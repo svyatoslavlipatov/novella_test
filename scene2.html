@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Novel VR Scene</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.x.x/dist/aframe-event-set-component.min.js"></script>
+    <script src="scripts/particles/aframe-particle-system-component.min.js"></script>
+    <script>
+      // Компонент для отслеживания камеры
+      AFRAME.registerComponent('look-at-camera', {
+        tick: function () {
+          const camera = document.querySelector('[camera]').object3D;
+          this.el.object3D.lookAt(camera.position);
+        },
+      });
+
+   
+      // Функция для динамической загрузки следующей сцены
+      function loadSceneDizayn() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const sceneContainer = document.getElementById('scene-container');
+        const iframe = document.getElementById('scene-iframe');
+        const mainScene = document.querySelector('a-scene');
+        
+        // Показываем экран загрузки
+        loadingScreen.style.display = 'flex';
+
+        // Скрываем текущую сцену
+        mainScene.setAttribute('visible', 'false');
+        
+        // Загружаем сцену в iframe
+        iframe.src = 'scenes-dizayn/scene1-dizayn.html';
+        
+        // Показ контейнера с новым iframe
+        sceneContainer.style.display = 'block';
+
+        // Через секунду скрываем экран загрузки
+        setTimeout(function () {
+          loadingScreen.style.display = 'none';
+        }, 1000);
+      }
+
+    </script>
+       <style>
+        /* Стили для экрана загрузки */
+        #loading-screen {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 2em;
+          display: none; /* Скрыт по умолчанию */
+        }
+      </style>
+  </head>
+  <body>
+    <a-scene>
+       <!-- Экран загрузки -->
+      <div id="loading-screen">
+        Загружается сцена...
+      </div>
+
+      <!-- Добавляем элемент для воспроизведения музыки -->
+      <assets>
+        <a-sound id="first-music" src="music/scene2/nakal.mp3" autoplay="true" loop="true" volume="0.5"></a-sound>
+        <a-sound id="second-music" src="music/scene2/funny.mp3" autoplay="false" loop="true" volume="0.5"></a-sound>
+        <audio id="blip1" src="sounds/blip/blick_click.wav"></audio>
+        <audio id="blip2" src="sounds/blip/blip_enter.wav"></audio>
+      </assets>
+      
+
+      <a-sky color="#313131"></a-sky>
+
+      <!-- Камера с контролем взгляда -->
+      <a-camera position="0 0 0" wasd-controls="enabled: false">
+        
+      </a-camera>
+
+
+      <a-entity id="particle" particle-system="preset: dust; particleCount: 1000; color: grey; size: 0.5; velocityValue: 0 0 -0.5; opacity: 0.7;"></a-entity>
+      
+      <!-- Тексты -->
+      <a-entity position="0 0 -3">
+        <a-text id="first-text" 
+          value="Привет!" 
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="10"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="second-text" 
+          value='Ты стоишь на перепутье: 
+          "Кем же мне стать?..."'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="thirst-text" 
+          value=' "На кого идти учиться?...
+
+          Столько много направлений..."'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="fourth-text" 
+          value=' Мы готовы тебе помочь!'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="five-text" 
+          value='Наш факультет - ФБКИ!
+          
+          Факультет бизнес-коммуникаций и информатики!'
+          
+          color="#319DDA" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="six-text" 
+          value='И мы покажем тебе 5 направлений!'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+        
+        <a-text id="text-reklama" 
+          position = "-3.2 0 3"
+          rotation="0 90 0" 
+          value='Реклама и связи
+          с общественностью'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="text-rpo"
+          position = "-1.65 0 0"
+          rotation="0 10 0" 
+          value='Разработка 
+          ПО'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="text-dizayn" 
+          position = "1.65 0 0"
+          rotation="0 -12 0" 
+          value='ПИ 
+          Дизайн'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="text-turizm" 
+          position = "2.65 0 3"
+          rotation="0 -90 0" 
+          value=Туризм'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <a-text id="text-personal" 
+          position = "0.13 0 5.57"
+          rotation="0 180 0" 
+          value='Управление персоналом'
+          color="white" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png" 
+          align="center" 
+          width="8"
+          opacity="0"
+          negate="false">
+        </a-text>
+
+        <!-- Кнопка Реклама + -->
+        <a-plane 
+          id="button-reklama" 
+          opacity="0"
+          animation="property: scale; to: 1.05 1.05 1.05; dir: alternate; loop: true"
+          position = "-3.2 -0.6 3"
+          rotation="0 90 0" 
+          width="1.1" 
+          height="0.5" 
+          color="grey"
+          id="start-button"
+          sound__1="on: click; src: #blip1"
+          sound__2="on: mouseenter; src: #blip2"
+          event-set__mouseenter="color: #319DDA" 
+          event-set__mouseleave="color: grey"
+          onclick="loadScene()">
+          
+          <a-text opacity="0"
+            id="button-text"
+            value="НАЧАТЬ!" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" 
+            color="white" 
+            align="center" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            negate="false">
+          </a-text>
+        </a-plane>
+
+        <!-- Кнопка РПО -->
+        <a-plane 
+          id="button-rpo" 
+          opacity="0"
+          animation="property: scale; to: 1.05 1.05 1.05; dir: alternate; loop: true"
+          position = "-1.65 -0.5 0"
+          rotation="0 10 0"
+          width="1.1" 
+          height="0.5" 
+          color="grey"
+          id="start-button"
+          sound__1="on: click; src: #blip1"
+          sound__2="on: mouseenter; src: #blip2"
+          event-set__mouseenter="color: #319DDA" 
+          event-set__mouseleave="color: grey"
+          onclick="loadScene()">
+          
+          <a-text opacity="0"
+            id="button-text-rpo"
+            value="НАЧАТЬ!" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" 
+            color="white" 
+            align="center" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            negate="false">
+          </a-text>
+        </a-plane>
+
+        <!-- Кнопка Дизайн + -->
+        <a-plane 
+          id="button-dizayn" 
+          opacity="0"
+          animation="property: scale; to: 1.05 1.05 1.05; dir: alternate; loop: true"
+          position = "1.65 -0.5 0"
+          rotation="0 -12 0" 
+          width="1.1" 
+          height="0.5" 
+          color="grey"
+          id="start-button"
+          sound__1="on: click; src: #blip1"
+          sound__2="on: mouseenter; src: #blip2"
+          event-set__mouseenter="color: #319DDA" 
+          event-set__mouseleave="color: grey"
+          onclick="loadSceneDizayn()">
+          
+          <a-text opacity="0"
+            id="button-text-dizayn"
+            value="НАЧАТЬ!" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" 
+            color="white" 
+            align="center" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            negate="false">
+          </a-text>
+        </a-plane>
+
+        <!-- Кнопка Туризм -->
+        <a-plane 
+          id="button-turizm" 
+          opacity="0"
+          animation="property: scale; to: 1.05 1.05 1.05; dir: alternate; loop: true"
+          position = "2.65 -0.5 3"
+          rotation="0 -90 0" 
+          width="1.1" 
+          height="0.5" 
+          color="grey"
+          id="start-button"
+          sound__1="on: click; src: #blip1"
+          sound__2="on: mouseenter; src: #blip2"
+          event-set__mouseenter="color: #319DDA" 
+          event-set__mouseleave="color: grey"
+          onclick="loadScene()">
+          
+          <a-text opacity="0"
+            id="button-text-turizm"
+            value="НАЧАТЬ!" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" 
+            color="white" 
+            align="center" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            negate="false">
+          </a-text>
+        </a-plane>
+
+        <!-- Кнопка Управление персоналом -->
+        <a-plane 
+          id="button-personal" 
+          opacity="0"
+          animation="property: scale; to: 1.05 1.05 1.05; dir: alternate; loop: true"
+          position = "0.13 -0.5 5.57"
+          rotation="0 180 0" 
+          width="1.1" 
+          height="0.5" 
+          color="grey"
+          id="start-button"
+          sound__1="on: click; src: #blip1"
+          sound__2="on: mouseenter; src: #blip2"
+          event-set__mouseenter="color: #319DDA" 
+          event-set__mouseleave="color: grey"
+          onclick="loadScene()">
+          
+          <a-text opacity="0"
+            id="button-text-personal"
+            value="НАЧАТЬ!" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" 
+            color="white" 
+            align="center" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            negate="false">
+          </a-text>
+        </a-plane>
+
+      </a-entity>
+    </a-scene>
+    <!-- Контейнер для загрузки новой сцены -->
+    <div id="scene-container" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none;">
+      <iframe id="scene-iframe" src="" width="100%" height="100%" style="border: none;"></iframe>
+    </div>
+
+    <script>
+      // Функция для плавного изменения прозрачности
+      function fadeIn(element, duration) {
+        let opacity = 0;
+        element.setAttribute('opacity', opacity);
+
+        const interval = setInterval(() => {
+          opacity += 1 / (duration / 50); // 50 миллисекунд на каждое изменение
+          if (opacity >= 1) {
+            clearInterval(interval);
+            element.setAttribute('opacity', 1); // Убедиться, что opacity равно 1
+          } else {
+            element.setAttribute('opacity', opacity);
+          }
+        }, 50);
+      }
+
+      function fadeOut(element, duration) {
+        let opacity = 1;
+        element.setAttribute('opacity', opacity);
+
+        const interval = setInterval(() => {
+          opacity -= 1 / (duration / 50); // 50 миллисекунд на каждое изменение
+          if (opacity <= 0) {
+            clearInterval(interval);
+            element.setAttribute('opacity', 0); // Убедиться, что opacity равно 0
+            element.parentNode.removeChild(element); // Удаляем элемент из сцены
+          } else {
+            element.setAttribute('opacity', opacity);
+          }
+        }, 50);
+      }
+
+      const texts = [
+        { element: document.querySelector('#particle'), delay: 1000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 38000 },
+        { element: document.querySelector('#first-text'), delay: 1000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 5000 },
+        { element: document.querySelector('#second-text'), delay: 7000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 11000 },
+        { element: document.querySelector('#thirst-text'), delay: 13500, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 18000 },
+        { element: document.querySelector('#fourth-text'), delay: 20000, fadeInTime: 1000, fadeOutTime: 2000, disappearTime: 25000 },
+        { element: document.querySelector('#five-text'), delay: 27000, fadeInTime: 1000, fadeOutTime: 2000, disappearTime: 30000 },
+        { element: document.querySelector('#six-text'), delay: 31000, fadeInTime: 1000, fadeOutTime: 2000, disappearTime: 33000 },
+        { element: document.querySelector('#seven-text'), delay: 34000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 38000 },
+        { element: document.querySelector('#button-reklama'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-rpo'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-dizayn'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-turizm'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-personal'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+
+        { element: document.querySelector('#button-text'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-text-dizayn'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-text-rpo'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-text-turizm'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-text-personal'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#button-text-reklama'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#text-reklama'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#text-rpo'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#text-dizayn'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#text-turizm'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+        { element: document.querySelector('#text-personal'), delay: 41000, fadeInTime: 2000, fadeOutTime: 2000, disappearTime: 1111000 },
+      ];
+
+      texts.forEach((text, index) => {
+        setTimeout(() => fadeIn(text.element, text.fadeInTime), text.delay);
+        setTimeout(() => fadeOut(text.element, text.fadeOutTime), text.disappearTime);
+      });
+
+      // Логика плавного уменьшения громкости и смены музыки
+      const firstMusic = document.querySelector('#first-music');
+      const secondMusic = document.querySelector('#second-music');
+
+      function fadeOutMusic(audioElement, duration) {
+        let volume = 0.5; // Начальная громкость
+        const interval = setInterval(() => {
+          volume -= 0.01; // Уменьшаем громкость
+          if (volume <= 0) {
+            clearInterval(interval);
+            audioElement.components.sound.stopSound(); // Останавливаем музыку
+            audioElement.setAttribute('volume', 0); // Устанавливаем окончательную громкость
+          } else {
+            audioElement.setAttribute('volume', volume); // Устанавливаем текущую громкость
+          }
+        }, duration / 50);
+      }
+
+      setTimeout(() => {
+        fadeOutMusic(firstMusic, 1000); // Плавно выключаем первую музыку за 2 секунды
+        setTimeout(() => {
+          secondMusic.components.sound.playSound(); // Включаем вторую музыку
+        }, 500); // Включаем вторую музыку после того, как первая будет остановлена
+      }, 18000); // Через 17 секунд
+
+      setTimeout(() => {
+        const cursor = document.createElement('a-cursor');
+        cursor.setAttribute('color', 'yellow');
+        cursor.setAttribute('scale', '0.5 0.5 0.5');
+        cursor.setAttribute('fuse', 'true');
+        cursor.setAttribute('timeout', '1000');
+        cursor.setAttribute('opacity', '1');
+        
+        // Добавляем курсор в камеру
+        const camera = document.querySelector('a-camera');
+        camera.appendChild(cursor);
+      }, 41000); // 50 секунд
+
+    </script>
+  </body>
+</html>

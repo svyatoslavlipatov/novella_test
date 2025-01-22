@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Novel VR Scene</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-watcher@1.4.0/index.min.js"></script>
+  </head>
+  <body>
+    <a-scene inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+
+      <!-- Камера, чтобы пользователь мог смотреть на сцену -->
+      <a-camera position="0 1.6 3">
+        <a-cursor color="yellow" scale="0.5 0.5 0.5" fuse="true" timeout="1000" />
+      </a-camera>
+
+      <!-- Фон сцены -->
+      <a-sky color="#87CEEB" id="scene-sky"></a-sky>
+
+      <!-- Пол для персонажа -->
+      <a-plane position="0 0 -5" rotation="-90 0 0" width="50" height="50" color="#228B22" id="scene-plane"></a-plane>
+
+      <!-- Персонаж (можно заменить на 3D модель персонажа) -->
+      <a-box position="0 0.5 -3" width="2" height="5" depth="1" color="#FF6347" id="scene-box"></a-box>
+
+      <!-- Основной текст -->
+      <a-plane opacity="0.8" position="0 1 -2" rotation="0 0 0" width="5" height="2" color="black">
+        <a-text 
+          value="Привет! Я персонаж твоей истории! Как ты себя чувствуешь?" 
+          position="0 0.5 0.01" 
+          scale="1 1 1" 
+          color="#FFFFFF" 
+          font="custom-msdf.json" 
+          font-image="custom.png" 
+          align="center" 
+          negate="false">
+        </a-text>
+
+        <!-- Левая кнопка -->
+        <a-plane 
+          position="-1 -0.5 0.01" 
+          rotation="0 0 0" 
+          width="1.7" 
+          height="0.5" 
+          color="blue"
+          id="left-button">
+          <a-text 
+            value="Левая кнопка" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            color="#FFFFFF" 
+            font="custom-msdf.json" 
+            font-image="custom.png" 
+            align="center" 
+            negate="false">
+          </a-text>
+        </a-plane>
+
+        <!-- Правая кнопка -->
+        <a-plane 
+          position="1 -0.5 0.01" 
+          rotation="0 0 0" 
+          width="1.7" 
+          height="0.5" 
+          color="red"
+          id="right-button">
+          <a-text 
+            value="Правая кнопка" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            color="#FFFFFF" 
+            font="custom-msdf.json" 
+            font-image="custom.png" 
+            align="center" 
+            negate="false">
+          </a-text>
+        </a-plane>
+      </a-plane>
+
+      <script>
+        // Переменная для отслеживания состояния курсора
+        let isCursorOnRightButton = false;
+
+        // Получаем элементы кнопок
+        const leftButton = document.getElementById('left-button');
+        const rightButton = document.getElementById('right-button');
+
+        // Добавляем обработчики событий для изменения цвета при наведении
+        leftButton.addEventListener('mouseenter', () => {
+          leftButton.setAttribute('color', 'green');
+        });
+        leftButton.addEventListener('mouseleave', () => {
+          leftButton.setAttribute('color', 'blue');
+        });
+
+        rightButton.addEventListener('mouseenter', () => {
+          rightButton.setAttribute('color', 'yellow');
+          isCursorOnRightButton = true;  // Курсор на правой кнопке
+        });
+        rightButton.addEventListener('mouseleave', () => {
+          rightButton.setAttribute('color', 'red');
+          isCursorOnRightButton = false; // Курсор не на правой кнопке
+        });
+
+        // Обработчик нажатия на пробел
+        document.addEventListener('keydown', (event) => {
+          // Проверка, что нажата клавиша пробела и курсор на правой кнопке
+          if (event.code === 'Space' && isCursorOnRightButton) {
+            // Смена сцены без перехода на новую страницу
+            changeScene();
+          }
+        });
+
+        // Функция для изменения сцены
+        function changeScene() {
+          // Скрываем старую сцену
+          document.getElementById('scene-sky').setAttribute('color', '#FF6347'); // Меняем цвет фона
+          document.getElementById('scene-plane').setAttribute('color', '#FFEB3B'); // Меняем цвет пола
+          document.getElementById('scene-box').setAttribute('color', '#0000FF'); // Меняем цвет куба
+          document.querySelector('a-text').setAttribute('value', 'Сцена была изменена!'); // Меняем текст
+        }
+      </script>
+
+    </a-scene>
+  </body>
+</html>

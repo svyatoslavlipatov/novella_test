@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Novel VR Scene</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-watcher@1.4.0/index.min.js"></script>
+    <style>
+      /* Стили для экрана загрузки */
+      #loading-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 2em;
+        display: none; /* Скрыт по умолчанию */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Экран загрузки -->
+    <div id="loading-screen">
+      Загружается сцена...
+    </div>
+
+    <!-- Основная сцена -->
+    <a-scene id="main-scene" inspector="url: https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+      <!-- Камера, чтобы пользователь мог смотреть на сцену -->
+      <a-camera position="0 1.6 3">
+        <a-cursor color="yellow" scale="0.5 0.5 0.5" fuse="true" timeout="1000" />
+      </a-camera>
+
+      <!-- Фон сцены -->
+      <a-sky color="#87CEEB" id="scene-sky"></a-sky>
+
+      <!-- Пол для персонажа -->
+      <a-plane position="0 0 -5" rotation="-90 0 0" width="50" height="50" color="#228B22" id="scene-plane"></a-plane>
+
+      <!-- Персонаж -->
+      <a-box position="0 0.5 -3" width="2" height="5" depth="1" color="#FF6347" id="scene-box"></a-box>
+
+      <!-- Основной текст -->
+      <a-plane opacity="0.8" position="0 1 -2" rotation="0 0 0" width="5" height="2" color="black">
+        <a-text 
+          value="Привет! Я персонаж твоей истории! Как ты себя чувствуешь?" 
+          position="0 0.5 0.01" 
+          scale="1 1 1" 
+          color="#FFFFFF" 
+          font="custom-msdf.json" 
+          font-image="custom.png" 
+          align="center" 
+          negate="false">
+        </a-text>
+
+        <!-- Левая кнопка -->
+        <a-plane 
+          position="-1 -0.5 0.01" 
+          rotation="0 0 0" 
+          width="1.7" 
+          height="0.5" 
+          color="blue"
+          id="left-button">
+          <a-text 
+            value="Левая кнопка" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            color="#FFFFFF" 
+            font="custom-msdf.json" 
+            font-image="custom.png" 
+            align="center" 
+            negate="false">
+          </a-text>
+        </a-plane>
+
+        <!-- Правая кнопка -->
+        <a-plane 
+          position="1 -0.5 0.01" 
+          rotation="0 0 0" 
+          width="1.7" 
+          height="0.5" 
+          color="red"
+          id="right-button">
+          <a-text 
+            value="Правая кнопка" 
+            position="0 0 0.01" 
+            scale="1 1 1" 
+            color="#FFFFFF" 
+            font="custom-msdf.json" 
+            font-image="custom.png" 
+            align="center" 
+            negate="false">
+          </a-text>
+        </a-plane>
+      </a-plane>
+    </a-scene>
+
+    <!-- Контейнер для загрузки новой сцены -->
+    <div id="scene-container" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: none;">
+      <iframe id="scene-iframe" src="" width="100%" height="100%" style="border: none;"></iframe>
+    </div>
+
+    <script>
+      // Переменная для отслеживания состояния курсора
+      let isCursorOnRightButton = false;
+
+      // Получаем элементы кнопок
+      const leftButton = document.getElementById('left-button');
+      const rightButton = document.getElementById('right-button');
+      const loadingScreen = document.getElementById('loading-screen'); // Экран загрузки
+
+      // Добавляем обработчики событий для изменения цвета при наведении
+      leftButton.addEventListener('mouseenter', () => {
+        leftButton.setAttribute('color', 'green');
+      });
+      leftButton.addEventListener('mouseleave', () => {
+        leftButton.setAttribute('color', 'blue');
+      });
+
+      rightButton.addEventListener('mouseenter', () => {
+        rightButton.setAttribute('color', 'yellow');
+        isCursorOnRightButton = true;  // Курсор на правой кнопке
+      });
+      rightButton.addEventListener('mouseleave', () => {
+        rightButton.setAttribute('color', 'red');
+        isCursorOnRightButton = false; // Курсор не на правой кнопке
+      });
+
+      // Обработчик нажатия на пробел
+      document.addEventListener('keydown', (event) => {
+        // Проверка, что нажата клавиша пробела и курсор на правой кнопке
+        if (event.code === 'Space' && isCursorOnRightButton) {
+          // Загрузка новой сцены
+          loadNewScene('new_scene.html'); // Замените на путь к вашему новому файлу
+        }
+      });
+
+      // Функция для загрузки новой сцены
+      function loadNewScene(sceneUrl) {
+        // Показываем экран загрузки
+        loadingScreen.style.display = 'flex';
+
+        // Скрываем текущую сцену
+        document.getElementById('main-scene').setAttribute('visible', 'false');
+
+        // Показываем контейнер с iframe
+        document.getElementById('scene-container').style.display = 'block';
+
+        // Загружаем новый файл сцены в iframe
+        const iframe = document.getElementById('scene-iframe');
+        iframe.src = sceneUrl;
+
+        // После того как iframe загружен, скрываем экран загрузки
+        iframe.onload = () => {
+          setTimeout(() => {
+            loadingScreen.style.display = 'none'; // Прячем экран загрузки
+          }, 500); // Небольшая задержка перед скрытием
+        };
+      }
+    </script>
+  </body>
+</html>
