@@ -23,4 +23,28 @@
       }
     }
   });
+
+  
+ function showMessage(currentMsgId, nextMsgId) {
+  // Удаляем текущее сообщение, если оно существует
+  if (currentMsgId) {
+    const currentMsg = document.getElementById(currentMsgId);
+    if (currentMsg) currentMsg.remove();
+  }
+
+  // Показываем следующее сообщение, если оно указано
+  if (nextMsgId) {
+    const nextMsg = document.getElementById(nextMsgId);
+    if (nextMsg) {
+      nextMsg.setAttribute('visible', 'true');
+
+      // Активируем эффект печати для текста
+      const speechElement = nextMsg.querySelector('#speech');
+      if (speechElement) {
+        const text = speechElement.getAttribute('value');
+        speechElement.setAttribute('typewriter', { text: text, speed: 50 });
+      }
+    }
+  }
+}
 </script>
