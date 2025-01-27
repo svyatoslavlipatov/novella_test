@@ -70,29 +70,83 @@
     }
   });
 
-  
- // Функция для переключения видимости сообщений
-function showMessage(currentMsgId, nextMsgId) {
-  // Удаляем текущее сообщение, если оно существует
-  if (currentMsgId) {
-    const currentMsg = document.getElementById(currentMsgId);
-    if (currentMsg) currentMsg.remove();
-  }
+    function showMessage(currentMsgId, nextMsgId) {
+    // Удаляем текущее сообщение, если оно существует
+    if (currentMsgId) {
+      const currentMsg = document.getElementById(currentMsgId);
+      if (currentMsg) currentMsg.remove();
+    }
 
-  // Показываем следующее сообщение, если оно указано
-  if (nextMsgId) {
-    const nextMsg = document.getElementById(nextMsgId);
-    if (nextMsg) {
-      nextMsg.setAttribute('visible', 'true');
+    // Показываем следующее сообщение, если оно указано
+    if (nextMsgId) {
+      const nextMsg = document.getElementById(nextMsgId);
+      if (nextMsg) {
+        nextMsg.setAttribute('visible', 'true');
 
-      // Активируем компонент typewriter для текста внутри следующего сообщения
-      const speechText = nextMsg.querySelector('#speech');
-      if (speechText && speechText.components.typewriter) {
-        speechText.components.typewriter.init(); // Переинициализируем компонент
+        // Активируем компонент typewriter для текста внутри следующего сообщения
+        const speechText = nextMsg.querySelector(`#speech-${nextMsgId}`);
+        if (speechText && speechText.components.typewriter) {
+          speechText.components.typewriter.init(); // Переинициализируем компонент
+        }
       }
     }
   }
-}
+</script>
+<script>
+  AFRAME.registerComponent('custom-button', {
+  schema: {
+    id: { type: 'string', default: '' }, // ID кнопки
+    text: { type: 'string', default: 'Кнопка' }, // Текст кнопки
+    color: { type: 'color', default: 'blue' }, // Цвет кнопки
+    hoverColor: { type: 'color', default: '#319DDA' }, // Цвет кнопки при наведении
+    width: { type: 'number', default: 1.7 }, // Ширина кнопки
+    height: { type: 'number', default: 0.5 }, // Высота кнопки
+    textColor: { type: 'color', default: '#FFFFFF' }, // Цвет текста
+    soundClick: { type: 'string', default: '#blip1' }, // Звук при клике
+    soundHover: { type: 'string', default: '#blip2' }, // Звук при наведении
+    onClick: { type: 'string', default: '' }, // Действие при клике
+  },
+  init: function () {
+    const data = this.data;
+    const el = this.el;
+
+    // Задаем ID элементу, если указан
+    if (data.id) {
+      el.setAttribute('id', data.id);
+    }
+
+    // Создаем текст кнопки
+    const text = document.createElement('a-text');
+    text.setAttribute('value', data.text);
+    text.setAttribute('color', data.textColor);
+    text.setAttribute('align', 'center');
+    text.setAttribute('position', '0 0 0.01');
+    text.setAttribute('font', '../msdf/custom-msdf.json');
+    text.setAttribute('font-image', '../msdf/custom.png');
+    text.setAttribute('negate', 'false');
+    el.appendChild(text);
+
+    // Применяем размеры и цвет
+    el.setAttribute('geometry', { primitive: 'plane', width: data.width, height: data.height });
+    el.setAttribute('material', { color: data.color });
+
+    // Добавляем звуки
+    el.setAttribute('sound__click', `on: click; src: ${data.soundClick}`);
+    el.setAttribute('sound__hover', `on: mouseenter; src: ${data.soundHover}`);
+
+    // Добавляем события для изменения цвета при наведении
+    el.setAttribute('event-set__mouseenter', `material.color: ${data.hoverColor}`);
+    el.setAttribute('event-set__mouseleave', `material.color: ${data.color}`);
+
+    // Добавляем событие клика
+    if (data.onClick) {
+      el.addEventListener('click', function () {
+        eval(data.onClick); // Выполняем действие при клике
+      });
+    }
+  },
+});
+
 </script>
     
        <style>
@@ -140,146 +194,55 @@ function showMessage(currentMsgId, nextMsgId) {
     <a-box position="0 0.5 -3" width="2" height="5" depth="1" color="#FF6347" id="scene-box"></a-box>
 
     <!-- Первый текст -->
-    <a-plane id="first-msg" opacity="0.8" position="0 1 -2" rotation="0 0 0" width="5" height="2" color="black">
+<a-plane id="first-msg" opacity="0.8" position="0 1 -2" rotation="0 0 0" width="5" height="2" color="black">
+  <a-text 
+    value="Сопроводитель" id="speaker-first-msg"
+    position="-2 0.75 0.01" scale="1 1 1" color="red" font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
+    align="left" 
+    negate="false">
+  </a-text>
+  
+  <a-text id="speech-first-msg"
+    typewriter="text: Привет! Это направление `Прикладная информатика в дизайне`; speed: 50;"
+    position="-2 0.3 0.01" width="5" scale="0.95 0.95 0.95" color="#FFFFFF"
+    font="../msdf/custom-msdf.json" font-image="../msdf/custom.png"
+    align="left"
+    negate="false">
+  </a-text>
 
-      <a-text 
-        value="Сопроводитель" id="speaker"
-        position="-2 0.75 0.01" scale="1 1 1" color="red" font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
-        align="left" 
-        negate="false">
-      </a-text>
-      
-      <a-text id="speech"
-        typewriter="text: Привет! Это направление `Прикладная 
-        информатика в дизайне`; speed: 50;"
-        position="-2 0.3 0.01" width="5" scale="0.95 0.95 0.95" color="#FFFFFF"
-        font="../msdf/custom-msdf.json" font-image="../msdf/custom.png"
-        align="left"
-        negate="false">
-      </a-text>
+  <!-- Кнопка -->
+  <a-entity 
+    custom-button="id: ok-button-first-msg; text: Привет!; color: blue; hoverColor: #319DDA; onClick: showMessage('first-msg', 'second-msg')"
+    position="0 -0.5 0.01">
+  </a-entity>
 
-      <!-- Кнопка -->
-      <a-plane 
-        id="ok-button"
-        position="0 -0.5 0.01" rotation="0 0 0" width="1.7" height="0.5" 
-        color="blue"
-        sound__1="on: click; src: #blip1"
-        sound__2="on: mouseenter; src: #blip2"
-        event-set__mouseenter="color: #319DDA" 
-        event-set__mouseleave="color: blue"
-        onclick="showMessage('first-msg', 'second-msg')">
-        <a-text 
-          value="Привет!" 
-          position="0 0 0.01" scale="1 1 1" color="#FFFFFF" 
-          font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
-          align="center" 
-          negate="false">
-        </a-text>
-      </a-plane>
-    </a-plane>
+</a-plane>
 
-    <!-- Второй текст -->
-    <a-plane id="second-msg" opacity="0.8" position="0 1 -2" rotation="0 0 0" width="5" height="2" color="black" visible="false">
-      <a-text id="speaker"
-        value="Сопроводитель" 
-        position="-2 0.75 0.01" scale="1 1 1" color="#FFFFFF" 
-        font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
-        align="left" 
-        negate="false">
-      </a-text>
+<!-- Второй текст -->
+<a-plane id="second-msg" opacity="0.8" position="0 1 -2" rotation="0 0 0" width="5" height="2" color="black" visible="false">
+  <a-text id="speaker-second-msg"
+    value="Сопроводитель" 
+    position="-2 0.75 0.01" scale="1 1 1" color="#FFFFFF" 
+    font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
+    align="left" 
+    negate="false">
+  </a-text>
 
-      <a-text id="speech"
-        typewriter="text: ЙОУ; speed: 50;"
-        position="-2 0.3 0.01" width="5" scale="0.95 0.95 0.95" color="#FFFFFF" 
-        font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
-        align="left" 
-        negate="false">
-      </a-text>
+  <a-text id="speech-second-msg"
+    typewriter="text: ЙОУЙОУЙОУЙОУЙОУЙОУЙОУЙОУ; speed: 50;"
+    position="-2 0.3 0.01" width="5" scale="0.95 0.95 0.95" color="#FFFFFF" 
+    font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
+    align="left" 
+    negate="false">
+  </a-text>
 
       <!-- Кнопка -->
-      <a-plane 
-        id="ok-button"
-        position="0 -0.5 0.01" rotation="0 0 0" width="1.7" height="0.5" 
-        color="blue"
-        sound__1="on: click; src: #blip1"
-        sound__2="on: mouseenter; src: #blip2"
-        event-set__mouseenter="color: #319DDA" "
-        event-set__mouseleave="color: blue"
-        onclick="showMessage('second-msg', 'third-msg')">
-        <a-text 
-          value="Понял!" 
-          position="0 0 0.01" scale="1 1 1" color="#FFFFFF" 
-          font="../msdf/custom-msdf.json" font-image="../msdf/custom.png" 
-          align="center" 
-          negate="false">
-        </a-text>
-      </a-plane>
-    </a-plane>
-
-    <!-- Третий текст (изначально скрыт) -->
-    <a-plane id="third-msg" opacity="0.8" position="0 1 -2" rotation="0 0 0" width="5" height="2" color="black" visible="false">
-      <a-text id="speech"
-        value="Готов перейти на другую сцену?" 
-        position="0 0.5 0.01" 
-        scale="1 1 1" 
-        color="#FFFFFF" 
-        font="../msdf/custom-msdf.json" 
-        font-image="../msdf/custom.png" 
-        align="center" 
-        negate="false">
-      </a-text>
-
-      <!-- Исправленная кнопка -->
-      <a-plane 
-      position="-1 -0.5 0.01" 
-      rotation="0 0 0" 
-      width="1.7" 
-      height="0.5" 
-      color="blue"
-      id="left-button"
-      sound__1="on: click; src: #blip1"
-      sound__2="on: mouseenter; src: #blip2"
-      event-set__mouseenter="color: #319DDA" 
-      event-set__mouseleave="color: grey"
-      onclick="loadScene()">
-      <a-text 
-        value="Левая кнопка" 
-        position="0 0 0.01" 
-        scale="1 1 1" 
-        color="#FFFFFF" 
-        font="../msdf/custom-msdf.json" 
-        font-image="../msdf/custom.png" 
-        align="center" 
-        negate="false">
-      </a-text>
-      </a-plane>
+      <a-entity 
+        custom-button="id: ok-button-second-msg; text: Привет!; color: blue; hoverColor: #319DDA; onClick: showMessage('second-msg', 'third-msg')"
+        position="0 -0.5 0.01">
+      </a-entity>
 
 
-      <!-- Правая кнопка -->
-          <a-plane 
-            position="1 -0.5 0.01" 
-            rotation="0 0 0" 
-            width="1.7" 
-            height="0.5" 
-            color="red"
-            id="right-button"
-            onclick="loadScene()"
-            sound__1="on: click; src: #blip1"
-            sound__2="on: mouseenter; src: #blip2"
-            event-set__mouseenter="color: #319DDA" 
-            event-set__mouseleave="color: grey">
-            <a-text 
-              value="Правая кнопка" 
-              position="0 0 0.01" 
-              scale="1 1 1" 
-              color="#FFFFFF" 
-              font="../msdf/custom-msdf.json" 
-              font-image="../msdf/custom.png" 
-              align="center" 
-              negate="false">
-            </a-text>
-          </a-plane>
-        </a-plane> 
       </a-scene>
 
   <!-- Контейнер для загрузки новой сцены -->
