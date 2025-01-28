@@ -47,28 +47,41 @@
 <script>
   AFRAME.registerComponent('typewriter', {
     schema: {
-      text: { type: 'string', default: '' }, // Текст для печати
-      speed: { type: 'number', default: 50 } // Скорость печати (мс на символ)
+      text: { type: 'string', default: '' },
+      speed: { type: 'number', default: 50 },
+      onComplete: { type: 'string', default: '' } // Действие после завершения печати
     },
     init: function () {
-      this.currentIndex = 0; // Текущий индекс печатаемого символа
-      this.textElement = this.el; // Ссылка на элемент <a-text>
-      this.printText(); // Запуск печати
+      this.currentIndex = 0;
+      this.textElement = this.el;
+      this.printText();
     },
     printText: function () {
       const textToPrint = this.data.text;
       const speed = this.data.speed;
-      
+
       if (this.currentIndex < textToPrint.length) {
-        // Добавляем по одному символу
         this.textElement.setAttribute('value', textToPrint.substring(0, this.currentIndex + 1));
         this.currentIndex++;
-        
-        // Рекурсивный вызов для следующего символа
+
         setTimeout(() => this.printText(), speed);
+      } else if (this.data.onComplete) {
+        // Вызываем действие, если указано
+        eval(this.data.onComplete);
       }
     }
   });
+
+  function enableButton(buttonId) {
+    const button = document.getElementById(buttonId);
+    if (button) {
+      const buttonData = button.components['custom-button'];
+      if (buttonData) {
+        buttonData.data.onClick = buttonData.data.onClickOriginal; // Восстанавливаем оригинальный onClick
+        button.setAttribute('material', 'opacity', 1); // Визуально активируем кнопку
+      }
+    }
+  }
 
     function showMessage(currentMsgId, nextMsgId) {
     // Удаляем текущее сообщение, если оно существует
@@ -197,7 +210,7 @@
   </a-text>
   
   <a-text id="speech-first-msg"
-    typewriter="text: Привет! Это направление `Прикладная информатика в дизайне`; speed: 50;"
+  typewriter="text: Привет! Это направление `Прикладная информатика в дизайне`; speed: 50; onComplete: enableButton('ok-button-first-msg')"
     position="-2 0.3 0.01" width="5" scale="0.95 0.95 0.95" color="#FFFFFF"
     font="../msdf/custom-msdf.json" font-image="../msdf/custom.png"
     align="left"
@@ -205,8 +218,9 @@
   </a-text>
 
   <!-- Кнопка -->
-  <a-entity id ="ok-button-first-msg"
-    custom-button="text: Привет!; color: blue; hoverColor: #319DDA; onClick: showMessage('first-msg', 'second-msg')"
+  <a-entity id="ok-button-first-msg"
+    custom-button="text: Привет!; color: blue; hoverColor: #319DDA; onClickOriginal: showMessage('first-msg', 'second-msg'); onClick: '';"
+    material="opacity: 0.1" 
     position="0 -0.5 0.01">
   </a-entity>
 
