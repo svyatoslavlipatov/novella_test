@@ -80,20 +80,19 @@
       <a-entity environment="preset: starry;"></a-entity>
       
       <!-- Камера с контролем взгляда -->
-      <a-camera position="0 1.2 0" wasd-controls="enabled: false">
+      <a-camera position="0 8 0" wasd-controls="enabled: false">
         <a-cursor color="yellow" scale="0.5 0.5 0.5" fuse="true" timeout="1000"></a-cursor>
       </a-camera>
 
 
-      <a-entity position="0 0 -10.8">
-        
+      <a-entity position="0 0 -8">
+
       <!-- Изображение над текстом -->
       <a-image 
         src="pictures/main_scene/logo.png" 
         position="0 2.6 0.01" 
         width="0.5" 
-        height="0.5" 
-        look-at-camera>
+        height="0.5" >
       </a-image>
 
       
@@ -107,8 +106,7 @@
             font="msdf/main_scene/Black-msdf.json" 
             font-image="msdf/main_scene/Black.png" 
             align="center" 
-            negate="false" 
-            look-at-camera>
+            negate="false" >
           </a-text>
 
           <!-- Кнопка -->
