@@ -5,7 +5,28 @@
   <body>
     <a-scene>
       <a-sky color="#222"></a-sky>
-      <a-text value="Добро пожаловать во вторую сцену!" position="-1 2 -3" color="white"></a-text>
+      <a-text value="Hi!" position="-1 2 -3" color="white"></a-text>
+
+      <!-- Камера -->
+      <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+
+      <!-- Контроллеры Pico 4 -->
+      <a-entity 
+        id="left-controller" 
+        laser-controls="hand: left" 
+        line="color: red; opacity: 0.5;" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10">
+      </a-entity>
+
+      <a-entity 
+        id="right-controller" 
+        laser-controls="hand: right" 
+        line="color: blue; opacity: 0.5;" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10">
+      </a-entity>
+
     </a-scene>
   </body>
 </html>
