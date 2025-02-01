@@ -35,12 +35,14 @@
           class="clickable" 
           width="1" height="0.4" 
           color="#008CBA"
-          hoverable>
+          hoverable
+          clickable>
         </a-plane>
         <a-text value="Click" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
       <script>
+        // Компонент для эффекта наведения
         AFRAME.registerComponent('hoverable', {
           init: function () {
             var el = this.el;
@@ -49,6 +51,17 @@
             });
             el.addEventListener('mouseleave', function () {
               el.setAttribute('color', '#008CBA'); // Исходный цвет
+            });
+          }
+        });
+
+        // Компонент для обработки кликов
+        AFRAME.registerComponent('clickable', {
+          init: function () {
+            var el = this.el;
+            el.addEventListener('click', function () {
+              console.log("Clicked!"); // Сообщение при клике
+              alert("Clicked!"); // Уведомление в браузере
             });
           }
         });
