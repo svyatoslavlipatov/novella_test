@@ -38,7 +38,7 @@
           hoverable
           clickable>
         </a-plane>
-        <a-text value="Click" align="center" color="white" position="0 0 0.01"></a-text>
+        <a-text value="Next Scene" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
       <script>
@@ -55,13 +55,12 @@
           }
         });
 
-        // Компонент для обработки кликов
+        // Компонент для обработки кликов (переход на другую сцену)
         AFRAME.registerComponent('clickable', {
           init: function () {
             var el = this.el;
             el.addEventListener('click', function () {
-              console.log("Clicked!"); // Сообщение при клике
-              alert("Clicked!"); // Уведомление в браузере
+              window.location.href = "scene2.html"; // Переход на вторую сцену
             });
           }
         });
