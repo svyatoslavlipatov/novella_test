@@ -15,17 +15,15 @@
       <a-entity 
         id="left-controller" 
         laser-controls="hand: left" 
-        line="color: red; opacity: 0.5;" 
         position="0 1 0" 
-        raycaster="objects: .clickable; far: 10">
+        raycaster="objects: .clickable; far: 10; lineColor: red; ">
       </a-entity>
 
       <a-entity 
         id="right-controller" 
         laser-controls="hand: right" 
-        line="color: blue; opacity: 0.5;" 
         position="0 1 0" 
-        raycaster="objects: .clickable; far: 10">
+        raycaster="objects: .clickable; far: 10; lineColor: red; ">
       </a-entity>
 
       <!-- Кнопка -->
@@ -43,7 +41,7 @@
 
       <!-- Звук клика -->
       <a-assets>
-        <audio id="click-sound" src="blip/blick_click.wav" preload="auto"></audio>
+        <audio id="click-sound" src="sounds/blip/blick_click.wav" preload="auto"></audio>
       </a-assets>
 
       <script>
@@ -89,6 +87,10 @@
             // Эмуляция клика
             intersection.object.emit('click');
           }
+
+          // Изменение цвета правого контроллера на зеленый
+          var rightController = document.querySelector('#right-controller');
+          rightController.setAttribute('color', 'green'); // Изменение цвета всего контроллера на зеленый
         }
 
         document.querySelector('#left-controller').addEventListener('triggerdown', handleTriggerDown);
