@@ -11,22 +11,22 @@
       <!-- Камера -->
       <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-       <!-- Контроллеры Pico 4 -->
-       <a-entity 
-       id="left-controller" 
-       laser-controls="hand: left" 
-       position="0 1 0" 
-       raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-       sound="src: #click-sound; on: click; volume: 1">
-     </a-entity>
+      <!-- Контроллеры Pico 4 -->
+      <a-entity 
+        id="left-controller" 
+        laser-controls="hand: left" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+        triggerdown="playSound">
+      </a-entity>
 
-     <a-entity 
-       id="right-controller" 
-       laser-controls="hand: right" 
-       position="0 1 0" 
-       raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-       sound="src: #click-sound; on: click; volume: 1">
-     </a-entity>
+      <a-entity 
+        id="right-controller" 
+        laser-controls="hand: right" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+        triggerdown="playSound">
+      </a-entity>
 
       <!-- Кнопка -->
       <a-entity position="0 1 -2">
@@ -38,7 +38,7 @@
           hoverable
           clickable>
         </a-plane>
-        <a-text value="Next!!!" align="center" color="white" position="0 0 0.01"></a-text>
+        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
       <!-- Звук клика -->
@@ -60,30 +60,17 @@
           }
         });
 
-        // Компонент для обработки клика с контроллера
-        AFRAME.registerComponent('trigger-listener', {
+        // Воспроизведение звука при нажатии на триггер
+        AFRAME.registerComponent('playSound', {
           init: function () {
-            var el = this.el;
-            var button = document.querySelector('#button');
-            var clickSound = document.querySelector('#click-sound');
-            
-            // Обработчик клика
-            el.addEventListener('triggerdown', function () {
-              // Воспроизведение звука
-              clickSound.play();
-
-              // Изменение цвета линии на зеленый
-              var leftController = document.querySelector('#left-controller');
-              var rightController = document.querySelector('#right-controller');
-              leftController.setAttribute('raycaster', 'lineColor', 'green');
-              rightController.setAttribute('raycaster', 'lineColor', 'green');
-
-              // Дополнительно, можно изменить цвет кнопки
-              button.setAttribute('color', '#4CAF50'); // Зеленый цвет для кнопки
+            var sound = document.querySelector('#click-sound');
+            this.el.addEventListener('triggerdown', function () {
+              sound.play();
             });
           }
         });
       </script>
+
     </a-scene>
   </body>
 </html>
