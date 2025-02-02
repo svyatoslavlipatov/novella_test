@@ -11,22 +11,22 @@
       <!-- Камера -->
       <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-      <!-- Контроллеры Pico 4 -->
-      <a-entity 
-        id="left-controller" 
-        laser-controls="hand: left" 
-        position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        trigger-listener>
-      </a-entity>
+       <!-- Контроллеры Pico 4 -->
+       <a-entity 
+       id="left-controller" 
+       laser-controls="hand: left" 
+       position="0 1 0" 
+       raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+       sound="src: #click-sound; on: click; volume: 1">
+     </a-entity>
 
-      <a-entity 
-        id="right-controller" 
-        laser-controls="hand: right" 
-        position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        trigger-listener>
-      </a-entity>
+     <a-entity 
+       id="right-controller" 
+       laser-controls="hand: right" 
+       position="0 1 0" 
+       raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+       sound="src: #click-sound; on: click; volume: 1">
+     </a-entity>
 
       <!-- Кнопка -->
       <a-entity position="0 1 -2">
@@ -38,7 +38,7 @@
           hoverable
           clickable>
         </a-plane>
-        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+        <a-text value="Next!" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
       <!-- Звук клика -->
