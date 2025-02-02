@@ -41,6 +41,11 @@
         <a-text value="Next Scene" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
+      <!-- Звук клика -->
+      <a-assets>
+        <audio id="click-sound" src="blip/blip_click.mp3"></audio>
+      </a-assets>
+
       <script>
         // Компонент для эффекта наведения
         AFRAME.registerComponent('hoverable', {
@@ -64,6 +69,22 @@
             });
           }
         });
+
+        // Обработка нажатия триггера на контроллере
+        function handleTriggerDown(event) {
+          var intersection = event.detail.intersection;
+          if (intersection && intersection.object.classList.contains('clickable')) {
+            // Воспроизведение звука клика
+            var sound = document.querySelector('#click-sound');
+            sound.components.sound.playSound();
+
+            // Эмуляция клика
+            intersection.object.emit('click');
+          }
+        }
+
+        document.querySelector('#left-controller').addEventListener('triggerdown', handleTriggerDown);
+        document.querySelector('#right-controller').addEventListener('triggerdown', handleTriggerDown);
       </script>
 
     </a-scene>
