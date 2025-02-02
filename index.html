@@ -16,14 +16,14 @@
         id="left-controller" 
         laser-controls="hand: left" 
         position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: red; ">
+        raycaster="objects: .clickable; far: 10; lineColor: red; lineOpacity: 0.5">
       </a-entity>
 
       <a-entity 
         id="right-controller" 
         laser-controls="hand: right" 
         position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: red; ">
+        raycaster="objects: .clickable; far: 10; lineColor: red; lineOpacity: 0.5">
       </a-entity>
 
       <!-- Кнопка -->
@@ -57,44 +57,6 @@
             });
           }
         });
-
-        // Компонент для обработки кликов (переход на другую сцену)
-        AFRAME.registerComponent('clickable', {
-          init: function () {
-            var el = this.el;
-            el.addEventListener('click', function () {
-              // Изменение цвета кнопки при клике
-              el.setAttribute('color', '#FF5733'); // Цвет при клике
-
-              // Переход на вторую сцену
-              setTimeout(function() {
-                window.location.href = "scene2.html"; // Переход на вторую сцену
-              }, 500); // Переход после 500 мс, чтобы можно было увидеть изменение цвета
-            });
-          }
-        });
-
-        // Обработка нажатия триггера на контроллере
-        function handleTriggerDown(event) {
-          var intersection = event.detail.intersection;
-          if (intersection && intersection.object.classList.contains('clickable')) {
-            // Воспроизведение звука клика
-            var sound = document.querySelector('#click-sound');
-            if (sound) {
-              sound.play();
-            }
-
-            // Эмуляция клика
-            intersection.object.emit('click');
-          }
-
-          // Изменение цвета правого контроллера на зеленый
-          var rightController = document.querySelector('#right-controller');
-          rightController.setAttribute('color', 'green'); // Изменение цвета всего контроллера на зеленый
-        }
-
-        document.querySelector('#left-controller').addEventListener('triggerdown', handleTriggerDown);
-        document.querySelector('#right-controller').addEventListener('triggerdown', handleTriggerDown);
       </script>
 
     </a-scene>
