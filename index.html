@@ -17,7 +17,7 @@
         laser-controls="hand: left" 
         position="0 1 0" 
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        triggerdown="playSound">
+        sound="src: #click-sound; on: click">
       </a-entity>
 
       <a-entity 
@@ -25,7 +25,7 @@
         laser-controls="hand: right" 
         position="0 1 0" 
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        triggerdown="playSound">
+        sound="src: #click-sound; on: click">
       </a-entity>
 
       <!-- Кнопка -->
@@ -56,16 +56,6 @@
             });
             el.addEventListener('mouseleave', function () {
               el.setAttribute('color', '#008CBA'); // Исходный цвет
-            });
-          }
-        });
-
-        // Воспроизведение звука при нажатии на триггер
-        AFRAME.registerComponent('playSound', {
-          init: function () {
-            var sound = document.querySelector('#click-sound');
-            this.el.addEventListener('triggerdown', function () {
-              sound.play();
             });
           }
         });
