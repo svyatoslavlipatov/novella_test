@@ -44,30 +44,6 @@
     </a-scene>
   </div>
 
-  <script>
-    function loadScene(url) {
-      fetch(url)
-        .then(response => response.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-          const newScene = doc.querySelector('a-scene');
 
-          if (newScene) {
-            const sceneContainer = document.getElementById('scene-container');
-            sceneContainer.innerHTML = ''; // Удаляем текущую сцену
-            
-            setTimeout(() => {
-              sceneContainer.appendChild(newScene); // Добавляем новую сцену
-            }, 100); // Даем браузеру время обработать изменения
-          }
-        })
-        .catch(error => console.error('Ошибка загрузки сцены:', error));
-    }
-
-    document.querySelector('#button').addEventListener('click', function () {
-      loadScene('scene1.html');
-    });
-  </script>
 </body>
 </html>
