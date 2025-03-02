@@ -9,46 +9,28 @@
       <a-entity environment="preset: starry;"></a-entity>
 
       <!-- Камера -->
-      <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
-
-      <!-- Контроллеры -->
-      <a-entity 
-        id="left-controller" 
-        laser-controls="hand: left" 
-        position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        sound="src: #click-sound; on: click">
+      <a-entity id="camera-wrapper">
+        <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
       </a-entity>
 
-      <a-entity 
-        id="right-controller" 
-        laser-controls="hand: right" 
-        position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        sound="src: #click-sound; on: click">
+      <!-- Контроллеры -->
+      <a-entity id="left-controller" laser-controls="hand: left" position="0 1 0" 
+                raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5">
+      </a-entity>
+
+      <a-entity id="right-controller" laser-controls="hand: right" position="0 1 0" 
+                raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5">
       </a-entity>
 
       <!-- Кнопка -->
       <a-entity position="0 1 -2">
-        <a-plane 
-          id="button" 
-          class="clickable" 
-          width="1" height="0.4" 
-          color="#008CBA"
-          hoverable
-          clickable>
+        <a-plane id="button" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
         </a-plane>
         <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
-
-      <!-- Звук клика -->
-      <a-assets>
-        <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
-      </a-assets>
     </a-scene>
 
     <script>
-      // Компонент для эффекта наведения
       AFRAME.registerComponent('hoverable', {
         init: function () {
           var el = this.el;
@@ -61,17 +43,22 @@
         }
       });
 
-      // Загрузка второй сцены
       document.querySelector("#button").addEventListener("click", function () {
         fetch("scene2.html")
           .then(response => response.text())
           .then(html => {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, "text/html");
-            const newScene = doc.querySelector("a-scene");
-            if (newScene) {
-              document.querySelector("#scene-container").replaceWith(newScene);
-            }
+            const newSceneContent = doc.querySelector("a-scene").innerHTML;
+            
+            // Очищаем текущую сцену, кроме камеры
+            let scene = document.querySelector("#scene-container");
+            let cameraWrapper = document.querySelector("#camera-wrapper");
+            scene.innerHTML = ''; 
+            scene.appendChild(cameraWrapper); // Оставляем камеру
+
+            // Добавляем новый контент
+            scene.insertAdjacentHTML("beforeend", newSceneContent);
           })
           .catch(err => console.error("Ошибка загрузки сцены:", err));
       });
