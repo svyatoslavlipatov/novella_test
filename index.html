@@ -5,24 +5,13 @@
   </head>
   <body>
     <a-scene>
-      <!-- Элементы сцены с классом scene-entity -->
-      <a-sky class="scene-entity" color="#ECECEC"></a-sky>
-      <a-entity class="scene-entity" environment="preset: starry;"></a-entity>
-      <a-entity class="scene-entity" position="0 1 -2">
-        <a-plane 
-          id="button" 
-          class="clickable" 
-          width="1" height="0.4" 
-          color="#008CBA"
-          hoverable
-          clickable
-          load-next-scene>
-        </a-plane>
-        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
-      </a-entity>
+      <a-sky color="#ECECEC"></a-sky>
+      <a-entity environment="preset: starry;"></a-entity>
 
-      <!-- Постоянные элементы -->
-      <a-camera id="camera" position="0 1 0" wasd-controls="enabled: false"></a-camera>
+      <!-- Камера -->
+      <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+
+      <!-- Контроллеры Pico 4 -->
       <a-entity 
         id="left-controller" 
         laser-controls="hand: left" 
@@ -30,6 +19,7 @@
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
         sound="src: #click-sound; on: click">
       </a-entity>
+
       <a-entity 
         id="right-controller" 
         laser-controls="hand: right" 
@@ -38,54 +28,49 @@
         sound="src: #click-sound; on: click">
       </a-entity>
 
-      <!-- Ассеты -->
+      <!-- Кнопка -->
+      <a-entity position="0 1 -2">
+        <a-plane 
+          id="button" 
+          class="clickable" 
+          width="1" height="0.4" 
+          color="#008CBA"
+          hoverable
+          clickable> <!-- Добавлен компонент clickable -->
+        </a-plane>
+        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+      </a-entity>
+
+      <!-- Звук клика -->
       <a-assets>
         <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
       </a-assets>
 
-      <!-- Скрипты -->
       <script>
-        // Компонент для эффекта наведения
+        // Компонент для эффекта наведения (уже есть в вашем коде)
         AFRAME.registerComponent('hoverable', {
           init: function () {
             var el = this.el;
             el.addEventListener('mouseenter', function () {
-              el.setAttribute('color', '#005F7F');
+              el.setAttribute('color', '#005F7F'); // Цвет при наведении
             });
             el.addEventListener('mouseleave', function () {
-              el.setAttribute('color', '#008CBA');
+              el.setAttribute('color', '#008CBA'); // Исходный цвет
             });
           }
         });
 
-        // Компонент для перехода на следующую сцену
-        AFRAME.registerComponent('load-next-scene', {
+        // Компонент для обработки клика (новый)
+        AFRAME.registerComponent('clickable', {
           init: function () {
-            this.el.addEventListener('click', () => {
-              fetch('scene1.html')
-                .then(response => response.text())
-                .then(text => {
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(text, 'text/html');
-                  const newEntities = doc.body.children;
-                  const sceneEl = this.el.sceneEl;
-
-                  // Удаляем старые элементы с классом scene-entity
-                  Array.from(sceneEl.querySelectorAll('.scene-entity')).forEach(el => {
-                    el.parentNode.removeChild(el);
-                  });
-
-                  // Добавляем новые элементы
-                  Array.from(newEntities).forEach(entity => {
-                    const importedEntity = document.importNode(entity, true);
-                    sceneEl.appendChild(importedEntity);
-                  });
-                })
-                .catch(error => console.error('Ошибка загрузки сцены:', error));
+            var el = this.el;
+            el.addEventListener('click', function () {
+              window.location.href = 'scene1.html'; // Переход на scene1.html
             });
           }
         });
       </script>
+
     </a-scene>
   </body>
 </html>
