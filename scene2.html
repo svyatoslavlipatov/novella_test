@@ -5,7 +5,7 @@
   </head>
   <body>
     <!-- Вторая сцена -->
-    <a-scene>
+    <a-scene id="scene-container">
       <a-sky color="#87CEEB"></a-sky>
       <a-entity environment="preset: forest;"></a-entity>
 
@@ -38,11 +38,11 @@
 
       <!-- Кнопка -->
       <a-entity position="0 1 -2">
-        <a-plane id="button" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
+        <a-plane id="button1" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
         </a-plane>
         <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
-      
+
     </a-scene>
 
     <script>
@@ -58,7 +58,7 @@
         }
       });
 
-      document.querySelector("#button").addEventListener("click", function () {
+      document.querySelector("#button1").addEventListener("click", function () {
         fetch("scene1.html")
           .then(response => response.text())
           .then(html => {
