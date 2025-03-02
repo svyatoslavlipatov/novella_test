@@ -5,40 +5,44 @@
   </head>
   <body>
     <a-scene>
-      <a-sky color="#ECECEC"></a-sky>
-      <a-entity environment="preset: starry;"></a-entity>
+      <!-- Сцена 1 (начальная) -->
+      <a-entity id="scene1" visible="true">
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity environment="preset: starry;"></a-entity>
+
+        <!-- Кнопка "Next" -->
+        <a-entity position="0 1 -2">
+          <a-plane 
+            id="button" 
+            class="clickable" 
+            width="1" height="0.4" 
+            color="#008CBA">
+          </a-plane>
+          <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+        </a-entity>
+      </a-entity>
+
+      <!-- Сцена 2 (скрыта изначально) -->
+      <a-entity id="scene2" visible="false">
+        <a-sky color="#222"></a-sky>
+        <a-text value="Привет!" position="-1 2 -3" color="white"></a-text>
+      </a-entity>
 
       <!-- Камера -->
       <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-      <!-- Контроллеры Pico 4 -->
+      <!-- Контроллеры -->
       <a-entity 
         id="left-controller" 
         laser-controls="hand: left" 
-        position="0 1 0" 
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
         sound="src: #click-sound; on: click">
       </a-entity>
-
       <a-entity 
         id="right-controller" 
         laser-controls="hand: right" 
-        position="0 1 0" 
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
         sound="src: #click-sound; on: click">
-      </a-entity>
-
-      <!-- Кнопка -->
-      <a-entity position="0 1 -2">
-        <a-plane 
-          id="button" 
-          class="clickable" 
-          width="1" height="0.4" 
-          color="#008CBA"
-          hoverable
-          clickable> <!-- Добавлен компонент clickable -->
-        </a-plane>
-        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
       <!-- Звук клика -->
@@ -47,30 +51,19 @@
       </a-assets>
 
       <script>
-        // Компонент для эффекта наведения (уже есть в вашем коде)
-        AFRAME.registerComponent('hoverable', {
-          init: function () {
-            var el = this.el;
-            el.addEventListener('mouseenter', function () {
-              el.setAttribute('color', '#005F7F'); // Цвет при наведении
-            });
-            el.addEventListener('mouseleave', function () {
-              el.setAttribute('color', '#008CBA'); // Исходный цвет
-            });
-          }
-        });
-
-        // Компонент для обработки клика (новый)
+        // Компонент для обработки клика
         AFRAME.registerComponent('clickable', {
           init: function () {
             var el = this.el;
             el.addEventListener('click', function () {
-              window.location.href = 'scene1.html'; // Переход на scene1.html
+              // Скрываем первую сцену
+              document.querySelector('#scene1').setAttribute('visible', 'false');
+              // Показываем вторую сцену
+              document.querySelector('#scene2').setAttribute('visible', 'true');
             });
           }
         });
       </script>
-
     </a-scene>
   </body>
 </html>
