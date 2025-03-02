@@ -53,7 +53,9 @@
             
             // Очищаем текущую сцену, кроме камеры
             let scene = document.querySelector("#scene-container");
+            let cameraWrapper = document.querySelector("#camera-wrapper");
             scene.innerHTML = ''; 
+            scene.appendChild(cameraWrapper); // Оставляем камеру
 
             // Добавляем новый контент
             scene.insertAdjacentHTML("beforeend", newSceneContent);
