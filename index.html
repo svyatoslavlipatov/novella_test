@@ -5,8 +5,13 @@
   </head>
   <body>
     <a-scene>
-      <!-- Первая сцена -->
-      <a-entity id="scene-1">
+      <!-- Звук клика -->
+      <a-assets>
+        <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
+      </a-assets>
+
+      <!-- Основная сцена -->
+      <a-entity id="main-scene">
         <a-sky color="#ECECEC"></a-sky>
         <a-entity environment="preset: starry;"></a-entity>
 
@@ -42,20 +47,14 @@
           </a-plane>
           <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
-
-        <!-- Звук клика -->
-        <a-assets>
-          <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
-        </a-assets>
       </a-entity>
 
-      <!-- Вторая сцена (скрыта по умолчанию) -->
-      <a-entity id="scene-2" visible="false">
-        <a-sky color="#123456"></a-sky> <!-- Измените цвет для другой сцены -->
-        <a-text value="HI" align="center" color="white" position="0 2 -4"></a-text>
-        
-        <!-- Камера для второй сцены -->
-        <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+      <!-- Вторая сцена -->
+      <a-entity id="scene2" visible="false">
+        <a-sky color="#0000FF"></a-sky> <!-- Другой цвет неба для второй сцены -->
+        <a-entity position="0 1 -4">
+          <a-text value="HI" align="center" color="white" scale="2 2 2"></a-text>
+        </a-entity>
       </a-entity>
 
     </a-scene>
@@ -74,16 +73,14 @@
         }
       });
 
-      // Переключение сцен при нажатии на кнопку
+      // Логика переключения сцен
       document.querySelector('#button').addEventListener('click', function () {
-        var scene1 = document.querySelector('#scene-1');
-        var scene2 = document.querySelector('#scene-2');
-
-        // Скрываем первую сцену и показываем вторую
-        scene1.setAttribute('visible', 'false');
-        scene2.setAttribute('visible', 'true');
+        var mainScene = document.querySelector('#main-scene');
+        var scene2 = document.querySelector('#scene2');
+        
+        mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
+        scene2.setAttribute('visible', 'true'); // Показать вторую сцену
       });
     </script>
-
   </body>
 </html>
