@@ -11,47 +11,27 @@
 
       <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-         <!-- Контроллеры Pico 4 -->
-         <a-entity 
-         id="left-controller" 
-         laser-controls="hand: left" 
-         position="0 1 0" 
-         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-         sound="src: #click-sound; on: click">
-       </a-entity>
- 
-       <a-entity 
-         id="right-controller" 
-         laser-controls="hand: right" 
-         position="0 1 0" 
-         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-         sound="src: #click-sound; on: click">
-       </a-entity>
- 
+      <!-- Контроллеры Pico 4 -->
+      <a-entity 
+        id="left-controller" 
+        laser-controls="hand: left" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+        sound="src: #click-sound; on: click">
+      </a-entity>
 
-      <!-- Простая кнопка, чтобы вернуться на первую сцену (если нужно) -->
-      <a-entity position="0 1 -2">
-        <a-plane 
-          class="clickable" 
-          width="1" height="0.4" 
-          color="#D32F2F"
-          hoverable
-          clickable>
-        </a-plane>
-        <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
+      <a-entity 
+        id="right-controller" 
+        laser-controls="hand: right" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+        sound="src: #click-sound; on: click">
       </a-entity>
 
       <script>
-        AFRAME.registerComponent('hoverable', {
-          init: function () {
-            var el = this.el;
-            el.addEventListener('mouseenter', function () {
-              el.setAttribute('color', '#9C1C1C'); // Цвет при наведении
-            });
-            el.addEventListener('mouseleave', function () {
-              el.setAttribute('color', '#D32F2F'); // Исходный цвет
-            });
-          }
+        // Автоматически активируем VR-режим при загрузке сцены
+        window.addEventListener('load', function() {
+          document.querySelector('a-scene').enterVR();
         });
       </script>
     </a-scene>
