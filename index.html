@@ -36,10 +36,7 @@
           width="1" height="0.4" 
           color="#008CBA"
           hoverable
-          clickable
-          event-set__mouseenter="scale: 1.1 1.1 1"
-          event-set__mouseleave="scale: 1 1 1"
-          onclick="loadScene()">
+          clickable>
         </a-plane>
         <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
@@ -63,19 +60,21 @@
           }
         });
 
-        // Функция для загрузки сцены
-        function loadScene() {
+        // Заменить сцену при нажатии на кнопку
+        document.querySelector('#button').addEventListener('click', function () {
+          // Удалить текущую сцену
           var scene = document.querySelector('a-scene');
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', 'scene2.html', true);
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-              scene.innerHTML = xhr.responseText;
-            }
-          };
-          xhr.send();
-        }
+          scene.parentNode.removeChild(scene);
+          
+          // Загрузить новый контент для scene2.html
+          var iframe = document.createElement('iframe');
+          iframe.src = 'scene2.html';
+          iframe.style.width = '100%';
+          iframe.style.height = '100%';
+          document.body.appendChild(iframe);
+        });
       </script>
+
     </a-scene>
   </body>
 </html>
