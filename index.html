@@ -7,8 +7,9 @@
   <body>
 
     <!-- Начальная сцена -->
-    <a-entity id="includedScene">
-      <a-scene>
+
+      <a-scene >
+        <a-entity id="includedScene">
         <a-sky color="#ECECEC"></a-sky>
         <a-entity environment="preset: starry;"></a-entity>
 
@@ -70,9 +71,8 @@
             $("#includedScene").load('scene2.html');
           });
         </script>
-        
+      </a-entity>
       </a-scene>
-  </a-entity>
 
 
   </body>
