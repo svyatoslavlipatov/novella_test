@@ -51,14 +51,12 @@
       </a-assets>
 
       <script>
-        // Компонент для обработки клика
         AFRAME.registerComponent('clickable', {
           init: function () {
             var el = this.el;
-            el.addEventListener('click', function () {
-              // Скрываем первую сцену
+            el.addEventListener('triggerdown', function () {
+              console.log('Кнопка нажата!');
               document.querySelector('#scene1').setAttribute('visible', 'false');
-              // Показываем вторую сцену
               document.querySelector('#scene2').setAttribute('visible', 'true');
             });
           }
