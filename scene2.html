@@ -1,30 +1,42 @@
-<a-sky color="#FFFAF0"></a-sky>
-<a-entity environment="preset: simple;"></a-entity>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+  </head>
+  <body>
 
-<!-- Камера -->
-<a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+    <a-scene>
+      <a-sky color="#333333"></a-sky>
+      <a-entity environment="preset: desert;"></a-entity>
 
-<!-- Контроллеры Pico 4 -->
-<a-entity 
-  id="left-controller" 
-  laser-controls="hand: left" 
-  position="0 1 0" 
-  raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5">
-</a-entity>
+      <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-<a-entity 
-  id="right-controller" 
-  laser-controls="hand: right" 
-  position="0 1 0" 
-  raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5">
-</a-entity>
+      <!-- Простая кнопка, чтобы вернуться на первую сцену (если нужно) -->
+      <a-entity position="0 1 -2">
+        <a-plane 
+          class="clickable" 
+          width="1" height="0.4" 
+          color="#D32F2F"
+          hoverable
+          clickable>
+        </a-plane>
+        <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
+      </a-entity>
 
-<script>
-  // Включение VR-режима при загрузке подсцены
-  window.addEventListener('vrdisplayactivate', function() {
-    var scene = document.querySelector('a-scene');
-    if (!scene.is('vr-mode')) {
-      scene.enterVR();
-    }
-  });
-</script>
+      <script>
+        AFRAME.registerComponent('hoverable', {
+          init: function () {
+            var el = this.el;
+            el.addEventListener('mouseenter', function () {
+              el.setAttribute('color', '#9C1C1C'); // Цвет при наведении
+            });
+            el.addEventListener('mouseleave', function () {
+              el.setAttribute('color', '#D32F2F'); // Исходный цвет
+            });
+          }
+        });
+      </script>
+    </a-scene>
+
+  </body>
+</html>
