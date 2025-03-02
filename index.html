@@ -6,78 +6,78 @@
   </head>
   <body>
 
-    <!-- Начальная сцена -->
-    <a-scene id="scene1">
-      <a-sky color="#ECECEC"></a-sky>
-      <a-entity environment="preset: starry;"></a-entity>
+    <!-- Контейнер для сцены -->
+    <div id="sceneContainer">
+      <!-- Начальная сцена -->
+      <a-scene id="scene1">
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity environment="preset: starry;"></a-entity>
 
-      <!-- Камера -->
-      <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+        <!-- Камера -->
+        <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-      <!-- Контроллеры Pico 4 -->
-      <a-entity 
-        id="left-controller" 
-        laser-controls="hand: left" 
-        position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        sound="src: #click-sound; on: click">
-      </a-entity>
+        <!-- Контроллеры Pico 4 -->
+        <a-entity 
+          id="left-controller" 
+          laser-controls="hand: left" 
+          position="0 1 0" 
+          raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+          sound="src: #click-sound; on: click">
+        </a-entity>
 
-      <a-entity 
-        id="right-controller" 
-        laser-controls="hand: right" 
-        position="0 1 0" 
-        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-        sound="src: #click-sound; on: click">
-      </a-entity>
+        <a-entity 
+          id="right-controller" 
+          laser-controls="hand: right" 
+          position="0 1 0" 
+          raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+          sound="src: #click-sound; on: click">
+        </a-entity>
 
-      <!-- Кнопка -->
-      <a-entity position="0 1 -2">
-        <a-plane 
-          id="button" 
-          class="clickable" 
-          width="1" height="0.4" 
-          color="#008CBA"
-          hoverable
-          clickable>
-        </a-plane>
-        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
-      </a-entity>
+        <!-- Кнопка -->
+        <a-entity position="0 1 -2">
+          <a-plane 
+            id="button" 
+            class="clickable" 
+            width="1" height="0.4" 
+            color="#008CBA"
+            hoverable
+            clickable>
+          </a-plane>
+          <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+        </a-entity>
 
-      <!-- Звук клика -->
-      <a-assets>
-        <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
-      </a-assets>
+        <!-- Звук клика -->
+        <a-assets>
+          <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
+        </a-assets>
 
-      <script>
-        // Компонент для эффекта наведения
-        AFRAME.registerComponent('hoverable', {
-          init: function () {
-            var el = this.el;
-            el.addEventListener('mouseenter', function () {
-              el.setAttribute('color', '#005F7F'); // Цвет при наведении
-            });
-            el.addEventListener('mouseleave', function () {
-              el.setAttribute('color', '#008CBA'); // Исходный цвет
-            });
-          }
-        });
-
-        // Обработчик клика по кнопке "Next"
-        $(document).ready(function() {
-          $("#button").click(function() {
-            // Скрываем текущую сцену
-            $("#scene1").hide();
-
-            // Заменяем содержимое entity с id "includedScene" на новую сцену
-            $("#includedScene").load('scene2.html');
+        <script>
+          // Компонент для эффекта наведения
+          AFRAME.registerComponent('hoverable', {
+            init: function () {
+              var el = this.el;
+              el.addEventListener('mouseenter', function () {
+                el.setAttribute('color', '#005F7F'); // Цвет при наведении
+              });
+              el.addEventListener('mouseleave', function () {
+                el.setAttribute('color', '#008CBA'); // Исходный цвет
+              });
+            }
           });
-        });
-      </script>
 
-      <!-- Сущность, куда будет загружаться новая сцена -->
-      <a-entity id="includedScene"></a-entity>
+          // Обработчик клика по кнопке "Next"
+          $(document).ready(function() {
+            $("#button").click(function() {
+              // Удаляем старую сцену
+              $("#scene1").remove();
 
-    </a-scene>
+              // Загружаем новую сцену
+              $("#sceneContainer").load('scene2.html');
+            });
+          });
+        </script>
+      </a-scene>
+    </div>
+
   </body>
 </html>
