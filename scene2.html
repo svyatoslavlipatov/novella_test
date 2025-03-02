@@ -21,29 +21,38 @@
 
     <!-- Кнопка перехода -->
     <a-entity position="0 1 -2">
-        <a-plane id="button-next" class="clickable" width="1" height="0.4" color="#008CBA" hoverable></a-plane>
+        <a-plane id="button-next" class="clickable" width="1" height="0.4" color="#008CBA"></a-plane>
         <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
     </a-entity>
 </a-scene>
 
 <script>
-  document.querySelector("#button-next").addEventListener("click", function () {
-    fetch("scene3.html")
-      .then(response => response.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const newSceneContent = doc.querySelector("a-scene").innerHTML;
-        
-        // Очищаем сцену, но сохраняем камеру
-        let scene = document.querySelector("#scene-container");
-        let cameraWrapper = document.querySelector("#camera-wrapper");
-        scene.innerHTML = '';
-        scene.appendChild(cameraWrapper);
+  // Ждём загрузки DOM перед привязкой события
+  document.addEventListener("DOMContentLoaded", function () {
+    const nextButton = document.querySelector("#button-next");
 
-        // Добавляем новую сцену
-        scene.insertAdjacentHTML("beforeend", newSceneContent);
-      })
-      .catch(err => console.error("Ошибка загрузки сцены:", err));
+    if (nextButton) {
+      nextButton.addEventListener("click", function () {
+        fetch("scene3.html")
+          .then(response => response.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            const newSceneContent = doc.querySelector("a-scene").innerHTML;
+
+            // Очищаем сцену, но сохраняем камеру
+            let scene = document.querySelector("#scene-container");
+            let cameraWrapper = document.querySelector("#camera-wrapper");
+            scene.innerHTML = '';
+            scene.appendChild(cameraWrapper);
+
+            // Добавляем новую сцену
+            scene.insertAdjacentHTML("beforeend", newSceneContent);
+          })
+          .catch(err => console.error("Ошибка загрузки сцены:", err));
+      });
+    } else {
+      console.error("Кнопка #button-next не найдена!");
+    }
   });
 </script>
