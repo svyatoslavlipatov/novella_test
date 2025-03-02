@@ -4,15 +4,14 @@
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
   </head>
   <body>
-    <!-- Начальная сцена -->
-    <a-scene>
+    <a-scene id="scene-container">
       <a-sky color="#ECECEC"></a-sky>
       <a-entity environment="preset: starry;"></a-entity>
 
       <!-- Камера -->
       <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-      <!-- Контроллеры Pico 4 -->
+      <!-- Контроллеры -->
       <a-entity 
         id="left-controller" 
         laser-controls="hand: left" 
@@ -46,31 +45,36 @@
       <a-assets>
         <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
       </a-assets>
-
-      <script>
-        // Компонент для эффекта наведения
-        AFRAME.registerComponent('hoverable', {
-          init: function () {
-            var el = this.el;
-            el.addEventListener('mouseenter', function () {
-              el.setAttribute('color', '#005F7F');
-            });
-            el.addEventListener('mouseleave', function () {
-              el.setAttribute('color', '#008CBA');
-            });
-          }
-        });
-
-        // Компонент для обработки клика
-        AFRAME.registerComponent('clickable', {
-          init: function () {
-            var el = this.el;
-            el.addEventListener('click', function () {
-              window.location.href = 'scene2.html'; // Переход на вторую сцену
-            });
-          }
-        });
-      </script>
     </a-scene>
+
+    <script>
+      // Компонент для эффекта наведения
+      AFRAME.registerComponent('hoverable', {
+        init: function () {
+          var el = this.el;
+          el.addEventListener('mouseenter', function () {
+            el.setAttribute('color', '#005F7F');
+          });
+          el.addEventListener('mouseleave', function () {
+            el.setAttribute('color', '#008CBA');
+          });
+        }
+      });
+
+      // Загрузка второй сцены
+      document.querySelector("#button").addEventListener("click", function () {
+        fetch("scene2.html")
+          .then(response => response.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            const newScene = doc.querySelector("a-scene");
+            if (newScene) {
+              document.querySelector("#scene-container").replaceWith(newScene);
+            }
+          })
+          .catch(err => console.error("Ошибка загрузки сцены:", err));
+      });
+    </script>
   </body>
 </html>
