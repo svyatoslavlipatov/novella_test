@@ -2,8 +2,11 @@
   <head>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Добавляем jQuery -->
   </head>
   <body>
+
+    <!-- Начальная сцена -->
     <a-scene>
       <a-sky color="#ECECEC"></a-sky>
       <a-entity environment="preset: starry;"></a-entity>
@@ -59,8 +62,17 @@
             });
           }
         });
-      </script>
 
+        // Обработчик для кнопки Next
+        $("#button").on("click", function() {
+          // Загрузка второй сцены
+          $("#includedScene").load('scene2.html');
+        });
+      </script>
+      
+      <!-- Сцена, куда будет загружена другая сцена -->
+      <a-entity id="includedScene"></a-entity>
     </a-scene>
+
   </body>
 </html>
