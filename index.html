@@ -7,51 +7,48 @@
   <body>
 
     <!-- Начальная сцена -->
-
       <a-scene >
-        <a-entity id="includedScene">
-        <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: starry;"></a-entity>
 
-        <!-- Камера -->
-        <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+          <a-sky color="#ECECEC"></a-sky>
+          <a-entity environment="preset: starry;"></a-entity>
 
-        <!-- Контроллеры Pico 4 -->
-        <a-entity 
-          id="left-controller" 
-          laser-controls="hand: left" 
-          position="0 1 0" 
-          raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-          sound="src: #click-sound; on: click">
-        </a-entity>
+          <!-- Камера -->
+          <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-        <a-entity 
-          id="right-controller" 
-          laser-controls="hand: right" 
-          position="0 1 0" 
-          raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-          sound="src: #click-sound; on: click">
-        </a-entity>
+          <!-- Контроллеры Pico 4 -->
+          <a-entity 
+            id="left-controller" 
+            laser-controls="hand: left" 
+            position="0 1 0" 
+            raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+            sound="src: #click-sound; on: click">
+          </a-entity>
 
-        <!-- Кнопка -->
-        <a-entity position="0 1 -2">
-          <a-plane 
-            id="button" 
-            class="clickable" 
-            width="1" height="0.4" 
-            color="#008CBA"
-            hoverable
-            clickable>
-          </a-plane>
-          <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
-        </a-entity>
+          <a-entity 
+            id="right-controller" 
+            laser-controls="hand: right" 
+            position="0 1 0" 
+            raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+            sound="src: #click-sound; on: click">
+          </a-entity>
 
-        <!-- Звук клика -->
-        <a-assets>
-          <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
-        </a-assets>
+          <!-- Кнопка -->
+          <a-entity position="0 1 -2">
+            <a-plane 
+              id="button" 
+              class="clickable" 
+              width="1" height="0.4" 
+              color="#008CBA"
+              hoverable
+              clickable>
+            </a-plane>
+            <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+          </a-entity>
 
-      </a-entity>
+          <!-- Звук клика -->
+          <a-assets>
+            <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
+          </a-assets>
       </a-scene>
 
       <script>
