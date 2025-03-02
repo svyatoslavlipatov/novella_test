@@ -1,6 +1,48 @@
-<a-scene>
+<a-scene id="scene-container1">
     <a-sky color="#222"></a-sky>
     <a-light type="directional" position="1 3 1"></a-light>
     <a-box position="0 1 -3" color="red"></a-box>
     <a-text value="HI!!!" position="-1 2 -3" color="white"></a-text>
+
+     <!-- Кнопка -->
+     <a-entity position="0 1 -2">
+        <a-plane id="button1" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
+        </a-plane>
+        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+      </a-entity>
+
 </a-scene>  
+
+<script>
+    AFRAME.registerComponent('hoverable', {
+      init: function () {
+        var el = this.el;
+        el.addEventListener('mouseenter', function () {
+          el.setAttribute('color', '#005F7F');
+        });
+        el.addEventListener('mouseleave', function () {
+          el.setAttribute('color', '#008CBA');
+        });
+      }
+    });
+
+    document.querySelector("#button1").addEventListener("click", function () {
+      fetch("scene3.html")
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          const newSceneContent = doc.querySelector("a-scene").innerHTML;
+          
+          // Очищаем текущую сцену, кроме камеры
+          let scene = document.querySelector("#scene-container1");
+          let cameraWrapper = document.querySelector("#camera-wrapper");
+          scene.innerHTML = ''; 
+          scene.appendChild(cameraWrapper); // Оставляем камеру
+
+          // Добавляем новый контент
+          scene.insertAdjacentHTML("beforeend", newSceneContent);
+        })
+        .catch(err => console.error("Ошибка загрузки сцены:", err));
+    });
+  </script>
