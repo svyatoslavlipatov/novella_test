@@ -7,6 +7,7 @@
   <body>
 
     <!-- Начальная сцена -->
+    <a-entity id="includedScene">
     <a-scene>
       <a-sky color="#ECECEC"></a-sky>
       <a-entity environment="preset: starry;"></a-entity>
@@ -70,9 +71,9 @@
         });
       </script>
       
-      <!-- Сцена, куда будет загружена другая сцена -->
-      <a-entity id="includedScene"></a-entity>
+      
     </a-scene>
+  </a-entity>
 
   </body>
 </html>
