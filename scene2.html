@@ -1,49 +1,20 @@
-<a-scene id="scene-container">
-    <a-sky color="#6EBAA7"></a-sky>
-    <a-entity environment="preset: forest"></a-entity>
+<a-scene id="scene">
+    <a-sky color="black"></a-sky>
+    <a-text value="HI!" position="-1 2 -3" color="white"></a-text>
   
-    <!-- Камера -->
     <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
   
-    <!-- Контроллеры Pico 4 -->
     <a-entity 
       id="left-controller" 
       laser-controls="hand: left" 
       position="0 1 0" 
-      raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-      sound="src: #click-sound; on: click">
+      raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5">
     </a-entity>
   
     <a-entity 
       id="right-controller" 
       laser-controls="hand: right" 
       position="0 1 0" 
-      raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-      sound="src: #click-sound; on: click">
+      raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5">
     </a-entity>
-  
-    <!-- Кнопка перехода на следующую сцену -->
-    <a-entity position="0 1 -2">
-      <a-plane 
-        id="button-next" 
-        class="clickable" 
-        width="1" height="0.4" 
-        color="#FF5733"
-        hoverable
-        clickable>
-      </a-plane>
-      <a-text value="Next Scene" align="center" color="white" position="0 0 0.01"></a-text>
-    </a-entity>
-  
-    <script>
-      // Обработчик для перехода на следующую сцену (например, scene3.html)
-      document.getElementById('button-next').addEventListener('click', function () {
-        fetch('scene3.html')
-          .then(response => response.text())
-          .then(html => {
-            document.getElementById('scene-container').outerHTML = html;
-          })
-          .catch(error => console.error('Ошибка загрузки сцены 3:', error));
-      });
-    </script>
   </a-scene>  

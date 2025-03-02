@@ -5,15 +5,12 @@
   </head>
   <body>
 
-    <!-- Начальная сцена -->
-    <a-scene id="scene-container">
+    <a-scene id="scene">
       <a-sky color="#ECECEC"></a-sky>
       <a-entity environment="preset: starry;"></a-entity>
 
-      <!-- Камера -->
       <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-      <!-- Контроллеры Pico 4 -->
       <a-entity 
         id="left-controller" 
         laser-controls="hand: left" 
@@ -30,7 +27,6 @@
         sound="src: #click-sound; on: click">
       </a-entity>
 
-      <!-- Кнопка -->
       <a-entity position="0 1 -2">
         <a-plane 
           id="button" 
@@ -43,36 +39,38 @@
         <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
-      <!-- Звук клика -->
       <a-assets>
         <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
       </a-assets>
 
-      <script>
-        // Компонент для эффекта наведения
-        AFRAME.registerComponent('hoverable', {
-          init: function () {
-            var el = this.el;
-            el.addEventListener('mouseenter', function () {
-              el.setAttribute('color', '#005F7F'); // Цвет при наведении
-            });
-            el.addEventListener('mouseleave', function () {
-              el.setAttribute('color', '#008CBA'); // Исходный цвет
-            });
-          }
-        });
-
-        // Загрузка сцены 2
-        document.getElementById('button').addEventListener('click', function () {
-          fetch('scene2.html')
-            .then(response => response.text())
-            .then(html => {
-              document.getElementById('scene-container').outerHTML = html;
-            })
-            .catch(error => console.error('Ошибка загрузки сцены 2:', error));
-        });
-      </script>
-
     </a-scene>
+
+    <script>
+      AFRAME.registerComponent('hoverable', {
+        init: function () {
+          var el = this.el;
+          el.addEventListener('mouseenter', function () {
+            el.setAttribute('color', '#005F7F');
+          });
+          el.addEventListener('mouseleave', function () {
+            el.setAttribute('color', '#008CBA');
+          });
+        }
+      });
+
+      document.getElementById('button').addEventListener('click', function () {
+        fetch('scene2.html')
+          .then(response => response.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newScene = doc.querySelector('a-scene');
+            if (newScene) {
+              document.getElementById('scene').replaceWith(newScene);
+            }
+          });
+      });
+    </script>
+
   </body>
 </html>
