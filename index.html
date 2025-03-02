@@ -49,29 +49,31 @@
         <a-assets>
           <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
         </a-assets>
+
+        <script>
+          // Компонент для эффекта наведения
+          AFRAME.registerComponent('hoverable', {
+            init: function () {
+              var el = this.el;
+              el.addEventListener('mouseenter', function () {
+                el.setAttribute('color', '#005F7F'); // Цвет при наведении
+              });
+              el.addEventListener('mouseleave', function () {
+                el.setAttribute('color', '#008CBA'); // Исходный цвет
+              });
+            }
+          });
+      
+          // Обработчик для кнопки Next
+          $("#button").on("click", function() {
+            // Загрузка второй сцены
+            $("#includedScene").load('scene2.html');
+          });
+        </script>
         
       </a-scene>
   </a-entity>
 
-  <script>
-    // Компонент для эффекта наведения
-    AFRAME.registerComponent('hoverable', {
-      init: function () {
-        var el = this.el;
-        el.addEventListener('mouseenter', function () {
-          el.setAttribute('color', '#005F7F'); // Цвет при наведении
-        });
-        el.addEventListener('mouseleave', function () {
-          el.setAttribute('color', '#008CBA'); // Исходный цвет
-        });
-      }
-    });
 
-    // Обработчик для кнопки Next
-    $("#button").on("click", function() {
-      // Загрузка второй сцены
-      $("#includedScene").load('scene2.html');
-    });
-  </script>
   </body>
 </html>
