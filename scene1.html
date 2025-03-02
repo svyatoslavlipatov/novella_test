@@ -18,7 +18,6 @@
         position="0 1 0" 
         raycaster="objects: .clickable; far: 10">
       </a-entity>
-
       <a-entity 
         id="right-controller" 
         laser-controls="hand: right" 
@@ -27,6 +26,16 @@
         raycaster="objects: .clickable; far: 10">
       </a-entity>
 
+      <!-- Кнопка возврата -->
+      <a-entity position="0 1 -2">
+        <a-plane 
+          class="clickable" 
+          width="1" height="0.4" 
+          color="#008CBA"
+          link="href: index.html; visualAspectEnabled: false; on: click">
+        </a-plane>
+        <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
+      </a-entity>
     </a-scene>
   </body>
 </html>

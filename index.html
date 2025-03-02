@@ -5,44 +5,39 @@
   </head>
   <body>
     <a-scene>
-      <!-- Сцена 1 (начальная) -->
-      <a-entity id="scene1" visible="true">
-        <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: starry;"></a-entity>
-
-        <!-- Кнопка "Next" -->
-        <a-entity position="0 1 -2">
-          <a-plane 
-            id="button" 
-            class="clickable" 
-            width="1" height="0.4" 
-            color="#008CBA">
-          </a-plane>
-          <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
-        </a-entity>
-      </a-entity>
-
-      <!-- Сцена 2 (скрыта изначально) -->
-      <a-entity id="scene2" visible="false">
-        <a-sky color="#222"></a-sky>
-        <a-text value="Привет!" position="-1 2 -3" color="white"></a-text>
-      </a-entity>
+      <a-sky color="#ECECEC"></a-sky>
+      <a-entity environment="preset: starry;"></a-entity>
 
       <!-- Камера -->
       <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
-      <!-- Контроллеры -->
+      <!-- Контроллеры Pico 4 -->
       <a-entity 
         id="left-controller" 
         laser-controls="hand: left" 
+        position="0 1 0" 
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
         sound="src: #click-sound; on: click">
       </a-entity>
       <a-entity 
         id="right-controller" 
         laser-controls="hand: right" 
+        position="0 1 0" 
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
         sound="src: #click-sound; on: click">
+      </a-entity>
+
+      <!-- Кнопка -->
+      <a-entity position="0 1 -2">
+        <a-plane 
+          id="button" 
+          class="clickable" 
+          width="1" height="0.4" 
+          color="#008CBA"
+          link="href: scene1.html; visualAspectEnabled: false; on: click"
+          hoverable>
+        </a-plane>
+        <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
       </a-entity>
 
       <!-- Звук клика -->
@@ -51,13 +46,14 @@
       </a-assets>
 
       <script>
-        AFRAME.registerComponent('clickable', {
+        AFRAME.registerComponent('hoverable', {
           init: function () {
             var el = this.el;
-            el.addEventListener('triggerdown', function () {
-              console.log('Кнопка нажата!');
-              document.querySelector('#scene1').setAttribute('visible', 'false');
-              document.querySelector('#scene2').setAttribute('visible', 'true');
+            el.addEventListener('mouseenter', function () {
+              el.setAttribute('color', '#005F7F');
+            });
+            el.addEventListener('mouseleave', function () {
+              el.setAttribute('color', '#008CBA');
             });
           }
         });
