@@ -51,18 +51,19 @@
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, 'text/html');
           const newScene = doc.querySelector('a-scene');
-
+  
           if (newScene) {
-            const currentScene = document.querySelector('#scene-container');
-            currentScene.innerHTML = newScene.innerHTML;
+            const oldScene = document.querySelector('a-scene');
+            oldScene.parentNode.replaceChild(newScene, oldScene);
           }
         })
         .catch(error => console.error('Ошибка загрузки сцены:', error));
     }
-
+  
     document.querySelector('#button').addEventListener('click', function () {
       loadScene('scene1.html');
     });
   </script>
+  
 </body>
 </html>
