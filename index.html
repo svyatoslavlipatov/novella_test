@@ -67,7 +67,6 @@
         <a-entity position="2 1 0" rotation="0 -90 0">
           <a-plane 
             id="button-back" 
-            class="clickable" 
             width="1" height="0.4" 
             color="#008CBA"
             hoverable>
@@ -93,22 +92,30 @@
 
       // Логика переключения на вторую сцену
       document.querySelector('#button-next').addEventListener('click', function () {
-        console.log('click');  // Выводим "click" в консоль
+        console.log('click');
         var mainScene = document.querySelector('#main-scene');
         var scene2 = document.querySelector('#scene2');
+        var buttonNext = document.querySelector('#button-next');
+        var buttonBack = document.querySelector('#button-back');
         
         mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
         scene2.setAttribute('visible', 'true');     // Показать вторую сцену
+        buttonNext.classList.remove('clickable');   // Удалить кликабельность у "Next"
+        buttonBack.classList.add('clickable');      // Добавить кликабельность к "Back"
       });
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
-        console.log('click');  // Выводим "click" в консоль
+        console.log('click');
         var mainScene = document.querySelector('#main-scene');
         var scene2 = document.querySelector('#scene2');
+        var buttonNext = document.querySelector('#button-next');
+        var buttonBack = document.querySelector('#button-back');
         
         scene2.setAttribute('visible', 'false');    // Скрыть вторую сцену
         mainScene.setAttribute('visible', 'true');  // Показать основную сцену
+        buttonBack.classList.remove('clickable');   // Удалить кликабельность у "Back"
+        buttonNext.classList.add('clickable');      // Добавить кликабельность к "Next"
       });
     </script>
   </body>
