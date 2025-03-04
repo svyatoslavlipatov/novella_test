@@ -72,97 +72,57 @@
         <a-entity id="portals">
           <!-- Первый портал -->
           <a-circle 
-            id="portal-1" 
+            id="portal1" 
             position="-1 1 -2" 
-            radius-inner="0.8" 
+            radius-inner="0.1" 
             radius-outer="1" 
             color="#00FFFF" 
             opacity="0" 
             visible="true">
-            <a-animation 
-              attribute="color" 
-              from="#00FFFF" 
-              to="#FF00FF" 
-              dur="2000" 
-              direction="alternate" 
-              repeat="indefinite">
-            </a-animation>
           </a-circle>
         
           <!-- Второй портал -->
           <a-circle 
-            id="portal-2" 
+            id="portal2" 
             position="1 1 -2" 
             radius-inner="0.8" 
             radius-outer="1" 
             color="#FF00FF" 
             opacity="0" 
             visible="true">
-            <a-animation 
-              attribute="color" 
-              from="#FF00FF" 
-              to="#00FFFF" 
-              dur="2000" 
-              direction="alternate" 
-              repeat="indefinite">
-            </a-animation>
           </a-circle>
 
           <!-- Третий портал -->
           <a-circle 
-            id="portal-3" 
+            id="portal3" 
             position="3 1 -2" 
             radius-inner="0.8" 
             radius-outer="1" 
             color="#FF00FF" 
             opacity="0" 
             visible="true">
-            <a-animation 
-              attribute="color" 
-              from="#FF00FF" 
-              to="#00FFFF" 
-              dur="2000" 
-              direction="alternate" 
-              repeat="indefinite">
-            </a-animation>
           </a-circle>
 
           <!-- Четвертый портал -->
           <a-circle 
-            id="portal-4" 
+            id="portal4" 
             position="4 1 -2" 
             radius-inner="0.8" 
             radius-outer="1" 
             color="#FF00FF" 
             opacity="0" 
             visible="true">
-            <a-animation 
-              attribute="color" 
-              from="#FF00FF" 
-              to="#00FFFF" 
-              dur="2000" 
-              direction="alternate" 
-              repeat="indefinite">
-            </a-animation>
           </a-circle>
 
           <!-- Пятый портал -->
           <a-circle 
-            id="portal-5" 
+            id="portal5" 
             position="5 1 -2" 
             radius-inner="0.8" 
             radius-outer="1" 
             color="#FF00FF" 
             opacity="0" 
             visible="true">
-            <a-animation 
-              attribute="color" 
-              from="#FF00FF" 
-              to="#00FFFF" 
-              dur="2000" 
-              direction="alternate" 
-              repeat="indefinite">
-            </a-animation>
           </a-circle>
         
           <!-- Подсветка снизу (общая для всех порталов) -->
@@ -174,14 +134,6 @@
             position="0 -1 -2" 
             angle="60" 
             target="#msg-six">
-            <a-animation 
-              attribute="intensity" 
-              from="0" 
-              to="1" 
-              dur="1500" 
-              direction="alternate" 
-              repeat="indefinite">
-            </a-animation>
           </a-light>
         </a-entity>
 
