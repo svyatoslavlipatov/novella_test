@@ -110,12 +110,12 @@
         msgOne.setAttribute('visible', 'true');
         msgTwo.setAttribute('visible', 'false');
         
-        // Через 2 секунды скрыть "HI" и показать "Second msg"
-        setTimeout(function() {
-          msgOne.setAttribute('visible', 'false');
-          msgTwo.setAttribute('visible', 'true');
+      // Через 2 секунды удаляем первое сообщение и показываем второе
+      setTimeout(function() {
+          msgOne.parentNode.removeChild(msgOne); // Удаляем первое сообщение
+          msgTwo.setAttribute('visible', 'true'); // Показываем второе сообщение
         }, 2000);
-      });
+      })
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
