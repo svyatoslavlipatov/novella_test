@@ -38,10 +38,6 @@
         sound="src: #click-sound; on: click">
       </a-entity>
 
-
-
-
-
       <!-- Основная сцена -->
       <a-entity id="main-scene">
         <a-sky color="#ECECEC"></a-sky>
@@ -65,10 +61,10 @@
         <a-entity environment="preset: forest;"></a-entity>
         
         <a-entity position="0 1 -4">
-          <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2"></a-text>
-          <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
-          <a-text id="msg-three" value="Three msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
-          <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
+          <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+          <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-three" value="Three msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -90,49 +86,68 @@
         init: function () {
           var el = this.el;
           el.addEventListener('mouseenter', function () {
-            el.setAttribute('color', '#005F7F'); // Цвет при наведении
+            el.setAttribute('color', '#005F7F');
           });
           el.addEventListener('mouseleave', function () {
-            el.setAttribute('color', '#008CBA'); // Исходный цвет
+            el.setAttribute('color', '#008CBA');
           });
         }
       });
 
-     // Логика переключения на вторую сцену
-     document.querySelector('#button-next').addEventListener('click', async function () {
-    console.log('click');
-    const mainScene = document.querySelector('#main-scene');
-    const scene2 = document.querySelector('#scene2');
-    const buttonNext = document.querySelector('#button-next');
-    const buttonBack = document.querySelector('#button-back');
+      // Логика переключения на вторую сцену
+      document.querySelector('#button-next').addEventListener('click', async function () {
+        console.log('click');
+        const mainScene = document.querySelector('#main-scene');
+        const scene2 = document.querySelector('#scene2');
+        const buttonNext = document.querySelector('#button-next');
+        const buttonBack = document.querySelector('#button-back');
 
-    mainScene.setAttribute('visible', 'false');
-    scene2.setAttribute('visible', 'true');
-    buttonNext.classList.remove('clickable');
-    buttonBack.classList.add('clickable');
+        mainScene.setAttribute('visible', 'false');
+        scene2.setAttribute('visible', 'true');
+        buttonNext.classList.remove('clickable');
+        buttonBack.classList.add('clickable');
 
-    const messages = [
-        { id: '#msg-one', delay: 3000 },
-        { id: '#msg-two', delay: 4000 },
-        { id: '#msg-three', delay: 2500 },
-        { id: '#msg-four', delay: 0 }
-    ];
+        const messages = [
+          { id: '#msg-one', delay: 3000 },
+          { id: '#msg-two', delay: 4000 },
+          { id: '#msg-three', delay: 2500 },
+          { id: '#msg-four', delay: 0 }
+        ];
 
-    messages.forEach((msg, index) => {
-        const element = document.querySelector(msg.id);
-        element.setAttribute('visible', index === 0 ? 'true' : 'false');
-    });
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        // Функция для запуска анимации
+        const animateOpacity = (element, from, to, duration) => {
+          return new Promise(resolve => {
+            element.setAttribute('animation', {
+              property: 'opacity',
+              from: from,
+              to: to,
+              dur: duration,
+              easing: 'easeInOutQuad'
+            });
+            element.addEventListener('animationcomplete', resolve, { once: true });
+          });
+        };
 
-    for (let i = 0; i < messages.length - 1; i++) {
-        await sleep(messages[i].delay);
-        const current = document.querySelector(messages[i].id);
-        current.parentNode.removeChild(current);
-        const next = document.querySelector(messages[i + 1].id);
-        next.setAttribute('visible', 'true');
-    }
-});
+        // Инициализация: первое сообщение уже видно (opacity="1")
+        for (let i = 0; i < messages.length - 1; i++) {
+          const current = document.querySelector(messages[i].id);
+          const next = document.querySelector(messages[i + 1].id);
+
+          // Ждем перед началом исчезновения
+          await sleep(messages[i].delay - 1000); // Уменьшаем задержку на длительность анимации
+
+          // Плавное исчезновение текущего
+          await animateOpacity(current, 1, 0, 1000);
+
+          // Удаляем текущий элемент
+          current.parentNode.removeChild(current);
+
+          // Плавное появление следующего
+          await animateOpacity(next, 0, 1, 1000);
+        }
+      });
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
@@ -142,12 +157,11 @@
         var buttonNext = document.querySelector('#button-next');
         var buttonBack = document.querySelector('#button-back');
         
-        scene2.setAttribute('visible', 'false');    // Скрыть вторую сцену
-        mainScene.setAttribute('visible', 'true');  // Показать основную сцену
-        buttonBack.classList.remove('clickable');   // Удалить кликабельность у "Back"
-        buttonNext.classList.add('clickable');      // Добавить кликабельность к "Next"
+        scene2.setAttribute('visible', 'false');
+        mainScene.setAttribute('visible', 'true');
+        buttonBack.classList.remove('clickable');
+        buttonNext.classList.add('clickable');
       });
     </script>
-
   </body>
 </html>
