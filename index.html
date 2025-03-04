@@ -308,52 +308,26 @@
         buttonNext.classList.add('clickable');
       });
 
-      // Логика перехода на rpo-scene через portal1
-      document.querySelector('#portal1 a-circle').addEventListener('click', function () {
-        console.log('portal1 clicked');
-        const transition_scene = document.querySelector('#transition_scene');
-        const rpoScene = document.querySelector('#rpo-scene');
-        const portalsContainer = document.querySelector('#portals');
-        const portals = portalsContainer.querySelectorAll('a-circle');
+    // Функция для обработки перехода по клику на портал
+    function handlePortalClick(portalId, targetSceneId) {
+      document.querySelector(`#${portalId} a-circle`).addEventListener('click', function () {
+        console.log(`${portalId} clicked`);
+        const transitionScene = document.querySelector('#transition_scene');
+        const targetScene = document.querySelector(`#${targetSceneId}`);
+        const portals = document.querySelector('#portals').querySelectorAll('a-circle');
 
-        // Убираем кликабельность у всех порталов
-        portals.forEach(portal => {
-          portal.classList.remove('clickable');
-        });
-
-        transition_scene.setAttribute('visible', 'false');
-        rpoScene.setAttribute('visible', 'true');
+        portals.forEach(portal => portal.classList.remove('clickable'));
+        transitionScene.setAttribute('visible', 'false');
+        targetScene.setAttribute('visible', 'true');
       });
+    }
 
-      document.querySelector('#portal2 a-circle').addEventListener('click', function () {
-        console.log('portal2 clicked');
-        const transition_scene = document.querySelector('#transition_scene');
-        const dizaynScene = document.querySelector('#dizayn-scene');
-        const portalsContainer = document.querySelector('#portals');
-        const portals = portalsContainer.querySelectorAll('a-circle');
-
-        portals.forEach(portal => {
-          portal.classList.remove('clickable');
-        });
-
-        transition_scene.setAttribute('visible', 'false');
-        dizaynScene.setAttribute('visible', 'true');
-      });
-
-      document.querySelector('#portal3 a-circle').addEventListener('click', function () {
-        console.log('portal3 clicked');
-        const transition_scene = document.querySelector('#transition_scene');
-        const turizmScene = document.querySelector('#turizm-scene');
-        const portalsContainer = document.querySelector('#portals');
-        const portals = portalsContainer.querySelectorAll('a-circle');
-
-        portals.forEach(portal => {
-          portal.classList.remove('clickable');
-        });
-
-        transition_scene.setAttribute('visible', 'false');
-        turizmScene.setAttribute('visible', 'true');
-      });
+    // Применяем функцию для каждого портала
+    handlePortalClick('portal1', 'rpo-scene');
+    handlePortalClick('portal2', 'dizayn-scene');
+    handlePortalClick('portal3', 'turizm-scene');
+    handlePortalClick('portal4', 'service-scene');
+    handlePortalClick('portal5', 'reklama-scene');
 
 
     </script>
