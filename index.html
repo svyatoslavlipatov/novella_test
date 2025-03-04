@@ -63,6 +63,7 @@
           <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2"></a-text>
           <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
           <a-text id="msg-three" value="Three msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
+          <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -93,38 +94,46 @@
       });
 
      // Логика переключения на вторую сцену
-      document.querySelector('#button-next').addEventListener('click', function () {
-        console.log('click');
-        var mainScene = document.querySelector('#main-scene');
-        var scene2 = document.querySelector('#scene2');
-        var buttonNext = document.querySelector('#button-next');
-        var buttonBack = document.querySelector('#button-back');
-        var msgOne = document.querySelector('#msg-one');
-        var msgTwo = document.querySelector('#msg-two');
-        var msgThree = document.querySelector('#msg-three'); // Добавляем ссылку на "Three msg"
+  document.querySelector('#button-next').addEventListener('click', function () {
+    console.log('click');
+    var mainScene = document.querySelector('#main-scene');
+    var scene2 = document.querySelector('#scene2');
+    var buttonNext = document.querySelector('#button-next');
+    var buttonBack = document.querySelector('#button-back');
+    var msgOne = document.querySelector('#msg-one');
+    var msgTwo = document.querySelector('#msg-two');
+    var msgThree = document.querySelector('#msg-three');
+    var msgFour = document.querySelector('#msg-four'); // Добавляем ссылку на "Four msg"
 
-        mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
-        scene2.setAttribute('visible', 'true');     // Показать вторую сцену
-        buttonNext.classList.remove('clickable');   // Удалить кликабельность у "Next"
-        buttonBack.classList.add('clickable');      // Добавить кликабельность к "Back"
+    mainScene.setAttribute('visible', 'false');
+    scene2.setAttribute('visible', 'true');
+    buttonNext.classList.remove('clickable');
+    buttonBack.classList.add('clickable');
 
-        // Убедиться, что "HI" виден, а "Second msg" и "Three msg" скрыты
-        msgOne.setAttribute('visible', 'true');
-        msgTwo.setAttribute('visible', 'false');
-        msgThree.setAttribute('visible', 'false');
+    // Убедиться, что все сообщения в начальном состоянии
+    msgOne.setAttribute('visible', 'true');
+    msgTwo.setAttribute('visible', 'false');
+    msgThree.setAttribute('visible', 'false');
+    msgFour.setAttribute('visible', 'false');
 
-        // Через 2 секунды удаляем "HI" и показываем "Second msg"
+    // Последовательность отображения и удаления сообщений
+    setTimeout(function() {
+      msgOne.parentNode.removeChild(msgOne); // Удаляем "HI"
+      msgTwo.setAttribute('visible', 'true'); // Показываем "Second msg"
+
+      setTimeout(function() {
+        msgTwo.parentNode.removeChild(msgTwo); // Удаляем "Second msg"
+        msgThree.setAttribute('visible', 'true'); // Показываем "Three msg"
+
+        // Добавляем новый таймер для "Four msg"
         setTimeout(function() {
-          msgOne.parentNode.removeChild(msgOne); // Удаляем "HI"
-          msgTwo.setAttribute('visible', 'true'); // Показываем "Second msg"
+          msgThree.parentNode.removeChild(msgThree); // Удаляем "Three msg"
+          msgFour.setAttribute('visible', 'true'); // Показываем "Four msg"
+        }, 2500); // 2 секунды после "Three msg"
 
-          // Через еще 2 секунды удаляем "Second msg" и показываем "Three msg"
-          setTimeout(function() {
-            msgTwo.parentNode.removeChild(msgTwo); // Удаляем "Second msg"
-            msgThree.setAttribute('visible', 'true'); // Показываем "Three msg"
-          }, 2000);
-        }, 2000);
-      });
+      }, 4000); // 2 секунды после "Second msg"
+    }, 3000); // 2 секунды после "HI"
+  });
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
