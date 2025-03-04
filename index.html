@@ -10,25 +10,25 @@
         <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
       </a-assets>
       
-     <!-- Камера -->
-     <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+      <!-- Камера -->
+      <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
 
       <!-- Контроллеры Pico 4 -->
       <a-entity 
-      id="left-controller" 
-      laser-controls="hand: left" 
-      position="0 1 0" 
-      raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-      sound="src: #click-sound; on: click">
-    </a-entity>
+        id="left-controller" 
+        laser-controls="hand: left" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+        sound="src: #click-sound; on: click">
+      </a-entity>
 
-    <a-entity 
-      id="right-controller" 
-      laser-controls="hand: right" 
-      position="0 1 0" 
-      raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
-      sound="src: #click-sound; on: click">
-    </a-entity>
+      <a-entity 
+        id="right-controller" 
+        laser-controls="hand: right" 
+        position="0 1 0" 
+        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
+        sound="src: #click-sound; on: click">
+      </a-entity>
 
       <!-- Основная сцена -->
       <a-entity id="main-scene">
@@ -51,7 +51,7 @@
 
       <!-- Вторая сцена -->
       <a-entity id="scene2" visible="false">
-        <a-sky color="#0000FF"></a-sky> <!-- Другой цвет неба для второй сцены -->
+        <a-sky color="#0000FF"></a-sky>
         <a-entity position="0 1 -4">
           <a-text value="HI" align="center" color="white" scale="2 2 2"></a-text>
         </a-entity>
@@ -79,7 +79,8 @@
         var scene2 = document.querySelector('#scene2');
         
         mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
-        scene2.setAttribute('visible', 'true'); // Показать вторую сцену
+        scene2.setAttribute('visible', 'true');     // Показать вторую сцену
+        this.classList.remove('clickable');         // Удалить класс clickable с кнопки
       });
     </script>
   </body>
