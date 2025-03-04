@@ -339,6 +339,23 @@
         transition_scene.setAttribute('visible', 'false');
         dizaynScene.setAttribute('visible', 'true');
       });
+
+      document.querySelector('#portal3 a-circle').addEventListener('click', function () {
+        console.log('portal3 clicked');
+        const transition_scene = document.querySelector('#transition_scene');
+        const turizmScene = document.querySelector('#turizm-scene');
+        const portalsContainer = document.querySelector('#portals');
+        const portals = portalsContainer.querySelectorAll('a-circle');
+
+        portals.forEach(portal => {
+          portal.classList.remove('clickable');
+        });
+
+        transition_scene.setAttribute('visible', 'false');
+        turizmScene.setAttribute('visible', 'true');
+      });
+
+
     </script>
   </body>
 </html>
