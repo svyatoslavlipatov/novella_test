@@ -99,46 +99,47 @@
       });
 
      // Логика переключения на вторую сцену
-  document.querySelector('#button-next').addEventListener('click', function () {
-    console.log('click');
-    var mainScene = document.querySelector('#main-scene');
-    var scene2 = document.querySelector('#scene2');
-    var buttonNext = document.querySelector('#button-next');
-    var buttonBack = document.querySelector('#button-back');
-    var msgOne = document.querySelector('#msg-one');
-    var msgTwo = document.querySelector('#msg-two');
-    var msgThree = document.querySelector('#msg-three');
-    var msgFour = document.querySelector('#msg-four'); // Добавляем ссылку на "Four msg"
+document.querySelector('#button-next').addEventListener('click', function () {
+  console.log('click');
+  const mainScene = document.querySelector('#main-scene');
+  const scene2 = document.querySelector('#scene2');
+  const buttonNext = document.querySelector('#button-next');
+  const buttonBack = document.querySelector('#button-back');
+  const messages = [
+    document.querySelector('#msg-one'),
+    document.querySelector('#msg-two'),
+    document.querySelector('#msg-three'),
+    document.querySelector('#msg-four')
+  ];
 
-    mainScene.setAttribute('visible', 'false');
-    scene2.setAttribute('visible', 'true');
-    buttonNext.classList.remove('clickable');
-    buttonBack.classList.add('clickable');
+  // Переключение сцен
+  mainScene.setAttribute('visible', 'false');
+  scene2.setAttribute('visible', 'true');
+  buttonNext.classList.remove('clickable');
+  buttonBack.classList.add('clickable');
 
-    // Убедиться, что все сообщения в начальном состоянии
-    msgOne.setAttribute('visible', 'true');
-    msgTwo.setAttribute('visible', 'false');
-    msgThree.setAttribute('visible', 'false');
-    msgFour.setAttribute('visible', 'false');
-
-    // Последовательность отображения и удаления сообщений
-    setTimeout(function() {
-      msgOne.parentNode.removeChild(msgOne); // Удаляем "HI"
-      msgTwo.setAttribute('visible', 'true'); // Показываем "Second msg"
-
-      setTimeout(function() {
-        msgTwo.parentNode.removeChild(msgTwo); // Удаляем "Second msg"
-        msgThree.setAttribute('visible', 'true'); // Показываем "Three msg"
-
-        // Добавляем новый таймер для "Four msg"
-        setTimeout(function() {
-          msgThree.parentNode.removeChild(msgThree); // Удаляем "Three msg"
-          msgFour.setAttribute('visible', 'true'); // Показываем "Four msg"
-        }, 2500); // 2 секунды после "Three msg"
-
-      }, 4000); // 2 секунды после "Second msg"
-    }, 3000); // 2 секунды после "HI"
+  // Установка начального состояния сообщений
+  messages.forEach((msg, index) => {
+    msg.setAttribute('visible', index === 0 ? 'true' : 'false');
   });
+
+  // Логика последовательного отображения сообщений
+  const delays = [3000, 4000, 2500]; // Задержки между сообщениями
+  let cumulativeDelay = 0;
+
+  messages.forEach((msg, index) => {
+    if (index === messages.length - 1) return; // Последнее сообщение не удаляем
+
+    setTimeout(() => {
+      msg.parentNode.removeChild(msg); // Удаляем текущее сообщение
+      if (messages[index + 1]) {
+        messages[index + 1].setAttribute('visible', 'true'); // Показываем следующее
+      }
+    }, cumulativeDelay);
+
+    cumulativeDelay += delays[index] || 0; // Добавляем задержку для следующего шага
+  });
+});
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
