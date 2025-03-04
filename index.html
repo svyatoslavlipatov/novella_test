@@ -98,48 +98,49 @@
         }
       });
 
-     // Логика переключения на вторую сцену
-document.querySelector('#button-next').addEventListener('click', function () {
-  console.log('click');
-  const mainScene = document.querySelector('#main-scene');
-  const scene2 = document.querySelector('#scene2');
-  const buttonNext = document.querySelector('#button-next');
-  const buttonBack = document.querySelector('#button-back');
-  const messages = [
-    document.querySelector('#msg-one'),
-    document.querySelector('#msg-two'),
-    document.querySelector('#msg-three'),
-    document.querySelector('#msg-four')
-  ];
+  // Логика переключения на вторую сцену
+  document.querySelector('#button-next').addEventListener('click', function () {
+    console.log('click');
+    const mainScene = document.querySelector('#main-scene');
+    const scene2 = document.querySelector('#scene2');
+    const buttonNext = document.querySelector('#button-next');
+    const buttonBack = document.querySelector('#button-back');
+    const messages = [
+      document.querySelector('#msg-one'),
+      document.querySelector('#msg-two'),
+      document.querySelector('#msg-three'),
+      document.querySelector('#msg-four')
+    ];
 
-  // Переключение сцен
-  mainScene.setAttribute('visible', 'false');
-  scene2.setAttribute('visible', 'true');
-  buttonNext.classList.remove('clickable');
-  buttonBack.classList.add('clickable');
+    // Переключение сцен
+    mainScene.setAttribute('visible', 'false');
+    scene2.setAttribute('visible', 'true');
+    buttonNext.classList.remove('clickable');
+    buttonBack.classList.add('clickable');
 
-  // Установка начального состояния сообщений
-  messages.forEach((msg, index) => {
-    msg.setAttribute('visible', index === 0 ? 'true' : 'false');
+    // Установка начального состояния сообщений
+    messages[0].setAttribute('visible', 'true'); // Явно показываем "HI"
+    for (let i = 1; i < messages.length; i++) {
+      messages[i].setAttribute('visible', 'false'); // Скрываем остальные
+    }
+
+    // Логика последовательного отображения сообщений
+    const delays = [3000, 4000, 2500]; // Задержки между сообщениями
+    let cumulativeDelay = 0;
+
+    messages.forEach((msg, index) => {
+      if (index === messages.length - 1) return; // Последнее сообщение не удаляем
+
+      setTimeout(() => {
+        msg.parentNode.removeChild(msg); // Удаляем текущее сообщение
+        if (messages[index + 1]) {
+          messages[index + 1].setAttribute('visible', 'true'); // Показываем следующее
+        }
+      }, cumulativeDelay);
+
+      cumulativeDelay += delays[index] || 0; // Добавляем задержку для следующего шага
+    });
   });
-
-  // Логика последовательного отображения сообщений
-  const delays = [3000, 4000, 2500]; // Задержки между сообщениями
-  let cumulativeDelay = 0;
-
-  messages.forEach((msg, index) => {
-    if (index === messages.length - 1) return; // Последнее сообщение не удаляем
-
-    setTimeout(() => {
-      msg.parentNode.removeChild(msg); // Удаляем текущее сообщение
-      if (messages[index + 1]) {
-        messages[index + 1].setAttribute('visible', 'true'); // Показываем следующее
-      }
-    }, cumulativeDelay);
-
-    cumulativeDelay += delays[index] || 0; // Добавляем задержку для следующего шага
-  });
-});
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
