@@ -57,7 +57,7 @@
       </a-entity>
 
       <!-- Вторая сцена -->
-      <a-entity id="scene2" visible="false">
+      <a-entity id="transition_scene" visible="false">
         <a-entity environment="preset: forest;"></a-entity>
         
         <a-entity position="0 1 -4">
@@ -70,8 +70,9 @@
         </a-entity>
 
         <a-entity id="portals">
+
           <!-- Первый портал -->
-          <a-entity id="portal1">
+          <a-entity id="portal1" >
             <a-circle 
               position="-2 1 -0.5" 
               rotation="0 90 0"
@@ -79,20 +80,11 @@
               color="#00FFFF" 
               opacity="0" 
               visible="true">
-              <a-animation 
-                attribute="radius" 
-                from="0.450" 
-                to="0.550" 
-                dur="1500" 
-                direction="alternate" 
-                repeat="indefinite" 
-                begin="startPulse">
-              </a-animation>
             </a-circle>
-          </a-entity>
+           </a-entity>
 
           <!-- Второй портал -->
-          <a-entity id="portal2">
+          <a-entity id="portal2" >
             <a-circle 
               position="-1 1 -2" 
               rotation="0 0 0"
@@ -100,20 +92,11 @@
               color="#FF00FF" 
               opacity="0" 
               visible="true">
-              <a-animation 
-                attribute="radius" 
-                from="0.450" 
-                to="0.550" 
-                dur="1500" 
-                direction="alternate" 
-                repeat="indefinite" 
-                begin="startPulse">
-              </a-animation>
             </a-circle>
           </a-entity>
 
           <!-- Третий портал -->
-          <a-entity id="portal3">
+          <a-entity id="portal3" >
             <a-circle 
               position="1 1 -2" 
               rotation="0 0 0"
@@ -121,20 +104,11 @@
               color="#FF00FF" 
               opacity="0" 
               visible="true">
-              <a-animation 
-                attribute="radius" 
-                from="0.450" 
-                to="0.550" 
-                dur="1500" 
-                direction="alternate" 
-                repeat="indefinite" 
-                begin="startPulse">
-              </a-animation>
             </a-circle>
           </a-entity>
 
           <!-- Четвертый портал -->
-          <a-entity id="portal4">
+          <a-entity id="portal4" >
             <a-circle 
               position="0 1 1" 
               rotation="0 -180 0"
@@ -142,20 +116,11 @@
               color="#FF00FF" 
               opacity="0" 
               visible="true">
-              <a-animation 
-                attribute="radius" 
-                from="0.450" 
-                to="0.550" 
-                dur="1500" 
-                direction="alternate" 
-                repeat="indefinite" 
-                begin="startPulse">
-              </a-animation>
             </a-circle>
           </a-entity>
 
           <!-- Пятый портал -->
-          <a-entity id="portal5">
+          <a-entity id="portal5" >
             <a-circle 
               position="1.5 1 -0.5" 
               rotation="0 -90 0"
@@ -163,15 +128,6 @@
               color="#FF00FF" 
               opacity="0" 
               visible="true">
-              <a-animation 
-                attribute="radius" 
-                from="0.450" 
-                to="0.550" 
-                dur="1500" 
-                direction="alternate" 
-                repeat="indefinite" 
-                begin="startPulse">
-              </a-animation>
             </a-circle>
           </a-entity>
         
@@ -184,20 +140,38 @@
             position="0 -1 -2" 
             angle="60" 
             target="#msg-six">
+            
           </a-light>
+        </a-entity>
+
+
+      </a-entity>
+
+        <!-- Кнопка "Back" -->
+        <a-entity position="2 1 0" rotation="0 -90 0">
+          <a-plane 
+            id="button-back" 
+            width="1" height="0.4" 
+            color="#008CBA"
+            hoverable>
+          </a-plane>
+          <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
-      <!-- Кнопка "Back" -->
-      <a-entity position="2 1 0" rotation="0 -90 0">
-        <a-plane 
-          id="button-back" 
-          width="1" height="0.4" 
-          color="#008CBA"
-          hoverable>
-        </a-plane>
-        <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
+      <!-- Конец переходной сцены  -->
+
+
+      <!-- РПО сцена -->
+      <a-entity id="rpo-scene">
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity environment="preset: starry;"></a-entity>
+
+        <a-entity position="0 1 -4">
+          <a-text id="rpo-msg-one" value="HI" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+        </a-entity>
       </a-entity>
+
     </a-scene>
 
     <script>
@@ -218,12 +192,12 @@
       document.querySelector('#button-next').addEventListener('click', async function () {
         console.log('click');
         const mainScene = document.querySelector('#main-scene');
-        const scene2 = document.querySelector('#scene2');
+        const transition_scene = document.querySelector('#transition_scene');
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
 
         mainScene.setAttribute('visible', 'false');
-        scene2.setAttribute('visible', 'true');
+        transition_scene.setAttribute('visible', 'true');
         buttonNext.classList.remove('clickable');
         buttonBack.classList.add('clickable');
 
@@ -284,12 +258,12 @@
             // Последовательное появление порталов
             for (const portal of portals) {
               await animateOpacity(portal, 0, 0.8, animationDuration);
-              portal.emit('startPulse'); // Запускаем анимацию пульсации
               await sleep(300); // Задержка между появлением порталов (0.3 секунды)
             }
             
             portalLight.setAttribute('intensity', '1'); // Включаем подсветку после всех порталов
           }
+          
         }
       });
 
@@ -297,11 +271,11 @@
       document.querySelector('#button-back').addEventListener('click', function () {
         console.log('click');
         const mainScene = document.querySelector('#main-scene');
-        const scene2 = document.querySelector('#scene2');
+        const transition_scene = document.querySelector('#transition_scene');
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
         
-        scene2.setAttribute('visible', 'false');
+        transition_scene.setAttribute('visible', 'false');
         mainScene.setAttribute('visible', 'true');
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
