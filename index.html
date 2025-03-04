@@ -95,60 +95,64 @@
       });
 
       // Логика переключения на вторую сцену
-      document.querySelector('#button-next').addEventListener('click', async function () {
-        console.log('click');
-        const mainScene = document.querySelector('#main-scene');
-        const scene2 = document.querySelector('#scene2');
-        const buttonNext = document.querySelector('#button-next');
-        const buttonBack = document.querySelector('#button-back');
+document.querySelector('#button-next').addEventListener('click', async function () {
+  console.log('click');
+  const mainScene = document.querySelector('#main-scene');
+  const scene2 = document.querySelector('#scene2');
+  const buttonNext = document.querySelector('#button-next');
+  const buttonBack = document.querySelector('#button-back');
 
-        mainScene.setAttribute('visible', 'false');
-        scene2.setAttribute('visible', 'true');
-        buttonNext.classList.remove('clickable');
-        buttonBack.classList.add('clickable');
+  mainScene.setAttribute('visible', 'false');
+  scene2.setAttribute('visible', 'true');
+  buttonNext.classList.remove('clickable');
+  buttonBack.classList.add('clickable');
 
-        const messages = [
-          { id: '#msg-one', delay: 3000 },
-          { id: '#msg-two', delay: 4000 },
-          { id: '#msg-three', delay: 2500 },
-          { id: '#msg-four', delay: 0 }
-        ];
+  const messages = [
+    { id: '#msg-one', delay: 3000 },
+    { id: '#msg-two', delay: 4000 },
+    { id: '#msg-three', delay: 2500 },
+    { id: '#msg-four', delay: 0 }
+  ];
 
-        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-        const animationDuration = 1000; // Переменная для длительности анимации
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const animationDuration = 500; // Длительность анимации
+  const pauseBeforeFadeIn = 500; // Пауза перед появлением
 
-        // Функция для запуска анимации
-        const animateOpacity = (element, from, to, duration) => {
-          return new Promise(resolve => {
-            element.setAttribute('animation', {
-              property: 'opacity',
-              from: from,
-              to: to,
-              dur: duration,
-              easing: 'easeInOutQuad'
-            });
-            element.addEventListener('animationcomplete', resolve, { once: true });
-          });
-        };
-
-        // Инициализация: первое сообщение уже видно (opacity="1")
-        for (let i = 0; i < messages.length - 1; i++) {
-          const current = document.querySelector(messages[i].id);
-          const next = document.querySelector(messages[i + 1].id);
-
-          // Ждем перед началом исчезновения
-          await sleep(messages[i].delay - animationDuration); // Используем переменную
-
-          // Плавное исчезновение текущего
-          await animateOpacity(current, 1, 0, animationDuration);
-
-          // Удаляем текущий элемент
-          current.parentNode.removeChild(current);
-
-          // Плавное появление следующего
-          await animateOpacity(next, 0, 1, animationDuration);
-        }
+  // Функция для запуска анимации
+  const animateOpacity = (element, from, to, duration) => {
+    return new Promise(resolve => {
+      element.setAttribute('animation', {
+        property: 'opacity',
+        from: from,
+        to: to,
+        dur: duration,
+        easing: 'easeInOutQuad'
       });
+      element.addEventListener('animationcomplete', resolve, { once: true });
+    });
+  };
+
+  // Инициализация: первое сообщение уже видно (opacity="1")
+  for (let i = 0; i < messages.length - 1; i++) {
+    const current = document.querySelector(messages[i].id);
+    const next = document.querySelector(messages[i + 1].id);
+
+    // Ждем перед началом исчезновения
+    await sleep(messages[i].delay - animationDuration);
+
+    // Плавное исчезновение текущего
+    await animateOpacity(current, 1, 0, animationDuration);
+
+    // Удаляем текущий элемент
+    current.parentNode.removeChild(current);
+
+    // Пауза перед появлением следующего
+    await sleep(pauseBeforeFadeIn);
+
+    // Плавное появление следующего
+    await animateOpacity(next, 0, 1, animationDuration);
+  }
+});
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
