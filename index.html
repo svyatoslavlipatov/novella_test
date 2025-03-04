@@ -275,7 +275,14 @@
         console.log('portal1 clicked');
         const transition_scene = document.querySelector('#transition_scene');
         const rpoScene = document.querySelector('#rpo-scene');
-        
+        const portalsContainer = document.querySelector('#portals');
+        const portals = portalsContainer.querySelectorAll('a-circle');
+
+        // Убираем кликабельность у всех порталов
+        portals.forEach(portal => {
+          portal.classList.remove('clickable');
+        });
+
         transition_scene.setAttribute('visible', 'false');
         rpoScene.setAttribute('visible', 'true');
       });
