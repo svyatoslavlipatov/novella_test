@@ -115,6 +115,7 @@
         ];
 
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const animationDuration = 500; // Переменная для длительности анимации
 
         // Функция для запуска анимации
         const animateOpacity = (element, from, to, duration) => {
@@ -136,16 +137,16 @@
           const next = document.querySelector(messages[i + 1].id);
 
           // Ждем перед началом исчезновения
-          await sleep(messages[i].delay - 1000); // Уменьшаем задержку на длительность анимации
+          await sleep(messages[i].delay - animationDuration); // Используем переменную
 
           // Плавное исчезновение текущего
-          await animateOpacity(current, 1, 0, 1000);
+          await animateOpacity(current, 1, 0, animationDuration);
 
           // Удаляем текущий элемент
           current.parentNode.removeChild(current);
 
           // Плавное появление следующего
-          await animateOpacity(next, 0, 1, 1000);
+          await animateOpacity(next, 0, 1, animationDuration);
         }
       });
 
