@@ -7,8 +7,6 @@
     <a-scene>      
       <!-- Ассеты -->
       <a-assets>
-        <!-- <audio id="first-music" src="music/scene2/nakal.mp3" autoplay="true" loop="true" volume="0.5"></audio>
-        <audio id="second-music" src="music/scene2/funny.mp3" autoplay="false" loop="true" volume="0.5"></audio> -->
         <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
         <audio id="blip2" src="sounds/blip/blip_enter.wav"></audio>
       </a-assets>
@@ -77,7 +75,6 @@
           <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
-
     </a-scene>
 
     <script>
@@ -101,18 +98,15 @@
         
         mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
         scene2.setAttribute('visible', 'true');     // Показать вторую сцену
-        this.classList.remove('clickable');         // Удалить класс clickable с кнопки "Next"
       });
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
         var mainScene = document.querySelector('#main-scene');
         var scene2 = document.querySelector('#scene2');
-        var buttonNext = document.querySelector('#button-next');
         
         scene2.setAttribute('visible', 'false');    // Скрыть вторую сцену
         mainScene.setAttribute('visible', 'true');  // Показать основную сцену
-        buttonNext.classList.add('clickable');      // Вернуть класс clickable кнопке "Next"
       });
     </script>
   </body>
