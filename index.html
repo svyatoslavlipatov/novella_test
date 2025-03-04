@@ -60,7 +60,8 @@
       <a-entity id="scene2" visible="false">
         <a-sky color="#0000FF"></a-sky>
         <a-entity position="0 1 -4">
-          <a-text value="HI" align="center" color="white" scale="2 2 2"></a-text>
+          <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2"></a-text>
+          <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -97,11 +98,23 @@
         var scene2 = document.querySelector('#scene2');
         var buttonNext = document.querySelector('#button-next');
         var buttonBack = document.querySelector('#button-back');
+        var msgOne = document.querySelector('#msg-one');
+        var msgTwo = document.querySelector('#msg-two');
         
         mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
         scene2.setAttribute('visible', 'true');     // Показать вторую сцену
         buttonNext.classList.remove('clickable');   // Удалить кликабельность у "Next"
         buttonBack.classList.add('clickable');      // Добавить кликабельность к "Back"
+        
+        // Убедиться, что "HI" виден, а "Second msg" скрыт
+        msgOne.setAttribute('visible', 'true');
+        msgTwo.setAttribute('visible', 'false');
+        
+        // Через 2 секунды скрыть "HI" и показать "Second msg"
+        setTimeout(function() {
+          msgOne.setAttribute('visible', 'false');
+          msgTwo.setAttribute('visible', 'true');
+        }, 2000);
       });
 
       // Логика переключения обратно на основную сцену
