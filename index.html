@@ -67,18 +67,45 @@
           <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
           <a-text id="msg-five" value="Five msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
           <a-text id="msg-six" value="Six msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <!-- Портал -->
+          
+          <!-- Овальный портал -->
           <a-ring 
             id="portal" 
-            radius-inner="0.5" 
+            position="0 -1 -2" 
+            radius-inner="0.8" 
             radius-outer="1" 
             color="#00FFFF" 
             opacity="0" 
-            position="0 -1 0" 
-            rotation="90 0 0" 
-            visible="true" 
-            animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear">
+            visible="true"
+            rotation="90 0 0">
+            <a-animation 
+              attribute="color" 
+              from="#00FFFF" 
+              to="#FF00FF" 
+              dur="2000" 
+              direction="alternate" 
+              repeat="indefinite">
+            </a-animation>
           </a-ring>
+
+          <!-- Подсветка снизу -->
+          <a-light 
+            id="portal-light" 
+            type="spot" 
+            color="#FFFFFF" 
+            intensity="0" 
+            position="0 -1 -2" 
+            angle="60" 
+            target="#msg-six">
+            <a-animation 
+              attribute="intensity" 
+              from="0" 
+              to="1" 
+              dur="1500" 
+              direction="alternate" 
+              repeat="indefinite">
+            </a-animation>
+          </a-light>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -131,9 +158,8 @@
         ];
 
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-        const animationDuration = 1000; // Длительность анимации текста
-        const pauseBeforeFadeIn = 1000; // Пауза перед появлением текста
-        const portalAnimationDuration = 2000; // Длительность анимации портала
+        const animationDuration = 1000; // Длительность анимации
+        const pauseBeforeFadeIn = 1000; // Пауза перед появлением
 
         // Функция для запуска анимации
         const animateOpacity = (element, from, to, duration) => {
@@ -143,27 +169,6 @@
               from: from,
               to: to,
               dur: duration,
-              easing: 'easeInOutQuad'
-            });
-            element.addEventListener('animationcomplete', resolve, { once: true });
-          });
-        };
-
-        // Функция для анимации портала (подъем и прозрачность)
-        const animatePortal = (element) => {
-          return new Promise(resolve => {
-            element.setAttribute('animation__position', {
-              property: 'position',
-              from: '0 -1 0',
-              to: '0 0 0',
-              dur: portalAnimationDuration,
-              easing: 'easeInOutQuad'
-            });
-            element.setAttribute('animation__opacity', {
-              property: 'opacity',
-              from: 0,
-              to: 1,
-              dur: portalAnimationDuration,
               easing: 'easeInOutQuad'
             });
             element.addEventListener('animationcomplete', resolve, { once: true });
@@ -190,11 +195,13 @@
           // Плавное появление следующего
           await animateOpacity(next, 0, 1, animationDuration);
 
-          // Если это последнее сообщение (msg-six), показываем портал
-          if (i === messages.length - 2) {
+          // Показываем портал после появления msg-six
+          if (next.id === 'msg-six') {
             const portal = document.querySelector('#portal');
+            const portalLight = document.querySelector('#portal-light');
             await sleep(500); // Небольшая пауза перед появлением портала
-            await animatePortal(portal);
+            await animateOpacity(portal, 0, 0.8, animationDuration); // Плавное появление портала
+            portalLight.setAttribute('intensity', '1'); // Включаем подсветку
           }
         }
       });
@@ -202,10 +209,10 @@
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
         console.log('click');
-        var mainScene = document.querySelector('#main-scene');
-        var scene2 = document.querySelector('#scene2');
-        var buttonNext = document.querySelector('#button-next');
-        var buttonBack = document.querySelector('#button-back');
+        const mainScene = document.querySelector('#main-scene');
+        const scene2 = document.querySelector('#scene2');
+        const buttonNext = document.querySelector('#button-next');
+        const buttonBack = document.querySelector('#button-back');
         
         scene2.setAttribute('visible', 'false');
         mainScene.setAttribute('visible', 'true');
