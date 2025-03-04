@@ -67,6 +67,18 @@
           <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
           <a-text id="msg-five" value="Five msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
           <a-text id="msg-six" value="Six msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <!-- Портал -->
+          <a-ring 
+            id="portal" 
+            radius-inner="0.5" 
+            radius-outer="1" 
+            color="#00FFFF" 
+            opacity="0" 
+            position="0 -1 0" 
+            rotation="90 0 0" 
+            visible="true" 
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear">
+          </a-ring>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -97,66 +109,95 @@
       });
 
       // Логика переключения на вторую сцену
-document.querySelector('#button-next').addEventListener('click', async function () {
-  console.log('click');
-  const mainScene = document.querySelector('#main-scene');
-  const scene2 = document.querySelector('#scene2');
-  const buttonNext = document.querySelector('#button-next');
-  const buttonBack = document.querySelector('#button-back');
+      document.querySelector('#button-next').addEventListener('click', async function () {
+        console.log('click');
+        const mainScene = document.querySelector('#main-scene');
+        const scene2 = document.querySelector('#scene2');
+        const buttonNext = document.querySelector('#button-next');
+        const buttonBack = document.querySelector('#button-back');
 
-  mainScene.setAttribute('visible', 'false');
-  scene2.setAttribute('visible', 'true');
-  buttonNext.classList.remove('clickable');
-  buttonBack.classList.add('clickable');
+        mainScene.setAttribute('visible', 'false');
+        scene2.setAttribute('visible', 'true');
+        buttonNext.classList.remove('clickable');
+        buttonBack.classList.add('clickable');
 
-  const messages = [
-    { id: '#msg-one', delay: 3000 },
-    { id: '#msg-two', delay: 4000 },
-    { id: '#msg-three', delay: 2500 },
-    { id: '#msg-four', delay: 1000 },
-    { id: '#msg-five', delay: 1000 },
-    { id: '#msg-six', delay: 0 }
-  ];
+        const messages = [
+          { id: '#msg-one', delay: 3000 },
+          { id: '#msg-two', delay: 4000 },
+          { id: '#msg-three', delay: 2500 },
+          { id: '#msg-four', delay: 1000 },
+          { id: '#msg-five', delay: 1000 },
+          { id: '#msg-six', delay: 0 }
+        ];
 
-  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-  const animationDuration = 1000; // Длительность анимации
-  const pauseBeforeFadeIn = 1000; // Пауза перед появлением
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const animationDuration = 1000; // Длительность анимации текста
+        const pauseBeforeFadeIn = 1000; // Пауза перед появлением текста
+        const portalAnimationDuration = 2000; // Длительность анимации портала
 
-  // Функция для запуска анимации
-  const animateOpacity = (element, from, to, duration) => {
-    return new Promise(resolve => {
-      element.setAttribute('animation', {
-        property: 'opacity',
-        from: from,
-        to: to,
-        dur: duration,
-        easing: 'easeInOutQuad'
+        // Функция для запуска анимации
+        const animateOpacity = (element, from, to, duration) => {
+          return new Promise(resolve => {
+            element.setAttribute('animation', {
+              property: 'opacity',
+              from: from,
+              to: to,
+              dur: duration,
+              easing: 'easeInOutQuad'
+            });
+            element.addEventListener('animationcomplete', resolve, { once: true });
+          });
+        };
+
+        // Функция для анимации портала (подъем и прозрачность)
+        const animatePortal = (element) => {
+          return new Promise(resolve => {
+            element.setAttribute('animation__position', {
+              property: 'position',
+              from: '0 -1 0',
+              to: '0 0 0',
+              dur: portalAnimationDuration,
+              easing: 'easeInOutQuad'
+            });
+            element.setAttribute('animation__opacity', {
+              property: 'opacity',
+              from: 0,
+              to: 1,
+              dur: portalAnimationDuration,
+              easing: 'easeInOutQuad'
+            });
+            element.addEventListener('animationcomplete', resolve, { once: true });
+          });
+        };
+
+        // Инициализация: первое сообщение уже видно (opacity="1")
+        for (let i = 0; i < messages.length - 1; i++) {
+          const current = document.querySelector(messages[i].id);
+          const next = document.querySelector(messages[i + 1].id);
+
+          // Ждем перед началом исчезновения
+          await sleep(messages[i].delay - animationDuration);
+
+          // Плавное исчезновение текущего
+          await animateOpacity(current, 1, 0, animationDuration);
+
+          // Удаляем текущий элемент
+          current.parentNode.removeChild(current);
+
+          // Пауза перед появлением следующего
+          await sleep(pauseBeforeFadeIn);
+
+          // Плавное появление следующего
+          await animateOpacity(next, 0, 1, animationDuration);
+
+          // Если это последнее сообщение (msg-six), показываем портал
+          if (i === messages.length - 2) {
+            const portal = document.querySelector('#portal');
+            await sleep(500); // Небольшая пауза перед появлением портала
+            await animatePortal(portal);
+          }
+        }
       });
-      element.addEventListener('animationcomplete', resolve, { once: true });
-    });
-  };
-
-  // Инициализация: первое сообщение уже видно (opacity="1")
-  for (let i = 0; i < messages.length - 1; i++) { // Оставляем -1, чтобы последнее сообщение не исчезало
-    const current = document.querySelector(messages[i].id);
-    const next = document.querySelector(messages[i + 1].id);
-
-    // Ждем перед началом исчезновения
-    await sleep(messages[i].delay - animationDuration);
-
-    // Плавное исчезновение текущего
-    await animateOpacity(current, 1, 0, animationDuration);
-
-    // Удаляем текущий элемент
-    current.parentNode.removeChild(current);
-
-    // Пауза перед появлением следующего
-    await sleep(pauseBeforeFadeIn);
-
-    // Плавное появление следующего
-    await animateOpacity(next, 0, 1, animationDuration);
-  }
-});
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
