@@ -68,7 +68,7 @@
           <a-text id="msg-five" value="Five msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
           <a-text id="msg-six" value="Six msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
         </a-entity>
-        
+
         <a-entity id="portals"> 
 
 
@@ -206,10 +206,10 @@
 
           // Показываем портал после появления msg-six
           if (next.id === 'msg-six') {
-            const portal = document.querySelector('#portal');
+            const portals = document.querySelector('#portals');
             const portalLight = document.querySelector('#portal-light');
             await sleep(500); // Небольшая пауза перед появлением портала
-            await animateOpacity(portal, 0, 0.8, animationDuration); // Плавное появление портала
+            await animateOpacity(portals, 0, 0.8, animationDuration); // Плавное появление портала
             portalLight.setAttribute('intensity', '1'); // Включаем подсветку
           }
         }
