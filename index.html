@@ -4,14 +4,23 @@
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
   </head>
   <body>
-    <a-scene>
-      <!-- Звук клика -->
+    <a-scene>      
+      <!-- Ассеты -->
       <a-assets>
+        <audio id="first-music" src="music/scene2/nakal.mp3" autoplay="true" loop="true" volume="0.5"></audio>
+        <audio id="second-music" src="music/scene2/funny.mp3" autoplay="false" loop="true" volume="0.5"></audio>
         <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
+        <audio id="blip2" src="sounds/blip/blip_enter.wav"></audio>
       </a-assets>
-      
-      <!-- Камера -->
-      <a-camera position="0 1 0" wasd-controls="enabled: false"></a-camera>
+
+      <!-- Камера с raycaster для управления мышью -->
+      <a-camera 
+        position="0 1 0" 
+        wasd-controls="enabled: false" 
+        look-controls="enabled: true" 
+        raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5" 
+        cursor="rayOrigin: mouse">
+      </a-camera>
 
       <!-- Контроллеры Pico 4 -->
       <a-entity 
