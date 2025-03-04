@@ -35,15 +35,14 @@
         <a-sky color="#ECECEC"></a-sky>
         <a-entity environment="preset: starry;"></a-entity>
 
-        <!-- Кнопка -->
+        <!-- Кнопка "Next" -->
         <a-entity position="0 1 -2">
           <a-plane 
-            id="button" 
+            id="button-next" 
             class="clickable" 
             width="1" height="0.4" 
             color="#008CBA"
-            hoverable
-            clickable>
+            hoverable>
           </a-plane>
           <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
@@ -54,6 +53,18 @@
         <a-sky color="#0000FF"></a-sky>
         <a-entity position="0 1 -4">
           <a-text value="HI" align="center" color="white" scale="2 2 2"></a-text>
+        </a-entity>
+
+        <!-- Кнопка "Back" -->
+        <a-entity position="0 1 -2">
+          <a-plane 
+            id="button-back" 
+            class="clickable" 
+            width="1" height="0.4" 
+            color="#008CBA"
+            hoverable>
+          </a-plane>
+          <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
@@ -73,14 +84,25 @@
         }
       });
 
-      // Логика переключения сцен
-      document.querySelector('#button').addEventListener('click', function () {
+      // Логика переключения на вторую сцену
+      document.querySelector('#button-next').addEventListener('click', function () {
         var mainScene = document.querySelector('#main-scene');
         var scene2 = document.querySelector('#scene2');
         
         mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
         scene2.setAttribute('visible', 'true');     // Показать вторую сцену
-        this.classList.remove('clickable');         // Удалить класс clickable с кнопки
+        this.classList.remove('clickable');         // Удалить класс clickable с кнопки "Next"
+      });
+
+      // Логика переключения обратно на основную сцену
+      document.querySelector('#button-back').addEventListener('click', function () {
+        var mainScene = document.querySelector('#main-scene');
+        var scene2 = document.querySelector('#scene2');
+        var buttonNext = document.querySelector('#button-next');
+        
+        scene2.setAttribute('visible', 'false');    // Скрыть вторую сцену
+        mainScene.setAttribute('visible', 'true');  // Показать основную сцену
+        buttonNext.classList.add('clickable');      // Вернуть класс clickable кнопке "Next"
       });
     </script>
   </body>
