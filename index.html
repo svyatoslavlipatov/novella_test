@@ -116,7 +116,7 @@ document.querySelector('#button-next').addEventListener('click', async function 
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   const animationDuration = 1000; // Длительность анимации
-  const pauseBeforeFadeIn = 5000; // Пауза перед появлением
+  const pauseBeforeFadeIn = 1000; // Пауза перед появлением
 
   // Функция для запуска анимации
   const animateOpacity = (element, from, to, duration) => {
