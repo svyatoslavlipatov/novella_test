@@ -7,8 +7,8 @@
     <a-scene>      
       <!-- Ассеты -->
       <a-assets>
-        <audio id="first-music" src="music/scene2/nakal.mp3" autoplay="true" loop="true" volume="0.5"></audio>
-        <audio id="second-music" src="music/scene2/funny.mp3" autoplay="false" loop="true" volume="0.5"></audio>
+        <!-- <audio id="first-music" src="music/scene2/nakal.mp3" autoplay="true" loop="true" volume="0.5"></audio>
+        <audio id="second-music" src="music/scene2/funny.mp3" autoplay="false" loop="true" volume="0.5"></audio> -->
         <audio id="click-sound" src="sounds/blip/blick_click.wav"></audio>
         <audio id="blip2" src="sounds/blip/blip_enter.wav"></audio>
       </a-assets>
@@ -19,7 +19,8 @@
         wasd-controls="enabled: false" 
         look-controls="enabled: true" 
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5" 
-        cursor="rayOrigin: mouse">
+        cursor="rayOrigin: mouse"
+        sound="src: #click-sound; on: click">
       </a-camera>
 
       <!-- Контроллеры Pico 4 -->
