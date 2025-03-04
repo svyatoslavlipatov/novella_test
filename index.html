@@ -62,7 +62,7 @@
         <a-entity position="0 1 -4">
           <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2"></a-text>
           <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
-          <a-text id="three-two" value="Three msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
+          <a-text id="msg-three" value="Three msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -101,7 +101,7 @@
         var buttonBack = document.querySelector('#button-back');
         var msgOne = document.querySelector('#msg-one');
         var msgTwo = document.querySelector('#msg-two');
-        var threeMsg = document.querySelector('#three-two'); // Добавляем ссылку на "Three msg"
+        var msgThree = document.querySelector('#msg-three'); // Добавляем ссылку на "Three msg"
 
         mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
         scene2.setAttribute('visible', 'true');     // Показать вторую сцену
@@ -111,7 +111,7 @@
         // Убедиться, что "HI" виден, а "Second msg" и "Three msg" скрыты
         msgOne.setAttribute('visible', 'true');
         msgTwo.setAttribute('visible', 'false');
-        threeMsg.setAttribute('visible', 'false');
+        msgThree.setAttribute('visible', 'false');
 
         // Через 2 секунды удаляем "HI" и показываем "Second msg"
         setTimeout(function() {
@@ -121,7 +121,7 @@
           // Через еще 2 секунды удаляем "Second msg" и показываем "Three msg"
           setTimeout(function() {
             msgTwo.parentNode.removeChild(msgTwo); // Удаляем "Second msg"
-            threeMsg.setAttribute('visible', 'true'); // Показываем "Three msg"
+            msgThree.setAttribute('visible', 'true'); // Показываем "Three msg"
           }, 2000);
         }, 2000);
       });
@@ -140,6 +140,6 @@
         buttonNext.classList.add('clickable');      // Добавить кликабельность к "Next"
       });
     </script>
-    
+
   </body>
 </html>
