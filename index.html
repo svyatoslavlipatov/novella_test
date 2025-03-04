@@ -62,6 +62,7 @@
         <a-entity position="0 1 -4">
           <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2"></a-text>
           <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
+          <a-text id="three-two" value="Three msg" align="center" color="white" scale="2 2 2" visible="false"></a-text>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -91,7 +92,7 @@
         }
       });
 
-      // Логика переключения на вторую сцену
+     // Логика переключения на вторую сцену
       document.querySelector('#button-next').addEventListener('click', function () {
         console.log('click');
         var mainScene = document.querySelector('#main-scene');
@@ -100,22 +101,30 @@
         var buttonBack = document.querySelector('#button-back');
         var msgOne = document.querySelector('#msg-one');
         var msgTwo = document.querySelector('#msg-two');
-        
+        var threeMsg = document.querySelector('#three-two'); // Добавляем ссылку на "Three msg"
+
         mainScene.setAttribute('visible', 'false'); // Скрыть основную сцену
         scene2.setAttribute('visible', 'true');     // Показать вторую сцену
         buttonNext.classList.remove('clickable');   // Удалить кликабельность у "Next"
         buttonBack.classList.add('clickable');      // Добавить кликабельность к "Back"
-        
-        // Убедиться, что "HI" виден, а "Second msg" скрыт
+
+        // Убедиться, что "HI" виден, а "Second msg" и "Three msg" скрыты
         msgOne.setAttribute('visible', 'true');
         msgTwo.setAttribute('visible', 'false');
-        
-      // Через 2 секунды удаляем первое сообщение и показываем второе
-      setTimeout(function() {
-          msgOne.parentNode.removeChild(msgOne); // Удаляем первое сообщение
-          msgTwo.setAttribute('visible', 'true'); // Показываем второе сообщение
+        threeMsg.setAttribute('visible', 'false');
+
+        // Через 2 секунды удаляем "HI" и показываем "Second msg"
+        setTimeout(function() {
+          msgOne.parentNode.removeChild(msgOne); // Удаляем "HI"
+          msgTwo.setAttribute('visible', 'true'); // Показываем "Second msg"
+
+          // Через еще 2 секунды удаляем "Second msg" и показываем "Three msg"
+          setTimeout(function() {
+            msgTwo.parentNode.removeChild(msgTwo); // Удаляем "Second msg"
+            threeMsg.setAttribute('visible', 'true'); // Показываем "Three msg"
+          }, 2000);
         }, 2000);
-      })
+      });
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
@@ -131,5 +140,6 @@
         buttonNext.classList.add('clickable');      // Добавить кликабельность к "Next"
       });
     </script>
+    
   </body>
 </html>
