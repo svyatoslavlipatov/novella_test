@@ -206,7 +206,7 @@
 
           // Показываем портал после появления msg-six
           if (next.id === 'msg-six') {
-            const portals = document.querySelector('#portals');
+            const portals = document.querySelector('#portal');
             const portalLight = document.querySelector('#portal-light');
             await sleep(500); // Небольшая пауза перед появлением портала
             await animateOpacity(portals, 0, 0.8, animationDuration); // Плавное появление портала
