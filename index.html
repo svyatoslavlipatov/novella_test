@@ -66,6 +66,7 @@
           <a-text id="msg-three" value="Three msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
           <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
           <a-text id="msg-five" value="Five msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-six" value="Six msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
         </a-entity>
 
         <!-- Кнопка "Back" -->
@@ -113,7 +114,8 @@ document.querySelector('#button-next').addEventListener('click', async function 
     { id: '#msg-two', delay: 4000 },
     { id: '#msg-three', delay: 2500 },
     { id: '#msg-four', delay: 1000 },
-    { id: '#msg-five', delay: 0 }
+    { id: '#msg-five', delay: 1000 },
+    { id: '#msg-six', delay: 0 }
   ];
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
