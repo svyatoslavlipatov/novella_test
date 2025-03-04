@@ -98,49 +98,41 @@
         }
       });
 
-  // Логика переключения на вторую сцену
-  document.querySelector('#button-next').addEventListener('click', function () {
+     // Логика переключения на вторую сцену
+     document.querySelector('#button-next').addEventListener('click', async function () {
     console.log('click');
     const mainScene = document.querySelector('#main-scene');
     const scene2 = document.querySelector('#scene2');
     const buttonNext = document.querySelector('#button-next');
     const buttonBack = document.querySelector('#button-back');
-    const messages = [
-      document.querySelector('#msg-one'),
-      document.querySelector('#msg-two'),
-      document.querySelector('#msg-three'),
-      document.querySelector('#msg-four')
-    ];
 
-    // Переключение сцен
     mainScene.setAttribute('visible', 'false');
     scene2.setAttribute('visible', 'true');
     buttonNext.classList.remove('clickable');
     buttonBack.classList.add('clickable');
 
-    // Установка начального состояния сообщений
-    messages[0].setAttribute('visible', 'true'); // Явно показываем "HI"
-    for (let i = 1; i < messages.length; i++) {
-      messages[i].setAttribute('visible', 'false'); // Скрываем остальные
-    }
-
-    // Логика последовательного отображения сообщений
-    const delays = [3000, 4000, 2500]; // Задержки между сообщениями
-    let cumulativeDelay = 0;
+    const messages = [
+        { id: '#msg-one', delay: 3000 },
+        { id: '#msg-two', delay: 4000 },
+        { id: '#msg-three', delay: 2500 },
+        { id: '#msg-four', delay: 0 }
+    ];
 
     messages.forEach((msg, index) => {
-      if (index === messages.length - 1) return; // Последнее сообщение не удаляем
-
-      setTimeout(() => {
-        msg.parentNode.removeChild(msg); // Удаляем текущее сообщение
-        if (messages[index + 1]) {
-          messages[index + 1].setAttribute('visible', 'true'); // Показываем следующее
-        }
-      }, cumulativeDelay);
-
-      cumulativeDelay += delays[index] || 0; // Добавляем задержку для следующего шага
+        const element = document.querySelector(msg.id);
+        element.setAttribute('visible', index === 0 ? 'true' : 'false');
     });
-  });
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    for (let i = 0; i < messages.length - 1; i++) {
+        await sleep(messages[i].delay);
+        const current = document.querySelector(messages[i].id);
+        current.parentNode.removeChild(current);
+        const next = document.querySelector(messages[i + 1].id);
+        next.setAttribute('visible', 'true');
+    }
+});
 
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
