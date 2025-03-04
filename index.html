@@ -70,11 +70,9 @@
         </a-entity>
 
         <a-entity id="portals">
-
           <!-- Первый портал -->
           <a-entity id="portal1" >
             <a-circle 
-              class="clickable"
               position="-2 1 -0.5" 
               rotation="0 90 0"
               radius="0.450"
@@ -141,12 +139,8 @@
             position="0 -1 -2" 
             angle="60" 
             target="#msg-six">
-            
           </a-light>
         </a-entity>
-
-
-      </a-entity>
 
         <!-- Кнопка "Back" -->
         <a-entity position="2 1 0" rotation="0 -90 0">
@@ -159,9 +153,6 @@
           <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
-
-      <!-- Конец переходной сцены  -->
-
 
       <!-- РПО сцена -->
       <a-entity id="rpo-scene" visible="false">
@@ -212,8 +203,8 @@
         ];
 
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-        const animationDuration = 1000; // Длительность анимации
-        const pauseBeforeFadeIn = 1000; // Пауза перед появлением
+        const animationDuration = 1000;
+        const pauseBeforeFadeIn = 1000;
 
         // Функция для запуска анимации
         const animateOpacity = (element, from, to, duration) => {
@@ -225,28 +216,27 @@
               dur: duration,
               easing: 'easeInOutQuad'
             });
-            element.addEventListener('animationcomplete', resolve, { once: true });
+            element.addEventListener('animationcomplete', function handler() {
+              // Управление кликабельностью в зависимости от конечной opacity
+              if (to === 0) {
+                element.classList.remove('clickable');
+              } else if (to > 0) {
+                element.classList.add('clickable');
+              }
+              element.removeEventListener('animationcomplete', handler);
+              resolve();
+            }, { once: true });
           });
         };
 
-        // Инициализация: первое сообщение уже видно (opacity="1")
         for (let i = 0; i < messages.length - 1; i++) {
           const current = document.querySelector(messages[i].id);
           const next = document.querySelector(messages[i + 1].id);
 
-          // Ждем перед началом исчезновения
           await sleep(messages[i].delay - animationDuration);
-
-          // Плавное исчезновение текущего
           await animateOpacity(current, 1, 0, animationDuration);
-
-          // Удаляем текущий элемент
           current.parentNode.removeChild(current);
-
-          // Пауза перед появлением следующего
           await sleep(pauseBeforeFadeIn);
-
-          // Плавное появление следующего
           await animateOpacity(next, 0, 1, animationDuration);
 
           if (next.id === 'msg-six') {
@@ -254,17 +244,15 @@
             const portals = portalsContainer.querySelectorAll('a-circle');
             const portalLight = document.querySelector('#portal-light');
             
-            await sleep(500); // Начальная пауза
+            await sleep(500);
             
-            // Последовательное появление порталов
             for (const portal of portals) {
               await animateOpacity(portal, 0, 0.8, animationDuration);
-              await sleep(300); // Задержка между появлением порталов (0.3 секунды)
+              await sleep(300);
             }
             
-            portalLight.setAttribute('intensity', '1'); // Включаем подсветку после всех порталов
+            portalLight.setAttribute('intensity', '1');
           }
-          
         }
       });
 
@@ -281,9 +269,9 @@
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
       });
-      
-    // Логика перехода на rpo-scene через portal1
-    document.querySelector('#portal1 a-circle').addEventListener('click', function () {
+
+      // Логика перехода на rpo-scene через portal1
+      document.querySelector('#portal1 a-circle').addEventListener('click', function () {
         console.log('portal1 clicked');
         const transition_scene = document.querySelector('#transition_scene');
         const rpoScene = document.querySelector('#rpo-scene');
