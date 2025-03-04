@@ -69,19 +69,16 @@
           <a-text id="msg-six" value="Six msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
         </a-entity>
 
-        <a-entity id="portals"> 
-
-
-          <!-- Овальный портал -->
+        <a-entity id="portals">
+          <!-- Первый портал -->
           <a-circle 
-            id="portal" 
-            position="0 1 -2" 
+            id="portal1" 
+            position="-1 1 -2" 
             radius-inner="0.8" 
             radius-outer="1" 
             color="#00FFFF" 
             opacity="0" 
-            visible="true"
-            rotation="0 0 0">
+            visible="true">
             <a-animation 
               attribute="color" 
               from="#00FFFF" 
@@ -91,8 +88,27 @@
               repeat="indefinite">
             </a-animation>
           </a-circle>
-
-          <!-- Подсветка снизу -->
+        
+          <!-- Второй портал -->
+          <a-circle 
+            id="portal2" 
+            position="1 1 -2" 
+            radius-inner="0.8" 
+            radius-outer="1" 
+            color="#FF00FF" 
+            opacity="0" 
+            visible="true">
+            <a-animation 
+              attribute="color" 
+              from="#FF00FF" 
+              to="#00FFFF" 
+              dur="2000" 
+              direction="alternate" 
+              repeat="indefinite">
+            </a-animation>
+          </a-circle>
+        
+          <!-- Подсветка снизу (общая для всех порталов) -->
           <a-light 
             id="portal-light" 
             type="spot" 
@@ -204,14 +220,22 @@
           // Плавное появление следующего
           await animateOpacity(next, 0, 1, animationDuration);
 
-          // Показываем портал после появления msg-six
           if (next.id === 'msg-six') {
-            const portals = document.querySelector('#portals');
+            const portalsContainer = document.querySelector('#portals');
+            const portals = portalsContainer.querySelectorAll('a-circle');
             const portalLight = document.querySelector('#portal-light');
-            await sleep(500); // Небольшая пауза перед появлением портала
-            await animateOpacity(portals, 0, 0.8, animationDuration); // Плавное появление портала
-            portalLight.setAttribute('intensity', '1'); // Включаем подсветку
+            
+            await sleep(500); // Начальная пауза
+            
+            // Последовательное появление порталов
+            for (const portal of portals) {
+              await animateOpacity(portal, 0, 0.8, animationDuration);
+              await sleep(300); // Задержка между появлением порталов (0.3 секунды)
+            }
+            
+            portalLight.setAttribute('intensity', '1'); // Включаем подсветку после всех порталов
           }
+          
         }
       });
 
