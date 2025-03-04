@@ -157,12 +157,50 @@
       <!-- РПО сцена -->
       <a-entity id="rpo-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: starry;"></a-entity>
+        <a-entity environment="preset: default;"></a-entity>
 
         <a-entity position="0 1 -4">
-          <a-text id="rpo-msg-one" value="HI" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+          <a-text id="rpo-msg-one" value="RPO" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
       </a-entity>
+
+      <!-- Дизайн сцена -->
+      <a-entity id="dizayn-scene" visible="false">
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity environment="preset: goldmine;"></a-entity>
+
+        <a-entity position="0 1 -4">
+          <a-text id="dizayn-msg-one" value="DIZAYN" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+        </a-entity>
+      </a-entity>
+
+      <!-- Туризм сцена -->
+      <a-entity id="turizm-scene" visible="false">
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity environment="preset: egypt;"></a-entity>
+        <a-entity position="0 1 -4">
+          <a-text id="turizm-msg-one" value="TURIZM" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+        </a-entity>
+      </a-entity>
+      
+      <!-- Сервис сцена -->
+      <a-entity id="service-scene" visible="false">
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity environment="preset: japan;"></a-entity>
+        <a-entity position="0 1 -4">
+          <a-text id="service-msg-one" value="SERVICE" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+        </a-entity>
+      </a-entity>
+
+      <!-- Реклама сцена -->
+      <a-entity id="reklama-scene" visible="false">
+        <a-sky color="#ECECEC"></a-sky>
+        <a-entity environment="preset: volcano;"></a-entity>
+        <a-entity position="0 1 -4">
+          <a-text id="reklama-msg-one" value="REKLAMA" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+        </a-entity>
+      </a-entity>
+
 
     </a-scene>
 
@@ -285,6 +323,21 @@
 
         transition_scene.setAttribute('visible', 'false');
         rpoScene.setAttribute('visible', 'true');
+      });
+
+      document.querySelector('#portal2 a-circle').addEventListener('click', function () {
+        console.log('portal2 clicked');
+        const transition_scene = document.querySelector('#transition_scene');
+        const dizaynScene = document.querySelector('#dizayn-scene');
+        const portalsContainer = document.querySelector('#portals');
+        const portals = portalsContainer.querySelectorAll('a-circle');
+
+        portals.forEach(portal => {
+          portal.classList.remove('clickable');
+        });
+
+        transition_scene.setAttribute('visible', 'false');
+        dizaynScene.setAttribute('visible', 'true');
       });
     </script>
   </body>
