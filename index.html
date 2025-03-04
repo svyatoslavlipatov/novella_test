@@ -112,7 +112,8 @@ document.querySelector('#button-next').addEventListener('click', async function 
     { id: '#msg-one', delay: 3000 },
     { id: '#msg-two', delay: 4000 },
     { id: '#msg-three', delay: 2500 },
-    { id: '#msg-four', delay: 0 }
+    { id: '#msg-four', delay: 1000 },
+    { id: '#msg-five', delay: 0 }
   ];
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -134,7 +135,7 @@ document.querySelector('#button-next').addEventListener('click', async function 
   };
 
   // Инициализация: первое сообщение уже видно (opacity="1")
-  for (let i = 0; i < messages.length - 1; i++) {
+  for (let i = 0; i < messages.length - 1; i++) { // Оставляем -1, чтобы последнее сообщение не исчезало
     const current = document.querySelector(messages[i].id);
     const next = document.querySelector(messages[i + 1].id);
 
