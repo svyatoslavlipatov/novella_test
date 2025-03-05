@@ -38,32 +38,12 @@
         sound="src: #click-sound; on: click">
       </a-entity>
 
-
       <!-- Динамичный фон с environment -->
       <a-entity id="background" environment="preset: starry;"></a-entity>
-
-      <!-- Фоновые элементы в контейнерах -->
-
-      <a-entity id="background-main-container">
-        <!-- <a-entity id="background-main-scene" environment="preset: starry;"></a-entity> -->
-      </a-entity>
-
-      <a-entity id="background-transition-container" visible="false">
-        <!-- <a-entity id="background-transition-scene" environment="preset: forest;"></a-entity> -->
-      </a-entity>
-
-
-      <!-- <a-entity id="background-rpo-scene" environment="preset: default;" visible="false"></a-entity>
-      <a-entity id="background-dizayn-scene" environment="preset: goldmine;" visible="false"></a-entity>
-      <a-entity id="background-turizm-scene" environment="preset: egypt;" visible="false"></a-entity>
-      <a-entity id="background-service-scene" environment="preset: japan;" visible="false"></a-entity>
-      <a-entity id="background-reklama-scene" environment="preset: volcano;" visible="false"></a-entity> -->
-
 
       <!-- Основная сцена -->
       <a-entity id="main-scene">
         <a-sky color="#ECECEC"></a-sky>
-
         <!-- Кнопка "Next" -->
         <a-entity position="0 1 -2">
           <a-plane 
@@ -79,7 +59,6 @@
 
       <!-- Транзитная сцена -->
       <a-entity id="transition-scene" visible="false">
-        
         <a-entity position="0 1 -4">
           <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
           <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
@@ -91,7 +70,7 @@
 
         <a-entity id="portals">
           <!-- Первый портал -->
-          <a-entity id="portal1" >
+          <a-entity id="portal1">
             <a-circle 
               position="-2 1 -0.5" 
               rotation="0 90 0"
@@ -103,7 +82,7 @@
            </a-entity>
 
           <!-- Второй портал -->
-          <a-entity id="portal2" >
+          <a-entity id="portal2">
             <a-circle 
               position="-1 1 -2" 
               rotation="0 0 0"
@@ -115,7 +94,7 @@
           </a-entity>
 
           <!-- Третий портал -->
-          <a-entity id="portal3" >
+          <a-entity id="portal3">
             <a-circle 
               position="1 1 -2" 
               rotation="0 0 0"
@@ -127,7 +106,7 @@
           </a-entity>
 
           <!-- Четвертый портал -->
-          <a-entity id="portal4" >
+          <a-entity id="portal4">
             <a-circle 
               position="0 1 1" 
               rotation="0 -180 0"
@@ -139,7 +118,7 @@
           </a-entity>
 
           <!-- Пятый портал -->
-          <a-entity id="portal5" >
+          <a-entity id="portal5">
             <a-circle 
               position="1.5 1 -0.5" 
               rotation="0 -90 0"
@@ -177,7 +156,6 @@
       <!-- РПО сцена -->
       <a-entity id="rpo-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-
         <a-entity position="0 1 -4">
           <a-text id="rpo-msg-one" value="RPO" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
@@ -186,7 +164,6 @@
       <!-- Дизайн сцена -->
       <a-entity id="dizayn-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-
         <a-entity position="0 1 -4">
           <a-text id="dizayn-msg-one" value="DIZAYN" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
@@ -195,7 +172,6 @@
       <!-- Туризм сцена -->
       <a-entity id="turizm-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-
         <a-entity position="0 1 -4">
           <a-text id="turizm-msg-one" value="TURIZM" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
@@ -204,7 +180,6 @@
       <!-- Сервис сцена -->
       <a-entity id="service-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-
         <a-entity position="0 1 -4">
           <a-text id="service-msg-one" value="SERVICE" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
@@ -213,12 +188,10 @@
       <!-- Реклама сцена -->
       <a-entity id="reklama-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-
         <a-entity position="0 1 -4">
           <a-text id="reklama-msg-one" value="REKLAMA" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
       </a-entity>
-
 
     </a-scene>
 
@@ -243,15 +216,13 @@
         const transitionScene = document.querySelector('#transition-scene');
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
-        const backgroundMainContainer = document.querySelector('#background-main-container');
-        const backgroundTransitionContainer = document.querySelector('#background-transition-container');
+        const background = document.querySelector('#background');
 
         mainScene.setAttribute('visible', 'false');
         transitionScene.setAttribute('visible', 'true');
-        background.setAttribute('environment', 'preset: forest');
-
         buttonNext.classList.remove('clickable');
         buttonBack.classList.add('clickable');
+        background.setAttribute('environment', 'preset: forest'); // Меняем фон на forest
 
         const messages = [
           { id: '#msg-one', delay: 1000 },
@@ -266,7 +237,6 @@
         const animationDuration = 1000;
         const pauseBeforeFadeIn = 1000;
 
-        // Функция для запуска анимации
         const animateOpacity = (element, from, to, duration) => {
           return new Promise(resolve => {
             element.setAttribute('animation', {
@@ -277,7 +247,6 @@
               easing: 'easeInOutQuad'
             });
             element.addEventListener('animationcomplete', function handler() {
-              // Управление кликабельностью в зависимости от конечной opacity
               if (to === 0) {
                 element.classList.remove('clickable');
               } else if (to > 0) {
@@ -323,45 +292,37 @@
         const transitionScene = document.querySelector('#transition-scene');
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
-        
-        const backgroundMainContainer = document.querySelector('#background-main-container');
-        const backgroundTransitionContainer = document.querySelector('#background-transition-container');
+        const background = document.querySelector('#background');
         
         transitionScene.setAttribute('visible', 'false');
         mainScene.setAttribute('visible', 'true');
-        background.setAttribute('environment', 'preset: starry');
-
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
+        background.setAttribute('environment', 'preset: starry'); // Возвращаем фон starry
       });
 
-    // Функция для обработки перехода по клику на портал
-    function handlePortalClick(portalId, targetSceneId, environmentPreset) {
-  document.querySelector(`#${portalId} a-circle`).addEventListener('click', function () {
-    console.log(`${portalId} clicked`);
-    const transitionScene = document.querySelector('#transition_scene');
-    const targetScene = document.querySelector(`#${targetSceneId}`);
-    const portals = document.querySelector('#portals').querySelectorAll('a-circle');
-    const background = document.querySelector('#background');
+      // Функция для обработки перехода по клику на портал
+      function handlePortalClick(portalId, targetSceneId, environmentPreset) {
+        document.querySelector(`#${portalId} a-circle`).addEventListener('click', function () {
+          console.log(`${portalId} clicked`);
+          const transitionScene = document.querySelector('#transition-scene');
+          const targetScene = document.querySelector(`#${targetSceneId}`);
+          const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+          const background = document.querySelector('#background');
 
-    portals.forEach(portal => portal.classList.remove('clickable'));
-    transitionScene.setAttribute('visible', 'false');
-    targetScene.setAttribute('visible', 'true');
-    if (environmentPreset) {
-      background.setAttribute('environment', `preset: ${environmentPreset}`);
-    }
-  });
-}
+          portals.forEach(portal => portal.classList.remove('clickable'));
+          transitionScene.setAttribute('visible', 'false');
+          targetScene.setAttribute('visible', 'true');
+          background.setAttribute('environment', `preset: ${environmentPreset}`);
+        });
+      }
 
-
-
-    // Применяем функцию для каждого портала
-    handlePortalClick('portal1', 'rpo-scene', 'default');
-    handlePortalClick('portal2', 'dizayn-scene', 'goldmine');
-    handlePortalClick('portal3', 'turizm-scene', 'default');
-    handlePortalClick('portal4', 'service-scene', 'default');
-    handlePortalClick('portal5', 'reklama-scene', 'default');
-
+      // Применяем функцию для каждого портала
+      handlePortalClick('portal1', 'rpo-scene', 'default');
+      handlePortalClick('portal2', 'dizayn-scene', 'goldmine');
+      handlePortalClick('portal3', 'turizm-scene', 'egypt');
+      handlePortalClick('portal4', 'service-scene', 'japan');
+      handlePortalClick('portal5', 'reklama-scene', 'volcano');
     </script>
   </body>
 </html>
