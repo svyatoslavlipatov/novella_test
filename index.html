@@ -38,12 +38,17 @@
         sound="src: #click-sound; on: click">
       </a-entity>
 
-      <!-- Background сцен-->
-      <a-entity id="background-main-scene" environment="preset: starry;"></a-entity>
-      
-      <a-entity id="background-transition-scene" environment="preset: forest;" visible="false"></a-entity>
+      <!-- Фоновые элементы в контейнерах -->
 
-      
+      <a-entity id="background-main-container">
+        <a-entity id="background-main-scene" environment="preset: starry;"></a-entity>
+      </a-entity>
+
+      <a-entity id="background-transition-container" visible="false">
+        <a-entity id="background-transition-scene" environment="preset: forest;"></a-entity>
+      </a-entity>
+
+
       <!-- <a-entity id="background-rpo-scene" environment="preset: default;" visible="false"></a-entity>
       <a-entity id="background-dizayn-scene" environment="preset: goldmine;" visible="false"></a-entity>
       <a-entity id="background-turizm-scene" environment="preset: egypt;" visible="false"></a-entity>
@@ -234,13 +239,13 @@
         const transitionScene = document.querySelector('#transition-scene');
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
-        const backgroundMainScene = document.querySelector('#background-main-scene');
-        const backgroundTransitionScene = document.querySelector('#background-transition-scene');
+        const backgroundMainContainer = document.querySelector('#background-main-container');
+        const backgroundTransitionContainer = document.querySelector('#background-transition-container');
 
         mainScene.setAttribute('visible', 'false');
         transitionScene.setAttribute('visible', 'true');
-        backgroundMainScene.setAttribute('visible', 'false'); // Скрываем фон main-scene
-        backgroundTransitionScene.setAttribute('visible', 'true'); // Показываем фон transition-scene
+        backgroundMainContainer.setAttribute('visible', 'false'); // Скрываем контейнер фона main-scene
+        backgroundTransitionContainer.setAttribute('visible', 'true'); // Показываем контейнер фона transition-scene
 
         buttonNext.classList.remove('clickable');
         buttonBack.classList.add('clickable');
@@ -315,13 +320,14 @@
         const transitionScene = document.querySelector('#transition-scene');
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
-        const backgroundMainScene = document.querySelector('#background-main-scene');
-        const backgroundTransitionScene = document.querySelector('#background-transition-scene');
+        
+        const backgroundMainContainer = document.querySelector('#background-main-container');
+        const backgroundTransitionContainer = document.querySelector('#background-transition-container');
         
         transitionScene.setAttribute('visible', 'false');
         mainScene.setAttribute('visible', 'true');
-        backgroundTransitionScene.setAttribute('visible', 'false'); // Скрываем фон transition-scene
-        backgroundMainScene.setAttribute('visible', 'true'); // Показываем фон main-scene
+        backgroundTransitionContainer.setAttribute('visible', 'false'); // Скрываем контейнер фона transition-scene
+        backgroundMainContainer.setAttribute('visible', 'true'); // Показываем контейнер фона main-scene
 
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
