@@ -2,47 +2,7 @@
   <head>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
-    <script>
-AFRAME.registerComponent('typewriter', {
-  init: function () {
-    var el = this.el;
-    var text = el.getAttribute('value');
-    el.setAttribute('value', ''); // Очищаем текст при инициализации
-    this.text = text; // Сохраняем исходный текст
-    this.index = 0;
-    this.interval = null;
 
-    // Функция для запуска эффекта печати
-    this.startTyping = function () {
-      if (this.interval) return; // Не запускаем, если уже идет
-      this.index = 0; // Сбрасываем индекс
-      el.setAttribute('value', ''); // Очищаем текст
-      this.interval = setInterval(() => {
-        if (this.index < this.text.length) {
-          el.setAttribute('value', el.getAttribute('value') + this.text[this.index]);
-          this.index++;
-        } else {
-          clearInterval(this.interval);
-          this.interval = null;
-        }
-      }, 50); // Скорость печати
-    };
-
-    // Наблюдаем за изменением видимости родительской сцены
-    var parentScene = el.closest('#rpo-scene');
-    if (parentScene) {
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.attributeName === 'visible' && parentScene.getAttribute('visible')) {
-            this.startTyping();
-          }
-        });
-      });
-      observer.observe(parentScene, { attributes: true, attributeFilter: ['visible'] });
-    }
-  }
-});
-    </script>
   </head>
   <body>
     <a-scene>      
