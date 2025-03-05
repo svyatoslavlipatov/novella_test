@@ -29,6 +29,7 @@
         raycaster="objects: .clickable; far: 10; lineColor: white; lineOpacity: 0.5"
         sound="src: #click-sound; on: click">
       </a-entity>
+
       <a-entity 
         id="right-controller" 
         laser-controls="hand: right" 
@@ -43,6 +44,7 @@
       <!-- Основная сцена -->
       <a-entity id="main-scene">
         <a-sky color="#ECECEC"></a-sky>
+        <!-- Кнопка "Next" -->
         <a-entity position="0 1 -2">
           <a-plane 
             id="button-next" 
@@ -50,8 +52,8 @@
             width="1" height="0.4" 
             color="#008CBA"
             hoverable>
-            <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
           </a-plane>
+          <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
@@ -67,35 +69,95 @@
         </a-entity>
 
         <a-entity id="portals">
+          <!-- Первый портал -->
           <a-entity id="portal1">
-            <a-circle position="-2 1 -0.5" rotation="0 90 0" radius="0.450" color="#00FFFF" opacity="0" visible="true"></a-circle>
-          </a-entity>
+            <a-circle 
+              position="-2 1 -0.5" 
+              rotation="0 90 0"
+              radius="0.450"
+              color="#00FFFF" 
+              opacity="0" 
+              visible="true">
+            </a-circle>
+           </a-entity>
+
+          <!-- Второй портал -->
           <a-entity id="portal2">
-            <a-circle position="-1 1 -2" rotation="0 0 0" radius="0.450" color="#FF00FF" opacity="0" visible="true"></a-circle>
+            <a-circle 
+              position="-1 1 -2" 
+              rotation="0 0 0"
+              radius="0.450"
+              color="#FF00FF" 
+              opacity="0" 
+              visible="true">
+            </a-circle>
           </a-entity>
+
+          <!-- Третий портал -->
           <a-entity id="portal3">
-            <a-circle position="1 1 -2" rotation="0 0 0" radius="0.450" color="#FF00FF" opacity="0" visible="true"></a-circle>
+            <a-circle 
+              position="1 1 -2" 
+              rotation="0 0 0"
+              radius="0.450"
+              color="#FF00FF" 
+              opacity="0" 
+              visible="true">
+            </a-circle>
           </a-entity>
+
+          <!-- Четвертый портал -->
           <a-entity id="portal4">
-            <a-circle position="0 1 1" rotation="0 -180 0" radius="0.450" color="#FF00FF" opacity="0" visible="true"></a-circle>
+            <a-circle 
+              position="0 1 1" 
+              rotation="0 -180 0"
+              radius="0.450"
+              color="#FF00FF" 
+              opacity="0" 
+              visible="true">
+            </a-circle>
           </a-entity>
+
+          <!-- Пятый портал -->
           <a-entity id="portal5">
-            <a-circle position="1.5 1 -0.5" rotation="0 -90 0" radius="0.450" color="#FF00FF" opacity="0" visible="true"></a-circle>
+            <a-circle 
+              position="1.5 1 -0.5" 
+              rotation="0 -90 0"
+              radius="0.450"
+              color="#FF00FF" 
+              opacity="0" 
+              visible="true">
+            </a-circle>
           </a-entity>
-          <a-light id="portal-light" type="spot" color="#FFFFFF" intensity="0" position="0 -1 -2" angle="60" target="#msg-six"></a-light>
+        
+          <!-- Подсветка снизу (общая для всех порталов) -->
+          <a-light 
+            id="portal-light" 
+            type="spot" 
+            color="#FFFFFF" 
+            intensity="0" 
+            position="0 -1 -2" 
+            angle="60" 
+            target="#msg-six">
+          </a-light>
         </a-entity>
 
+        <!-- Кнопка "Back" -->
         <a-entity position="2 1 0" rotation="0 -90 0">
-          <a-plane id="button-back" width="1" height="0.4" color="#008CBA" hoverable>
-            <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
+          <a-plane 
+            id="button-back" 
+            width="1" height="0.4" 
+            color="#008CBA"
+            hoverable>
           </a-plane>
+          <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
       <!-- РПО сцена -->
-      <a-entity id="rpo-scene" visible="false">
+      <<a-entity id="rpo-scene" visible="false">
+        <!-- Темное окружение -->
         <a-sky color="#1A1A2E"></a-sky>
-
+      
         <!-- Шестеренки -->
         <a-entity position="-2 1 -3" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
           <a-torus radius="0.5" radius-tubular="0.05" arc="360" color="#FFD700"></a-torus>
@@ -106,7 +168,7 @@
         <a-entity position="0 3 -2" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 6000">
           <a-torus radius="0.3" radius-tubular="0.05" arc="360" color="#FFD700"></a-torus>
         </a-entity>
-
+      
         <!-- Падающий цифровой код -->
         <a-entity position="0 5 -3" animation="property: position; to: 0 -5 -3; loop: true; dur: 4000">
           <a-text value="101010 001 111 0101" color="#00FF00" align="center" scale="1 1 1"></a-text>
@@ -117,52 +179,12 @@
         <a-entity position="-2 5 -2" animation="property: position; to: -2 -5 -2; loop: true; dur: 3800">
           <a-text value="010101 111 000 1010" color="#00FF00" align="center" scale="1 1 1"></a-text>
         </a-entity>
-
-        <!-- Сопроводитель -->
+      
+        <!-- Сопроводитель (текст для начала) -->
         <a-entity id="guide" position="0 1.5 -3">
-          <a-text id="guide-text" value="Dobro pozhalovat' v mir RPO!\nYa — tvoj Soprovoditel'.\nTy popal v prostranstvo razrabotki programmogo obespecheniya,\ngde kod ozhivaet, a mekhanizmy tekhnologij rabotayut v garmonii."
+          <a-text id="guide-text" value="Hi!\nYa soprovoditel\nTi popapl v RPO,\ngde cod ozhivaet i vezde garmoniya"
                   color="#FFFFFF" align="center" width="4" scale="1 1 1" opacity="0"
                   animation="property: opacity; from: 0; to: 1; dur: 2000; delay: 1000"></a-text>
-        </a-entity>
-
-        <!-- Опции выбора -->
-        <a-entity id="rpo-options" position="0 1 -3" visible="false" animation="property: visible; to: true; dur: 0; delay: 4000">
-          <a-entity position="-1.5 0.5 0">
-            <a-plane id="option1" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
-              <a-text value="Chto takoe RPO?" align="center" color="white" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-entity>
-          <a-entity position="0 0.5 0">
-            <a-plane id="option2" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
-              <a-text value="Chto ya budu delat'?" align="center" color="white" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-entity>
-          <a-entity position="1.5 0.5 0">
-            <a-plane id="option3" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
-              <a-text value="Poprobovat' zadaniye!" align="center" color="white" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-entity>
-        </a-entity>
-
-        <!-- Задание -->
-        <a-entity id="challenge" visible="false">
-          <a-text id="challenge-text" value="Najdi pravil'nyj kod, chtoby vklyuchit' svet!" position="0 2 -3" color="#FFFFFF" align="center" scale="1 1 1"></a-text>
-          <a-entity position="-1.5 1 -3">
-            <a-plane id="code1" class="clickable" width="0.8" height="0.3" color="#FF4444">
-              <a-text value="0101" align="center" color="white" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-entity>
-          <a-entity position="0 1 -3">
-            <a-plane id="code2" class="clickable" width="0.8" height="0.3" color="#FF4444">
-              <a-text value="1100" align="center" color="white" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-entity>
-          <a-entity position="1.5 1 -3">
-            <a-plane id="code3" class="clickable" width="0.8" height="0.3" color="#FF4444">
-              <a-text value="1010" align="center" color="white" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-entity>
-          <a-light id="challenge-light" type="ambient" intensity="0" color="#FFFFFF"></a-light>
         </a-entity>
       </a-entity>
 
@@ -214,7 +236,7 @@
         }
       });
 
-      // Логика переключения на транзитную сцену
+      // Логика переключения на вторую сцену
       document.querySelector('#button-next').addEventListener('click', async function () {
         console.log('click');
         const mainScene = document.querySelector('#main-scene');
@@ -227,7 +249,7 @@
         transitionScene.setAttribute('visible', 'true');
         buttonNext.classList.remove('clickable');
         buttonBack.classList.add('clickable');
-        background.setAttribute('environment', 'preset: forest');
+        background.setAttribute('environment', 'preset: forest'); // Меняем фон на forest
 
         const messages = [
           { id: '#msg-one', delay: 1000 },
@@ -279,10 +301,12 @@
             const portalLight = document.querySelector('#portal-light');
             
             await sleep(500);
+            
             for (const portal of portals) {
               await animateOpacity(portal, 0, 0.8, animationDuration);
               await sleep(300);
             }
+            
             portalLight.setAttribute('intensity', '1');
           }
         }
@@ -301,7 +325,7 @@
         mainScene.setAttribute('visible', 'true');
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
-        background.setAttribute('environment', 'preset: starry');
+        background.setAttribute('environment', 'preset: starry'); // Возвращаем фон starry
       });
 
       // Функция для обработки перехода по клику на портал
@@ -326,88 +350,6 @@
       handlePortalClick('portal3', 'turizm-scene', 'egypt');
       handlePortalClick('portal4', 'service-scene', 'japan');
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
-
-      // Логика для сцены РПО
-      document.querySelector('#option1').addEventListener('click', () => showRpoInfo());
-      document.querySelector('#option2').addEventListener('click', () => showRpoTasks());
-      document.querySelector('#option3').addEventListener('click', () => startRpoChallenge());
-
-      function showRpoInfo() {
-        const guideText = document.querySelector('#guide-text');
-        const options = document.querySelector('#rpo-options');
-        options.setAttribute('visible', 'false');
-        guideText.setAttribute('value', 'RPO — eto razrabotka programmogo obespecheniya\ndlya dizajna i tekhnologij.\nZdes' ty budesh' sozdavat' programmy,\nkotorye pomogayut dizajneram voploshchat' idei v zhizn'.');
-      }
-
-      function showRpoTasks() {
-        const guideText = document.querySelector('#guide-text');
-        const options = document.querySelector('#rpo-options');
-        options.setAttribute('visible', 'false');
-        guideText.setAttribute('value', 'Ty budesh' pisat' kod dlya prilozhenij,\nsozdavat' algoritmy dlya obrabotki dannykh\ni razrabatyvat' interfejsy dlya dizajnerov.');
-      }
-
-      function startRpoChallenge() {
-        const guideText = document.querySelector('#guide-text');
-        const options = document.querySelector('#rpo-options');
-        const challenge = document.querySelector('#challenge');
-        options.setAttribute('visible', 'false');
-        guideText.setAttribute('visible', 'false');
-        challenge.setAttribute('visible', 'true');
-
-        document.querySelector('#code1').addEventListener('click', () => tryCode(false));
-        document.querySelector('#code2').addEventListener('click', () => tryCode(false));
-        document.querySelector('#code3').addEventListener('click', () => tryCode(true));
-      }
-
-      function tryCode(isCorrect) {
-        const challengeText = document.querySelector('#challenge-text');
-        const light = document.querySelector('#challenge-light');
-        if (isCorrect) {
-          challengeText.setAttribute('value', 'Otlichno! Svet vklyuchen!');
-          light.setAttribute('intensity', '1');
-          setTimeout(() => {
-            challengeText.setAttribute('value', 'Pozdravlyayu! Ty sdelal pervij shag v RPO.\nKhochesh' uznat' bol'she ili vernut'sya?');
-            const moreBtn = document.createElement('a-plane');
-            moreBtn.setAttribute('id', 'more-btn');
-            moreBtn.setAttribute('class', 'clickable');
-            moreBtn.setAttribute('width', '1');
-            moreBtn.setAttribute('height', '0.4');
-            moreBtn.setAttribute('color', '#008CBA');
-            moreBtn.setAttribute('position', '-1 0.5 -3');
-            moreBtn.innerHTML = '<a-text value="Uznat\' bol\'she" align="center" color="white" position="0 0 0.01"></a-text>';
-            challenge.appendChild(moreBtn);
-
-            const backBtn = document.createElement('a-plane');
-            backBtn.setAttribute('id', 'back-btn');
-            backBtn.setAttribute('class', 'clickable');
-            backBtn.setAttribute('width', '1');
-            backBtn.setAttribute('height', '0.4');
-            backBtn.setAttribute('color', '#008CBA');
-            backBtn.setAttribute('position', '1 0.5 -3');
-            backBtn.innerHTML = '<a-text value="Nazad" align="center" color="white" position="0 0 0.01"></a-text>';
-            challenge.appendChild(backBtn);
-
-            moreBtn.addEventListener('click', () => showRpoDetails());
-            backBtn.addEventListener('click', () => returnToTransition());
-          }, 1000);
-        } else {
-          challengeText.setAttribute('value', 'Poprobuj eshche!');
-        }
-      }
-
-      function showRpoDetails() {
-        const challenge = document.querySelector('#challenge');
-        const guideText = document.querySelector('#guide-text');
-        guideText.setAttribute('visible', 'true');
-        challenge.setAttribute('visible', 'false');
-        guideText.setAttribute('value', 'V RPO ty mozhesh' razrabatyvat'\ninstrumenty dlya dizajnerov,\nnaprimer, programmy dlya 3D-modelirovaniya\nili obrabotki izobrazhenij.');
-      }
-
-      function returnToTransition() {
-        document.querySelector('#rpo-scene').setAttribute('visible', 'false');
-        document.querySelector('#transition-scene').setAttribute('visible', 'true');
-        document.querySelector('#background').setAttribute('environment', 'preset: forest');
-      }
     </script>
   </body>
 </html>
