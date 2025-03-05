@@ -120,7 +120,7 @@
 
         <!-- Сопроводитель -->
         <a-entity id="guide" position="0 1.5 -3">
-          <a-text id="guide-text" value="Dobro pozhalovat' v mir RPO!\nYa — tvoj Soprovoditel'.\nTy popal v prostranstvo razrabotki programmogo obespecheniya,\ngde kod ozhivaet, a mekhanizmy tekhnologij rabotayut v garmonii."
+          <a-text id="guide-text" value="Добро пожаловать в мир РПО!\nЯ — твой Сопроводитель.\nТы попал в пространство разработки программного обеспечения,\nгде код оживает, а механизмы технологий работают в гармонии."
                   color="#FFFFFF" align="center" width="4" scale="1 1 1" opacity="0"
                   animation="property: opacity; from: 0; to: 1; dur: 2000; delay: 1000"></a-text>
         </a-entity>
@@ -129,24 +129,24 @@
         <a-entity id="rpo-options" position="0 1 -3" visible="false" animation="property: visible; to: true; dur: 0; delay: 4000">
           <a-entity position="-1.5 0.5 0">
             <a-plane id="option1" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
-              <a-text value="Chto takoe RPO?" align="center" color="white" position="0 0 0.01"></a-text>
+              <a-text value="Что такое РПО?" align="center" color="white" position="0 0 0.01"></a-text>
             </a-plane>
           </a-entity>
           <a-entity position="0 0.5 0">
             <a-plane id="option2" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
-              <a-text value="Chto ya budu delat'?" align="center" color="white" position="0 0 0.01"></a-text>
+              <a-text value="Что я буду делать?" align="center" color="white" position="0 0 0.01"></a-text>
             </a-plane>
           </a-entity>
           <a-entity position="1.5 0.5 0">
             <a-plane id="option3" class="clickable" width="1" height="0.4" color="#008CBA" hoverable>
-              <a-text value="Poprobovat' zadaniye!" align="center" color="white" position="0 0 0.01"></a-text>
+              <a-text value="Попробовать задание!" align="center" color="white" position="0 0 0.01"></a-text>
             </a-plane>
           </a-entity>
         </a-entity>
 
         <!-- Задание -->
         <a-entity id="challenge" visible="false">
-          <a-text id="challenge-text" value="Najdi pravil'nyj kod, chtoby vklyuchit' svet!" position="0 2 -3" color="#FFFFFF" align="center" scale="1 1 1"></a-text>
+          <a-text id="challenge-text" value="Найди правильный код, чтобы включить свет!" position="0 2 -3" color="#FFFFFF" align="center" scale="1 1 1"></a-text>
           <a-entity position="-1.5 1 -3">
             <a-plane id="code1" class="clickable" width="0.8" height="0.3" color="#FF4444">
               <a-text value="0101" align="center" color="white" position="0 0 0.01"></a-text>
@@ -336,14 +336,14 @@
         const guideText = document.querySelector('#guide-text');
         const options = document.querySelector('#rpo-options');
         options.setAttribute('visible', 'false');
-        guideText.setAttribute('value', 'RPO — eto razrabotka programmogo obespecheniya\ndlya dizajna i tekhnologij.\nZdes' 'ty budesh''sozdavat' 'programmy,\nkotorye pomogayut dizajneram voploshchat' 'idei v zhizn');
+        guideText.setAttribute('value', 'РПО — это разработка программного обеспечения\nдля дизайна и технологий.\nЗдесь ты будешь создавать программы,\nкоторые помогают дизайнерам воплощать идеи в жизнь.');
       }
 
       function showRpoTasks() {
         const guideText = document.querySelector('#guide-text');
         const options = document.querySelector('#rpo-options');
         options.setAttribute('visible', 'false');
-        guideText.setAttribute('value', 'Ty budesh' 'pisat' 'kod dlya prilozhenij,\nsozdavat' 'algoritmy dlya obrabotki dannykh\ni razrabatyvat' 'interfejsy dlya dizajnerov.');
+        guideText.setAttribute('value', 'Ты будешь писать код для приложений,\nсоздавать алгоритмы для обработки данных\nи разрабатывать интерфейсы для дизайнеров.');
       }
 
       function startRpoChallenge() {
@@ -363,10 +363,10 @@
         const challengeText = document.querySelector('#challenge-text');
         const light = document.querySelector('#challenge-light');
         if (isCorrect) {
-          challengeText.setAttribute('value', 'Otlichno! Svet vklyuchen!');
+          challengeText.setAttribute('value', 'Отлично! Свет включен!');
           light.setAttribute('intensity', '1');
           setTimeout(() => {
-            challengeText.setAttribute('value', 'Pozdravlyayu!');
+            challengeText.setAttribute('value', 'Поздравляю! Ты сделал первый шаг в РПО.\nХочешь узнать больше или вернуться?');
             const moreBtn = document.createElement('a-plane');
             moreBtn.setAttribute('id', 'more-btn');
             moreBtn.setAttribute('class', 'clickable');
@@ -374,7 +374,7 @@
             moreBtn.setAttribute('height', '0.4');
             moreBtn.setAttribute('color', '#008CBA');
             moreBtn.setAttribute('position', '-1 0.5 -3');
-            moreBtn.innerHTML = '<a-text value="Uznat\' bol\'she" align="center" color="white" position="0 0 0.01"></a-text>';
+            moreBtn.innerHTML = '<a-text value="Узнать больше" align="center" color="white" position="0 0 0.01"></a-text>';
             challenge.appendChild(moreBtn);
 
             const backBtn = document.createElement('a-plane');
@@ -384,14 +384,14 @@
             backBtn.setAttribute('height', '0.4');
             backBtn.setAttribute('color', '#008CBA');
             backBtn.setAttribute('position', '1 0.5 -3');
-            backBtn.innerHTML = '<a-text value="Nazad" align="center" color="white" position="0 0 0.01"></a-text>';
+            backBtn.innerHTML = '<a-text value="Назад" align="center" color="white" position="0 0 0.01"></a-text>';
             challenge.appendChild(backBtn);
 
             moreBtn.addEventListener('click', () => showRpoDetails());
             backBtn.addEventListener('click', () => returnToTransition());
           }, 1000);
         } else {
-          challengeText.setAttribute('value', 'Poprobuj eshche!');
+          challengeText.setAttribute('value', 'Попробуй еще!');
         }
       }
 
@@ -400,7 +400,7 @@
         const guideText = document.querySelector('#guide-text');
         guideText.setAttribute('visible', 'true');
         challenge.setAttribute('visible', 'false');
-        guideText.setAttribute('value', 'V RPO ty mozhesh razrabatyvat \ninstrumenty dlya dizajnerov,\nnaprimer, programmy dlya 3D-modelirovaniya\nili obrabotki izobrazhenij.');
+        guideText.setAttribute('value', 'В РПО ты можешь разрабатывать\nинструменты для дизайнеров,\nнапример, программы для 3D-моделирования\nили обработки изображений.');
       }
 
       function returnToTransition() {
