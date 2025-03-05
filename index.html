@@ -189,7 +189,8 @@
             font="fonts/msdf/pixel/pix-msdf.json" 
             font-image="fonts/msdf/pixel/pix.png" 
             position="-1.8 0.2 0.01" 
-            scale="0.5 0.5 0.5">
+            scale="0.5 0.5 0.5"
+            typewriter>
           </a-text>
         </a-entity>
       </a-entity>
@@ -356,6 +357,23 @@
       handlePortalClick('portal3', 'turizm-scene', 'egypt');
       handlePortalClick('portal4', 'service-scene', 'japan');
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
+
+      AFRAME.registerComponent('typewriter', {
+        init: function () {
+          var el = this.el;
+          var text = el.getAttribute('value');
+          el.setAttribute('value', '');
+          var index = 0;
+          var interval = setInterval(function () {
+            if (index < text.length) {
+              el.setAttribute('value', el.getAttribute('value') + text[index]);
+              index++;
+            } else {
+              clearInterval(interval);
+            }
+          }, 50); // Скорость набора текста (50 мс на символ)
+        }
+      });
     </script>
   </body>
 </html>
