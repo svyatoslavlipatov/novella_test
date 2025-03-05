@@ -38,14 +38,18 @@
         sound="src: #click-sound; on: click">
       </a-entity>
 
+
+      <!-- Динамичный фон с environment -->
+      <a-entity id="background" environment="preset: starry;"></a-entity>
+
       <!-- Фоновые элементы в контейнерах -->
 
       <a-entity id="background-main-container">
-        <a-entity id="background-main-scene" environment="preset: starry;"></a-entity>
+        <!-- <a-entity id="background-main-scene" environment="preset: starry;"></a-entity> -->
       </a-entity>
 
       <a-entity id="background-transition-container" visible="false">
-        <a-entity id="background-transition-scene" environment="preset: forest;"></a-entity>
+        <!-- <a-entity id="background-transition-scene" environment="preset: forest;"></a-entity> -->
       </a-entity>
 
 
@@ -244,8 +248,7 @@
 
         mainScene.setAttribute('visible', 'false');
         transitionScene.setAttribute('visible', 'true');
-        backgroundMainContainer.setAttribute('visible', 'false'); // Скрываем контейнер фона main-scene
-        backgroundTransitionContainer.setAttribute('visible', 'true'); // Показываем контейнер фона transition-scene
+        background.setAttribute('environment', 'preset: forest');
 
         buttonNext.classList.remove('clickable');
         buttonBack.classList.add('clickable');
@@ -326,33 +329,38 @@
         
         transitionScene.setAttribute('visible', 'false');
         mainScene.setAttribute('visible', 'true');
-        backgroundTransitionContainer.setAttribute('visible', 'false'); // Скрываем контейнер фона transition-scene
-        backgroundMainContainer.setAttribute('visible', 'true'); // Показываем контейнер фона main-scene
+        background.setAttribute('environment', 'preset: starry');
 
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
       });
 
     // Функция для обработки перехода по клику на портал
-    function handlePortalClick(portalId, targetSceneId) {
-      document.querySelector(`#${portalId} a-circle`).addEventListener('click', function () {
-        console.log(`${portalId} clicked`);
-        const transitionScene = document.querySelector('#transition-scene');
-        const targetScene = document.querySelector(`#${targetSceneId}`);
-        const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+    function handlePortalClick(portalId, targetSceneId, environmentPreset) {
+  document.querySelector(`#${portalId} a-circle`).addEventListener('click', function () {
+    console.log(`${portalId} clicked`);
+    const transitionScene = document.querySelector('#transition_scene');
+    const targetScene = document.querySelector(`#${targetSceneId}`);
+    const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+    const background = document.querySelector('#background');
 
-        portals.forEach(portal => portal.classList.remove('clickable'));
-        transitionScene.setAttribute('visible', 'false');
-        targetScene.setAttribute('visible', 'true');
-      });
+    portals.forEach(portal => portal.classList.remove('clickable'));
+    transitionScene.setAttribute('visible', 'false');
+    targetScene.setAttribute('visible', 'true');
+    if (environmentPreset) {
+      background.setAttribute('environment', `preset: ${environmentPreset}`);
     }
+  });
+}
+
+
 
     // Применяем функцию для каждого портала
-    handlePortalClick('portal1', 'rpo-scene');
-    handlePortalClick('portal2', 'dizayn-scene');
-    handlePortalClick('portal3', 'turizm-scene');
-    handlePortalClick('portal4', 'service-scene');
-    handlePortalClick('portal5', 'reklama-scene');
+    handlePortalClick('portal1', 'rpo-scene', 'default');
+    handlePortalClick('portal2', 'dizayn-scene', 'goldmine');
+    handlePortalClick('portal3', 'turizm-scene', 'default');
+    handlePortalClick('portal4', 'service-scene', 'default');
+    handlePortalClick('portal5', 'reklama-scene', 'default');
 
     </script>
   </body>
