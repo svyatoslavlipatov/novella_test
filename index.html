@@ -4,36 +4,41 @@
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
     <script>
       AFRAME.registerComponent('typewriter', {
-        init: function () {
-          console.log('Typewriter component initialized');
-          var el = this.el;
-          var text = el.getAttribute('value');
-          el.setAttribute('value', '');
-          var scene = el.closest('[visible]');
-          if (scene) {
-            scene.addEventListener('visibilitychanged', function () {
-              if (scene.getAttribute('visible')) {
-                console.log('Scene became visible, starting typewriter');
-                startTypewriter();
-              }
-            });
-          } else {
-            startTypewriter();
-          }
-    
-          function startTypewriter() {
-            var index = 0;
-            var interval = setInterval(function () {
-              if (index < text.length) {
-                el.setAttribute('value', el.getAttribute('value') + text[index]);
-                index++;
-              } else {
-                clearInterval(interval);
-              }
-            }, 50);
-          }
+  init: function () {
+    var el = this.el;
+    var text = el.getAttribute('value');
+    el.setAttribute('value', ''); // Очищаем текст при инициализации
+    this.text = text; // Сохраняем исходный текст
+    this.index = 0;
+    this.interval = null;
+
+    // Функция для запуска эффекта печати
+    this.startTyping = function () {
+      if (this.interval) return; // Не запускаем, если уже идет
+      this.interval = setInterval(() => {
+        if (this.index < this.text.length) {
+          el.setAttribute('value', el.getAttribute('value') + this.text[this.index]);
+          this.index++;
+        } else {
+          clearInterval(this.interval);
+          this.interval = null;
+        }
+      }, 50); // Скорость печати
+    };
+
+    // Слушаем событие видимости родительской сцены
+    var parentScene = el.closest('#rpo-scene');
+    if (parentScene) {
+      parentScene.addEventListener('visibilitychanged', (event) => {
+        if (event.target.getAttribute('visible')) {
+          this.index = 0; // Сбрасываем индекс
+          el.setAttribute('value', ''); // Очищаем текст
+          this.startTyping(); // Запускаем эффект
         }
       });
+    }
+  }
+});
     </script>
   </head>
   <body>
@@ -215,10 +220,12 @@
           </a-image>
           <a-text 
             id="guide-text" 
-            value="Hi" 
+            value="А механизмы технологий работают в гармонии." 
             color="#FFFFFF" 
             align="left" 
             width="3.5" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" 
             position="-1.8 0.2 0.01" 
             scale="0.5 0.5 0.5"
             typewriter>
