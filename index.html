@@ -42,6 +42,12 @@
       <a-entity id="background-main-scene" environment="preset: starry;"></a-entity>
       <a-entity id="background-transition-scene" environment="preset: forest;" visible="false"></a-entity>
 
+      <a-entity id="background-rpo-scene" environment="preset: default;" visible="false"></a-entity>
+      <a-entity id="background-dizayn-scene" environment="preset: goldmine;" visible="false"></a-entity>
+      <a-entity id="background-turizm-scene" environment="preset: egypt;" visible="false"></a-entity>
+      <a-entity id="background-service-scene" environment="preset: japan;" visible="false"></a-entity>
+      <a-entity id="background-reklama-scene" environment="preset: volcano;" visible="false"></a-entity>
+
 
       <!-- Основная сцена -->
       <a-entity id="main-scene">
@@ -160,7 +166,6 @@
       <!-- РПО сцена -->
       <a-entity id="rpo-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: default;"></a-entity>
 
         <a-entity position="0 1 -4">
           <a-text id="rpo-msg-one" value="RPO" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
@@ -170,7 +175,6 @@
       <!-- Дизайн сцена -->
       <a-entity id="dizayn-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: goldmine;"></a-entity>
 
         <a-entity position="0 1 -4">
           <a-text id="dizayn-msg-one" value="DIZAYN" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
@@ -180,7 +184,7 @@
       <!-- Туризм сцена -->
       <a-entity id="turizm-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: egypt;"></a-entity>
+
         <a-entity position="0 1 -4">
           <a-text id="turizm-msg-one" value="TURIZM" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
@@ -189,7 +193,7 @@
       <!-- Сервис сцена -->
       <a-entity id="service-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: japan;"></a-entity>
+
         <a-entity position="0 1 -4">
           <a-text id="service-msg-one" value="SERVICE" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
@@ -198,7 +202,7 @@
       <!-- Реклама сцена -->
       <a-entity id="reklama-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
-        <a-entity environment="preset: volcano;"></a-entity>
+
         <a-entity position="0 1 -4">
           <a-text id="reklama-msg-one" value="REKLAMA" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
@@ -316,7 +320,7 @@
         mainScene.setAttribute('visible', 'true');
         backgroundTransitionScene.setAttribute('visible', 'false'); // Скрываем фон transition-scene
         backgroundMainScene.setAttribute('visible', 'true'); // Показываем фон main-scene
-        
+
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
       });
