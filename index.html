@@ -431,25 +431,19 @@
       handlePortalClick('portal4', 'service-scene', 'japan');
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
 
-     // Логика переключения текста в rpo-scene
+      // Логика переключения текста в rpo-scene
       document.querySelector('#next-text-button').addEventListener('click', function() {
-        const textOne = document.querySelector('#accompanier-text-one');
-        const textTwo = document.querySelector('#accompanier-text-two');
-        const textThree = document.querySelector('#accompanier-text-three');
-        const textFour = document.querySelector('#accompanier-text-four');
+        const texts = [
+          document.querySelector('#accompanier-text-one'),
+          document.querySelector('#accompanier-text-two'),
+          document.querySelector('#accompanier-text-three'),
+          document.querySelector('#accompanier-text-four')
+        ];
 
-        if (textOne.getAttribute('visible')) {
-          // Переключаемся с первого на второй
-          textOne.setAttribute('visible', 'false');
-          textTwo.setAttribute('visible', 'true');
-        } else if (textTwo.getAttribute('visible')) {
-          // Переключаемся со второго на третий
-          textTwo.setAttribute('visible', 'false');
-          textThree.setAttribute('visible', 'true');
-        } else if (textThree.getAttribute('visible')) {
-          // Переключаемся с третьего на четвертый
-          textThree.setAttribute('visible', 'false');
-          textFour.setAttribute('visible', 'true');
+        const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
+        if (currentIndex < texts.length - 1) {
+          texts[currentIndex].setAttribute('visible', 'false');
+          texts[currentIndex + 1].setAttribute('visible', 'true');
         }
       });
 
