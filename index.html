@@ -155,77 +155,92 @@
       </a-entity>
 
       <!-- РПО сцена -->
-      <a-entity id="rpo-scene" visible="false">
-        <a-sky color="#ECECEC"></a-sky>
-        <a-entity position="0 1 -4">
-          <a-text id="rpo-msg-one" value="RPO" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
-        </a-entity>
-        
-        <!-- Сопроводитель -->
-        <a-entity id="accompanier" position="0 0.5 -3">
-          
-          <a-box 
-            id="accompanier-box"
-            width="4" 
-            height="1" 
-            depth="0.01" 
-            color="#000000" 
-            opacity="0.7">
-        
-          <a-text 
-            id="speaker-name" 
-            value="ACCOMPANIER" 
-            color="#FFD700" 
-            align="left" 
-            width="2.5" 
-            position="-1.8 0.34 0.01" 
-            scale="1 1 1"
-            opacity="1">
-          </a-text>
-
-          <a-entity id = "accompanier-dialog">
-            <a-text id="accompanier-text-one" 
-              value="Welcome!" 
-              color="#FFFFFF" 
-              align="left" 
-              anchor="left" 
-              baseline="top" 
-              width="3.5" 
-              scale="1 1 1" 
-              position="-1.8 0.2 0.01" 
-              wrapcount="50"
-              visible="true">
-            </a-text>
-
-            <a-text id="accompanier-text-two" 
-              value="You've entered RPO" 
-              color="#FFFFFF" 
-              align="left" 
-              anchor="left" 
-              baseline="top" 
-              width="3.5" 
-              scale="1 1 1" 
-              position="-1.8 0.2 0.01" 
-              wrapcount="50"
-              visible="false">
-            </a-text>
-
-          </a-entity>
-
-        </a-box>
-
-          <a-image 
-            id="character-portrait"
-            src="#character-image" 
-            position="-1.5 0.5 0" 
-            width="1" 
-            height="1.5" 
-            opacity="0" >
-          </a-image>
+<a-entity id="rpo-scene" visible="false">
+  <a-sky color="#ECECEC"></a-sky>
+  <a-entity position="0 1 -4">
+    <a-text id="rpo-msg-one" value="RPO" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+  </a-entity>
+  
+  <!-- Сопроводитель -->
+  <a-entity id="accompanier" position="0 0.5 -3">
+    <a-box 
+      id="accompanier-box"
+      width="4" 
+      height="1" 
+      depth="0.01" 
+      color="#000000" 
+      opacity="0.7">
       
+      <a-text 
+        id="speaker-name" 
+        value="ACCOMPANIER" 
+        color="#FFD700" 
+        align="left" 
+        width="2.5" 
+        position="-1.8 0.34 0.01" 
+        scale="1 1 1"
+        opacity="1">
+      </a-text>
 
-        </a-entity>
+      <a-entity id="accompanier-dialog">
+        <a-text id="accompanier-text-one" 
+          value="Welcome!" 
+          color="#FFFFFF" 
+          align="left" 
+          anchor="left" 
+          baseline="top" 
+          width="3.5" 
+          scale="1 1 1" 
+          position="-1.8 0.2 0.01" 
+          wrapcount="50"
+          visible="true">
+        </a-text>
+
+        <a-text id="accompanier-text-two" 
+          value="You've entered RPO" 
+          color="#FFFFFF" 
+          align="left" 
+          anchor="left" 
+          baseline="top" 
+          width="3.5" 
+          scale="1 1 1" 
+          position="-1.8 0.2 0.01" 
+          wrapcount="50"
+          visible="false">
+        </a-text>
       </a-entity>
+
+      <!-- Кнопка "Далее »" -->
+      <a-entity position="1.5 -0.3 0.01">
+        <a-plane 
+          id="next-text-button" 
+          class="clickable" 
+          width="0.6" 
+          height="0.3" 
+          color="#008CBA"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Далее »" 
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="0.6"
+          scale="0.8 0.8 0.8">
+        </a-text>
+      </a-entity>
+    </a-box>
+
+    <a-image 
+      id="character-portrait"
+      src="#character-image" 
+      position="-1.5 0.5 0" 
+      width="1" 
+      height="1.5" 
+      opacity="0">
+    </a-image>
+  </a-entity>
+</a-entity>
 
       <!-- Дизайн сцена -->
       <a-entity id="dizayn-scene" visible="false">
@@ -390,35 +405,17 @@
       handlePortalClick('portal4', 'service-scene', 'japan');
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
 
-
       // Логика переключения текста в rpo-scene
-    document.querySelector('#accompanier-box').addEventListener('click', function() {
-      const textOne = document.querySelector('#accompanier-text-one');
-      const textTwo = document.querySelector('#accompanier-text-two');
-      
-      // Анимация исчезновения первого текста
-      textOne.setAttribute('animation', {
-        property: 'opacity',
-        from: 1,
-        to: 0,
-        dur: 500,
-        easing: 'easeInOutQuad'
-      });
-      
-      // Ждем завершения анимации и показываем второй текст
-      setTimeout(() => {
-        textOne.setAttribute('visible', 'false');
-        textTwo.setAttribute('visible', 'true');
+      document.querySelector('#next-text-button').addEventListener('click', function() {
+        const textOne = document.querySelector('#accompanier-text-one');
+        const textTwo = document.querySelector('#accompanier-text-two');
         
-        textTwo.setAttribute('animation', {
-          property: 'opacity',
-          from: 0,
-          to: 1,
-          dur: 500,
-          easing: 'easeInOutQuad'
-        });
-      }, 500);
-    });
+        if (textOne.getAttribute('visible')) {
+          textOne.setAttribute('visible', 'false');
+          textTwo.setAttribute('visible', 'true');
+        }
+      })
+
     </script>
   </body>
 </html>
