@@ -161,7 +161,7 @@
           <a-text id="rpo-msg-one" value="RPO" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
         </a-entity>
         
-        <!-- Плашка текста -->
+        <!-- Сопроводитель -->
         <a-entity id="accompanier" position="0 0.5 -3">
           <a-box 
             id="accompanier-box"
@@ -169,11 +169,21 @@
             height="1" 
             depth="0.01" 
             color="#000000" 
-            opacity="0.7" 
-            animation="property: opacity; from: 0; to: 0.7; dur: 1000; delay: 500">
+            opacity="0.7" >
 
+          <a-text 
+            id="speaker-name" 
+            value="ACCOMPANIER" 
+            color="#FFD700" 
+            align="left" 
+            width="4" 
+            position="-1.8 0.4 0.01" 
+            scale="0.5 0.5 0.5"
+            opacity="0"
+            animation="property: opacity; from: 0; to: 1; dur: 1000; delay: 500">
+          </a-text>
 
-            <a-text 
+          <a-text 
             id="guide-text" 
             value="Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!Welcome!" 
             color="#FFFFFF" 
@@ -181,9 +191,10 @@
             anchor="left" 
             width="4" 
             position="0 0 0.01"
-            wrapCount="80"
-            >
+            wrapCount="80">
           </a-text>
+
+        
 
           </a-box>
 
@@ -196,21 +207,11 @@
             opacity="0" 
             animation="property: opacity; from: 0; to: 1; dur: 1000; delay: 500">
           </a-image>
-          <a-text 
-            id="speaker-name" 
-            value="accompanier" 
-            color="#FFD700" 
-            align="left" 
-            width="3.5" 
-            position="-1.8 0.4 0.01" 
-            scale="0.5 0.5 0.5"
-            opacity="0"
-            animation="property: opacity; from: 0; to: 1; dur: 1000; delay: 500">
-          </a-text>
+      
 
         </a-entity>
       </a-entity>
-      
+
       <!-- Дизайн сцена -->
       <a-entity id="dizayn-scene" visible="false">
         <a-sky color="#ECECEC"></a-sky>
