@@ -183,6 +183,7 @@
       </a-text>
 
       <a-entity id="accompanier-dialog">
+        
         <a-text id="accompanier-text-one" 
           value="Privet! Ti popal d yadro lubogo prilozheniya - backend. Ya soprovoditel i pokazhu tebe, kak zdes vse rabotaet" 
           color="#FFFFFF" 
@@ -315,7 +316,24 @@
           });
         }
       });
-
+    
+      // Функция для эффекта печати текста
+      function typeText(element, text, speed = 50) {
+        return new Promise(resolve => {
+          let index = 0;
+          element.setAttribute('value', ''); // Очищаем текст перед началом
+          const interval = setInterval(() => {
+            if (index < text.length) {
+              element.setAttribute('value', text.substring(0, index + 1));
+              index++;
+            } else {
+              clearInterval(interval);
+              resolve();
+            }
+          }, speed);
+        });
+      }
+    
       // Логика переключения на вторую сцену
       document.querySelector('#button-next').addEventListener('click', async function () {
         console.log('click');
@@ -324,13 +342,13 @@
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
         const background = document.querySelector('#background');
-
+    
         mainScene.setAttribute('visible', 'false');
         transitionScene.setAttribute('visible', 'true');
         buttonNext.classList.remove('clickable');
         buttonBack.classList.add('clickable');
-        background.setAttribute('environment', 'preset: forest'); // Меняем фон на forest
-
+        background.setAttribute('environment', 'preset: forest');
+    
         const messages = [
           { id: '#msg-one', delay: 1000 },
           { id: '#msg-two', delay: 1000 },
@@ -339,11 +357,11 @@
           { id: '#msg-five', delay: 1000 },
           { id: '#msg-six', delay: 0 }
         ];
-
+    
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         const animationDuration = 1000;
         const pauseBeforeFadeIn = 1000;
-
+    
         const animateOpacity = (element, from, to, duration) => {
           return new Promise(resolve => {
             element.setAttribute('animation', {
@@ -364,17 +382,17 @@
             }, { once: true });
           });
         };
-
+    
         for (let i = 0; i < messages.length - 1; i++) {
           const current = document.querySelector(messages[i].id);
           const next = document.querySelector(messages[i + 1].id);
-
+    
           await sleep(messages[i].delay - animationDuration);
           await animateOpacity(current, 1, 0, animationDuration);
           current.parentNode.removeChild(current);
           await sleep(pauseBeforeFadeIn);
           await animateOpacity(next, 0, 1, animationDuration);
-
+    
           if (next.id === 'msg-six') {
             const portalsContainer = document.querySelector('#portals');
             const portals = portalsContainer.querySelectorAll('a-circle');
@@ -391,7 +409,7 @@
           }
         }
       });
-
+    
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
         console.log('click');
@@ -405,48 +423,55 @@
         mainScene.setAttribute('visible', 'true');
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
-        background.setAttribute('environment', 'preset: starry'); // Возвращаем фон starry
+        background.setAttribute('environment', 'preset: starry');
       });
-
+    
       // Функция для обработки перехода по клику на портал
       function handlePortalClick(portalId, targetSceneId, environmentPreset) {
-        document.querySelector(`#${portalId} a-circle`).addEventListener('click', function () {
+        document.querySelector(`#${portalId} a-circle`).addEventListener('click', async function () {
           console.log(`${portalId} clicked`);
           const transitionScene = document.querySelector('#transition-scene');
           const targetScene = document.querySelector(`#${targetSceneId}`);
           const portals = document.querySelector('#portals').querySelectorAll('a-circle');
           const background = document.querySelector('#background');
-
+    
           portals.forEach(portal => portal.classList.remove('clickable'));
           transitionScene.setAttribute('visible', 'false');
           targetScene.setAttribute('visible', 'true');
           background.setAttribute('environment', `preset: ${environmentPreset}`);
+    
+          // Запускаем печать первого текста при входе в rpo-scene
+          if (targetSceneId === 'rpo-scene') {
+            const firstText = document.querySelector('#accompanier-text-one');
+            await typeText(firstText, firstText.getAttribute('value'));
+          }
         });
       }
-
+    
       // Применяем функцию для каждого портала
       handlePortalClick('portal1', 'rpo-scene', 'default');
       handlePortalClick('portal2', 'dizayn-scene', 'goldmine');
-      handlePortalClick('portal3', 'turizm-scene', 'eg  ypt');
+      handlePortalClick('portal3', 'turizm-scene', 'egypt');
       handlePortalClick('portal4', 'service-scene', 'japan');
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
-
-      // Логика переключения текста в rpo-scene
-      document.querySelector('#next-text-button').addEventListener('click', function() {
+    
+      // Логика переключения текста в rpo-scene с эффектом печати
+      document.querySelector('#next-text-button').addEventListener('click', async function() {
         const texts = [
           document.querySelector('#accompanier-text-one'),
           document.querySelector('#accompanier-text-two'),
           document.querySelector('#accompanier-text-three'),
           document.querySelector('#accompanier-text-four')
         ];
-
+    
         const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
         if (currentIndex < texts.length - 1) {
           texts[currentIndex].setAttribute('visible', 'false');
-          texts[currentIndex + 1].setAttribute('visible', 'true');
+          const nextText = texts[currentIndex + 1];
+          nextText.setAttribute('visible', 'true');
+          await typeText(nextText, nextText.getAttribute('value'));
         }
       });
-
     </script>
   </body>
 </html>
