@@ -501,11 +501,6 @@ document.querySelector('#next-text-button').addEventListener('click', async func
   const yesButtonEntity = document.querySelector('#yes-button-entity');
   const yesText = document.querySelector('#accompanier-text-five-yes');
 
-  if (!yesButtonEntity) {
-    console.error('Yes button entity not found');
-    return;
-  }
-
   const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
   if (currentIndex < texts.length - 1) {
     texts[currentIndex].setAttribute('visible', 'false');
@@ -531,10 +526,6 @@ document.querySelector('#yes-button').addEventListener('click', async function()
   const currentText = document.querySelector('#accompanier-text-four');
   const yesText = document.querySelector('#accompanier-text-five-yes');
 
-  if (!yesButtonEntity || !yesButton || !currentText || !yesText) {
-    console.error('Required elements not found');
-    return;
-  }
 
   // Скрываем текущий текст и кнопку
   currentText.setAttribute('visible', 'false');
@@ -544,6 +535,38 @@ document.querySelector('#yes-button').addEventListener('click', async function()
   // Показываем новый текст с эффектом печати
   yesText.setAttribute('visible', 'true');
   await typeText(yesText, yesText.getAttribute('value'));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Для тестирования
+document.addEventListener('keydown', function(event) {
+  const mainScene = document.querySelector('#main-scene');
+  const rpoScene = document.querySelector('#rpo-scene');
+  
+  // Проверяем, что нажата клавиша "1" и main-scene видима
+  if (event.key === '1' && mainScene.getAttribute('visible') === 'true') {
+    mainScene.setAttribute('visible', 'false');
+    rpoScene.setAttribute('visible', 'true');
+  }
 });
     </script>
   </body>
