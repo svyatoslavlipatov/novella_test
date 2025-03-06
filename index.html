@@ -559,13 +559,15 @@ document.querySelector('#yes-button').addEventListener('click', async function()
 
 // Для тестирования
 document.addEventListener('keydown', function(event) {
+  console.log('Нажата клавиша:', event.key);
   const mainScene = document.querySelector('#main-scene');
+  console.log('Видимость mainScene:', mainScene.getAttribute('visible'));
   const rpoScene = document.querySelector('#rpo-scene');
   
-  // Проверяем, что нажата клавиша "1" и main-scene видима
-  if (event.key === 'Q' && mainScene.getAttribute('visible') === 'true') {
-    mainScene.setAttribute('visible', 'false');
-    rpoScene.setAttribute('visible', 'true');
+  if (event.key.toLowerCase() === 'q' && mainScene.getAttribute('visible')) {
+    mainScene.setAttribute('visible', false);
+    rpoScene.setAttribute('visible', true);
+    console.log('Переключение на rpo-scene выполнено');
   }
 });
     </script>
