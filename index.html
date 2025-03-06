@@ -392,33 +392,33 @@
 
 
       // Логика переключения текста в rpo-scene
-      document.querySelector('#accompanier-box').addEventListener('click', function() {
-        const textOne = document.querySelector('#accompanier-text-one');
-        const textTwo = document.querySelector('#accompanier-text-two');
+    document.querySelector('#accompanier-box').addEventListener('click', function() {
+      const textOne = document.querySelector('#accompanier-text-one');
+      const textTwo = document.querySelector('#accompanier-text-two');
+      
+      // Анимация исчезновения первого текста
+      textOne.setAttribute('animation', {
+        property: 'opacity',
+        from: 1,
+        to: 0,
+        dur: 500,
+        easing: 'easeInOutQuad'
+      });
+      
+      // Ждем завершения анимации и показываем второй текст
+      setTimeout(() => {
+        textOne.setAttribute('visible', 'false');
+        textTwo.setAttribute('visible', 'true');
         
-        // Анимация исчезновения первого текста
-        textOne.setAttribute('animation', {
+        textTwo.setAttribute('animation', {
           property: 'opacity',
-          from: 1,
-          to: 0,
+          from: 0,
+          to: 1,
           dur: 500,
           easing: 'easeInOutQuad'
         });
-        
-        // Ждем завершения анимации и показываем второй текст
-        setTimeout(() => {
-          textOne.setAttribute('visible', 'false');
-          textTwo.setAttribute('visible', 'true');
-          
-          textTwo.setAttribute('animation', {
-            property: 'opacity',
-            from: 0,
-            to: 1,
-            dur: 500,
-            easing: 'easeInOutQuad'
-          });
-        }, 500);
-      });
+      }, 500);
+    });
     </script>
   </body>
 </html>
