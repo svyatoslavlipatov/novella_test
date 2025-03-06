@@ -510,24 +510,25 @@
     
           // Показываем кнопку "Yes" после завершения печати text-four
           if (nextText.id === 'accompanier-text-four') {
-            nextButton.setAttribute('visible', 'false'); // Скрываем "Next >>"
+            nextButton.setAttribute('visible', 'false');
             nextButton.classList.remove('clickable');
-            yesButton.setAttribute('visible', 'true');   // Показываем "Yes"
+            yesButton.setAttribute('visible', 'true');
           }
         }
       });
     
-      // Логика для кнопки "Yes"
+      // Логика для кнопки "Yes" с удалением
       document.querySelector('#yes-button').addEventListener('click', async function() {
         const textFour = document.querySelector('#accompanier-text-four');
         const textFive = document.querySelector('#accompanier-text-five');
-        const yesButton = document.querySelector('#yes-button').parentNode;
+        const yesButtonEntity = document.querySelector('#yes-button').parentNode;
     
         textFour.setAttribute('visible', 'false');
         textFive.setAttribute('visible', 'true');
-        yesButton.setAttribute('visible', 'false'); // Скрываем "Yes" после клика
-        yesButton.classList.remove('clickable');
         await typeText(textFive, textFive.getAttribute('value'));
+        
+        // Удаляем кнопку "Yes" из DOM
+        yesButtonEntity.parentNode.removeChild(yesButtonEntity);
       });
     </script>
   </body>
