@@ -237,7 +237,7 @@
       </a-text>
 
       <!-- Текст после появления кнопки -->
-      <a-text id="accompanier-text-five" 
+      <a-text id="accompanier-text-five-yes" 
         value="UHU" 
         color="#FFFFFF" 
         align="left" 
@@ -490,45 +490,44 @@
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
     
       // Логика переключения текста в rpo-scene с эффектом печати
-        document.querySelector('#next-text-button').addEventListener('click', async function() {
+      document.querySelector('#next-text-button').addEventListener('click', async function() {
           const texts = [
             document.querySelector('#accompanier-text-one'),
             document.querySelector('#accompanier-text-two'),
             document.querySelector('#accompanier-text-three'),
-            document.querySelector('#accompanier-text-four'),
-            document.querySelector('#accompanier-text-five')
+            document.querySelector('#accompanier-text-four')
           ];
-          const yesButtonContainer = document.querySelector('#yes-button-container');
-          const nextButton = document.querySelector('#next-text-button');
 
           const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
-          if (currentIndex < texts.length - 2) { // До text-four
+          if (currentIndex < texts.length - 1) {
             texts[currentIndex].setAttribute('visible', 'false');
             const nextText = texts[currentIndex + 1];
             nextText.setAttribute('visible', 'true');
             await typeText(nextText, nextText.getAttribute('value'));
-          } else if (currentIndex === texts.length - 2) { // text-four
-            texts[currentIndex].setAttribute('visible', 'false');
-            const nextText = texts[currentIndex + 1];
-            nextText.setAttribute('visible', 'true');
-            await typeText(nextText, nextText.getAttribute('value'));
-            // Показываем кнопку "Yes" и скрываем "Next >>"
-            yesButtonContainer.setAttribute('visible', 'true');
-            nextButton.setAttribute('visible', 'false');
-            nextButton.classList.remove('clickable');
+
+            // Когда появляется accompanier-text-four, показываем кнопку Yes
+            if (nextText.id === 'accompanier-text-four') {
+              const yesButtonEntity = document.querySelector('#yes-button-entity');
+              yesButtonEntity.setAttribute('visible', 'true');
+            }
           }
         });
 
-        // Логика для кнопки "Yes"
+        // Обработчик клика по кнопке Yes
         document.querySelector('#yes-button').addEventListener('click', async function() {
+          const yesButtonEntity = document.querySelector('#yes-button-entity');
           const textFour = document.querySelector('#accompanier-text-four');
-          const textFive = document.querySelector('#accompanier-text-five');
-          const yesButtonContainer = document.querySelector('#yes-button-container');
+          const textFiveYes = document.querySelector('#accompanier-text-five-yes');
 
+          // Скрываем кнопку Yes
+          yesButtonEntity.setAttribute('visible', 'false');
+          
+          // Скрываем accompanier-text-four
           textFour.setAttribute('visible', 'false');
-          textFive.setAttribute('visible', 'true');
-          await typeText(textFive, textFive.getAttribute('value'));
-          yesButtonContainer.parentNode.removeChild(yesButtonContainer); // Удаляем кнопку
+          
+          // Показываем и печатаем accompanier-text-five-yes
+          textFiveYes.setAttribute('visible', 'true');
+          await typeText(textFiveYes, textFiveYes.getAttribute('value'));
         });
     </script>
   </body>
