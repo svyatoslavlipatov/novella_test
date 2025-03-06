@@ -563,7 +563,7 @@ document.addEventListener('keydown', function(event) {
   const rpoScene = document.querySelector('#rpo-scene');
   
   // Проверяем, что нажата клавиша "1" и main-scene видима
-  if (event.key === '1' && mainScene.getAttribute('visible') === 'true') {
+  if (event.key === 'Q' && mainScene.getAttribute('visible') === 'true') {
     mainScene.setAttribute('visible', 'false');
     rpoScene.setAttribute('visible', 'true');
   }
