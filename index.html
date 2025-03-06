@@ -270,6 +270,27 @@
           scale="0.8 0.8 0.8">
         </a-text>
       </a-entity>
+
+      <!-- Кнопка "Yes" -->
+      <a-entity position="1.2 -0.3 0.01" visible="false">
+        <a-plane 
+          id="yes-button" 
+          class="clickable" 
+          width="0.6" 
+          height="0.3" 
+          color="#00CC00"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Yes" 
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="1.25"
+          scale="0.8 0.8 0.8">
+        </a-text>
+      </a-entity>
+      
     </a-box>
 
     <a-image 
@@ -326,7 +347,7 @@
             el.setAttribute('color', '#005F7F');
           });
           el.addEventListener('mouseleave', function () {
-            el.setAttribute('color', '#008CBA');
+            el.setAttribute('color', el.id === 'yes-button' ? '#00CC00' : '#008CBA');
           });
         }
       });
@@ -335,7 +356,7 @@
       function typeText(element, text, speed = 50) {
         return new Promise(resolve => {
           let index = 0;
-          element.setAttribute('value', ''); // Очищаем текст перед началом
+          element.setAttribute('value', '');
           const interval = setInterval(() => {
             if (index < text.length) {
               element.setAttribute('value', text.substring(0, index + 1));
@@ -454,7 +475,6 @@
           targetScene.setAttribute('visible', 'true');
           background.setAttribute('environment', `preset: ${environmentPreset}`);
     
-          // Запускаем печать первого текста при входе в rpo-scene
           if (targetSceneId === 'rpo-scene') {
             const firstText = document.querySelector('#accompanier-text-one');
             await typeText(firstText, firstText.getAttribute('value'));
@@ -478,6 +498,8 @@
           document.querySelector('#accompanier-text-four'),
           document.querySelector('#accompanier-text-five')
         ];
+        const nextButton = document.querySelector('#next-text-button');
+        const yesButton = document.querySelector('#yes-button').parentNode;
     
         const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
         if (currentIndex < texts.length - 1) {
@@ -485,7 +507,27 @@
           const nextText = texts[currentIndex + 1];
           nextText.setAttribute('visible', 'true');
           await typeText(nextText, nextText.getAttribute('value'));
+    
+          // Показываем кнопку "Yes" после завершения печати text-four
+          if (nextText.id === 'accompanier-text-four') {
+            nextButton.setAttribute('visible', 'false'); // Скрываем "Next >>"
+            nextButton.classList.remove('clickable');
+            yesButton.setAttribute('visible', 'true');   // Показываем "Yes"
+          }
         }
+      });
+    
+      // Логика для кнопки "Yes"
+      document.querySelector('#yes-button').addEventListener('click', async function() {
+        const textFour = document.querySelector('#accompanier-text-four');
+        const textFive = document.querySelector('#accompanier-text-five');
+        const yesButton = document.querySelector('#yes-button').parentNode;
+    
+        textFour.setAttribute('visible', 'false');
+        textFive.setAttribute('visible', 'true');
+        yesButton.setAttribute('visible', 'false'); // Скрываем "Yes" после клика
+        yesButton.classList.remove('clickable');
+        await typeText(textFive, textFive.getAttribute('value'));
       });
     </script>
   </body>
