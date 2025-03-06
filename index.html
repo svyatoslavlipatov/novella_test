@@ -497,7 +497,7 @@
     document.querySelector('#accompanier-text-three'),
     document.querySelector('#accompanier-text-four')
   ];
-  const yesButtonEntity = document.querySelector('#yes-button-entity');
+  const yesButton = document.querySelector('#yes-button');
   const yesText = document.querySelector('#accompanier-text-five-yes');
 
   const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
@@ -509,22 +509,22 @@
 
     // Показываем кнопку Yes после accompanier-text-four
     if (nextText.id === 'accompanier-text-four') {
-      yesButtonEntity.setAttribute('visible', 'true');
-      yesButtonEntity.querySelector('#yes-button').classList.add('clickable');
+      yesButton.setAttribute('visible', 'true');
+      yesButton.querySelector('#yes-button').classList.add('clickable');
     }
   }
 });
 
 // Обработчик для кнопки Yes
 document.querySelector('#yes-button').addEventListener('click', async function() {
-  const yesButtonEntity = document.querySelector('#yes-button-entity');
+  const yesButton = document.querySelector('#yes-button-entity');
   const currentText = document.querySelector('#accompanier-text-four');
   const yesText = document.querySelector('#accompanier-text-five-yes');
 
   // Скрываем текущий текст и кнопку
   currentText.setAttribute('visible', 'false');
-  yesButtonEntity.setAttribute('visible', 'false');
-  yesButtonEntity.querySelector('#yes-button').classList.remove('clickable');
+  yesButton.setAttribute('visible', 'false');
+  yesButton.querySelector('#yes-button').classList.remove('clickable');
 
   // Показываем новый текст с эффектом печати
   yesText.setAttribute('visible', 'true');
