@@ -350,6 +350,38 @@
         visible="false">
       </a-text>
 
+      <a-text id="accompanier-text-eleven-interactive" 
+        value="Я покажу тебе на примере. Слева от тебя кнопка Отправить сообщение, нажми на неё." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-twelve" 
+        value="Видишь? Ты нажал кнопку, а я за секунду обработал твой запрос. Это и есть наша работа — сделать так, чтобы всё было быстро, надёжно и незаметно для тебя. Хочешь попробовать сам?" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
       </a-entity>
 
      <!-- Кнопка "Далее »" -->
@@ -410,7 +442,28 @@
           width="3"
           scale="0.8 0.8 0.8">
         </a-text>
+
     </a-entity>
+
+     <!-- Кнопка интерактив 3-->
+     <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
+      <a-plane 
+        width="3" 
+        height="0.3" 
+        color="#00CC00"
+        hoverable>
+      </a-plane>
+      <a-text 
+        value="Отправить сообщение" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        align="center" 
+        color="white" 
+        position="0 0 0.01"
+        width="3"
+        scale="0.8 0.8 0.8">
+      </a-text>
 
     </a-entity>
 
@@ -645,11 +698,14 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     document.querySelector('#accompanier-text-eight-interactive'),
     document.querySelector('#accompanier-text-nine'),
     document.querySelector('#accompanier-text-ten'),
+    document.querySelector('#accompanier-text-eleven-interactive'),
+    document.querySelector('#accompanier-text-twelve')
   ];
   const nextButton = document.querySelector('#next-text-button');
   const nextPlane = nextButton.querySelector('a-plane');
   const rpoButtonOne = document.querySelector('#rpo-one-button-interactive');
   const rpoButtonTwo = document.querySelector('#rpo-two-button-interactive');
+  const rpoButtonThree = document.querySelector('#rpo-three-button-interactive');
 
   const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
   if (currentIndex < texts.length - 1) {
@@ -667,7 +723,7 @@ document.querySelector('#next-text-button').addEventListener('click', async func
       nextButton.setAttribute('visible', 'false');
       nextPlane.classList.remove('clickable');
       
-      if (rpoButtonOne) { // Проверяем, существует ли первая кнопка
+      if (rpoButtonOne) {
         rpoButtonOne.setAttribute('visible', 'true');
         rpoButtonOne.querySelector('a-plane').classList.add('clickable');
       }
@@ -677,11 +733,21 @@ document.querySelector('#next-text-button').addEventListener('click', async func
       nextButton.setAttribute('visible', 'false');
       nextPlane.classList.remove('clickable');
       
-      if (rpoButtonTwo) { // Проверяем, существует ли вторая кнопка
+      if (rpoButtonTwo) {
         rpoButtonTwo.setAttribute('visible', 'true');
         rpoButtonTwo.querySelector('a-plane').classList.add('clickable');
       }
     } 
+    // Третий интерактив
+    else if (nextText.id === 'accompanier-text-eleven-interactive') {
+      nextButton.setAttribute('visible', 'false');
+      nextPlane.classList.remove('clickable');
+      
+      if (rpoButtonThree) {
+        rpoButtonThree.setAttribute('visible', 'true');
+        rpoButtonThree.querySelector('a-plane').classList.add('clickable');
+      }
+    }
     else {
       // Показываем кнопку "Next" для всех остальных текстов
       nextButton.setAttribute('visible', 'true');
@@ -739,6 +805,31 @@ document.querySelector('#rpo-two-button-interactive').addEventListener('click', 
 
   // Удаляем кнопку rpo-two-button-interactive
   rpoButtonTwo.parentNode.removeChild(rpoButtonTwo);
+});
+
+// Логика для кнопки rpo-three-button-interactive
+document.querySelector('#rpo-three-button-interactive').addEventListener('click', async function() {
+  const rpoButtonThree = document.querySelector('#rpo-three-button-interactive');
+  const nextButton = document.querySelector('#next-text-button');
+  const nextPlane = nextButton.querySelector('a-plane');
+  const textTwelve = document.querySelector('#accompanier-text-twelve');
+  const textEleven = document.querySelector('#accompanier-text-eleven-interactive');
+
+  // Скрываем текущий текст и кнопку
+  textEleven.setAttribute('visible', 'false');
+  rpoButtonThree.setAttribute('visible', 'false');
+  rpoButtonThree.querySelector('a-plane').classList.remove('clickable');
+
+  // Показываем новый текст с эффектом печати
+  textTwelve.setAttribute('visible', 'true');
+  await typeText(textTwelve, textTwelve.getAttribute('value'));
+
+  // Показываем и активируем кнопку Next
+  nextButton.setAttribute('visible', 'true');
+  nextPlane.classList.add('clickable');
+
+  // Удаляем кнопку rpo-three-button-interactive
+  rpoButtonThree.parentNode.removeChild(rpoButtonThree);
 });
 
 
