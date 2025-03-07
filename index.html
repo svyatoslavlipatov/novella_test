@@ -558,6 +558,7 @@ visible="false">
   width="2"
   scale="0.8 0.8 0.8">
 </a-text>
+</a-entity>
 
 <!-- Варианты ответов для accompanier-text-seventeen -->
 <a-text id="accompanier-text-eighteen-a" 
@@ -1023,36 +1024,45 @@ function handleMultipleChoice(textId) {
   const currentText = document.querySelector(`#${textId}`);
   const choiceButtons = config.choices.map(choice => document.querySelector(`#${choice.buttonId}`));
 
-  // Показываем кнопки выбора
+  // Показываем кнопки выбора, только если они существуют
   choiceButtons.forEach(button => {
-    button.setAttribute('visible', 'true');
-    button.querySelector('a-plane').classList.add('clickable');
+    if (button) { // Проверка на null
+      button.setAttribute('visible', 'true');
+      button.querySelector('a-plane').classList.add('clickable');
+    } else {
+      console.warn(`Button with ID ${choice.buttonId} not found in DOM`);
+    }
   });
 
   // Обработчик для каждой кнопки выбора
   config.choices.forEach(choice => {
     const button = document.querySelector(`#${choice.buttonId}`);
-    button.addEventListener('click', async () => {
-      // Скрываем все кнопки выбора
-      choiceButtons.forEach(btn => {
-        btn.setAttribute('visible', 'false');
-        btn.querySelector('a-plane').classList.remove('clickable');
-        btn.parentNode.removeChild(btn); // Удаляем кнопки
+    if (button) { // Проверка на null
+      button.addEventListener('click', async () => {
+        // Скрываем все кнопки выбора
+        choiceButtons.forEach(btn => {
+          if (btn) { // Проверка на null
+            btn.setAttribute('visible', 'false');
+            btn.querySelector('a-plane').classList.remove('clickable');
+            btn.parentNode.removeChild(btn); // Удаляем кнопки
+          }
+        });
+
+        // Скрываем текущий текст и показываем ответ
+        currentText.setAttribute('visible', 'false');
+        const responseText = document.querySelector(`#${choice.responseTextId}`);
+        responseText.setAttribute('visible', 'true');
+        await typeText(responseText, responseText.getAttribute('value'));
+
+        // Показываем кнопку Next
+        nextButton.setAttribute('visible', 'true');
+        nextPlane.classList.add('clickable');
       });
-
-      // Скрываем текущий текст и показываем ответ
-      currentText.setAttribute('visible', 'false');
-      const responseText = document.querySelector(`#${choice.responseTextId}`);
-      responseText.setAttribute('visible', 'true');
-      await typeText(responseText, responseText.getAttribute('value'));
-
-      // Показываем кнопку Next
-      nextButton.setAttribute('visible', 'true');
-      nextPlane.classList.add('clickable');
-    });
+    } else {
+      console.warn(`Button with ID ${choice.buttonId} not found for event listener`);
+    }
   });
 }
-
 // Инициализация всех интерактивных кнопок
 Object.entries(interactiveConfig).forEach(([textId, { buttonId, nextTextId }]) => {
   handleInteractiveButton(buttonId, textId, nextTextId);
