@@ -541,31 +541,39 @@
           document.querySelector('#accompanier-text-two'),
           document.querySelector('#accompanier-text-three'),
           document.querySelector('#accompanier-text-four'),
-          document.querySelector('#accompanier-text-five-interactive'), // Добавляем интерактивный текст
-          document.querySelector('#accompanier-text-six')
+          document.querySelector('#accompanier-text-six') // Оставляем только основные тексты
         ];
+        const textFiveInteractive = document.querySelector('#accompanier-text-five-interactive');
         const rpoOneButtonEntity = document.querySelector('#rpo-one-button-entity');
         const nextTextButtonEntity = document.querySelector('#next-text-button-entity');
         const nextButton = document.querySelector('#next-text-button');
 
-        const currentIndex = texts.findIndex(text => text.getAttribute('visible') === 'true');
-        if (currentIndex < texts.length - 1) {
-          // Скрываем текущий текст, если он есть
-          if (currentIndex !== -1) {
-            texts[currentIndex].setAttribute('visible', 'false');
-          }
-
+        const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
+        
+        // Если виден accompanier-text-five-interactive
+        if (textFiveInteractive.getAttribute('visible') === 'true') {
+          textFiveInteractive.setAttribute('visible', 'false');
+          const nextText = texts[texts.length - 1]; // Переходим к accompanier-text-six
+          nextText.setAttribute('visible', 'true');
+          
+          nextTextButtonEntity.setAttribute('visible', 'false');
+          nextButton.classList.remove('clickable');
+          
+          await typeText(nextText, nextText.getAttribute('value'));
+          nextTextButtonEntity.setAttribute('visible', 'true');
+          nextButton.classList.add('clickable');
+        } 
+        // Обычная логика для основного потока текстов
+        else if (currentIndex < texts.length - 1) {
+          texts[currentIndex].setAttribute('visible', 'false');
           const nextText = texts[currentIndex + 1];
           nextText.setAttribute('visible', 'true');
           
-          // Скрываем кнопку Next перед началом анимации
           nextTextButtonEntity.setAttribute('visible', 'false');
           nextButton.classList.remove('clickable');
 
-          // Ждём завершения анимации печати
           await typeText(nextText, nextText.getAttribute('value'));
 
-          // Показываем кнопку Yes после accompanier-text-four
           if (nextText.id === 'accompanier-text-four') {
             rpoOneButtonEntity.setAttribute('visible', 'true');
             const yesButton = rpoOneButtonEntity.querySelector('#rpo-one-button');
@@ -573,7 +581,6 @@
               yesButton.classList.add('clickable');
             }
           } else {
-            // Показываем кнопку Next после завершения анимации, если это не accompanier-text-four
             nextTextButtonEntity.setAttribute('visible', 'true');
             nextButton.classList.add('clickable');
           }
