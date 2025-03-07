@@ -399,6 +399,119 @@
         visible="false">
       </a-text>
 
+      <!-- Варианты ответов для accompanier-text-thirteen -->
+<a-text id="accompanier-text-fourteen-a" 
+value="Верно! Нужно написать код для обработки запроса на сервере и отправки ответа клиенту." 
+font="msdf/pixel/pix-msdf.json" 
+font-image="msdf/pixel/pix.png"
+negate="false"
+color="#FFFFFF" 
+align="left" 
+anchor="left" 
+baseline="top" 
+width="3.5" 
+scale="1 1 1" 
+position="-1.8 0.2 0.01" 
+wrapcount="50"
+visible="false">
+</a-text>
+
+<a-text id="accompanier-text-fourteen-b" 
+value="Не совсем. Перезагрузка страницы — это не задача сервера, а клиентская механика." 
+font="msdf/pixel/pix-msdf.json" 
+font-image="msdf/pixel/pix.png"
+negate="false"
+color="#FFFFFF" 
+align="left" 
+anchor="left" 
+baseline="top" 
+width="3.5" 
+scale="1 1 1" 
+position="-1.8 0.2 0.01" 
+wrapcount="50"
+visible="false">
+</a-text>
+
+<a-text id="accompanier-text-fourteen-c" 
+value="Нет, рисовать кнопки — это задача фронтенд-разработчиков, а не бэкенд." 
+font="msdf/pixel/pix-msdf.json" 
+font-image="msdf/pixel/pix.png"
+negate="false"
+color="#FFFFFF" 
+align="left" 
+anchor="left" 
+baseline="top" 
+width="3.5" 
+scale="1 1 1" 
+position="-1.8 0.2 0.01" 
+wrapcount="50"
+visible="false">
+</a-text>
+
+<!-- Кнопки выбора -->
+<a-entity id="choice-a-button" position="-1 0.8 0" visible="false">
+<a-plane 
+  width="2" 
+  height="0.3" 
+  color="#00CC00"
+  class="clickable"
+  hoverable>
+</a-plane>
+<a-text 
+  value="Обработать запрос" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  align="center" 
+  color="white" 
+  position="0 0 0.01"
+  width="2"
+  scale="0.8 0.8 0.8">
+</a-text>
+</a-entity>
+
+<a-entity id="choice-b-button" position="0 0.8 0" visible="false">
+<a-plane 
+  width="2" 
+  height="0.3" 
+  color="#00CC00"
+  class="clickable"
+  hoverable>
+</a-plane>
+<a-text 
+  value="Перезагрузить страницу" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  align="center" 
+  color="white" 
+  position="0 0 0.01"
+  width="2"
+  scale="0.8 0.8 0.8">
+</a-text>
+</a-entity>
+
+<a-entity id="choice-c-button" position="1 0.8 0" visible="false">
+<a-plane 
+  width="2" 
+  height="0.3" 
+  color="#00CC00"
+  class="clickable"
+  hoverable>
+</a-plane>
+<a-text 
+  value="Нарисовать кнопку" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  align="center" 
+  color="white" 
+  position="0 0 0.01"
+  width="2"
+  scale="0.8 0.8 0.8">
+</a-text>
+</a-entity>
+
       </a-entity>
 
      <!-- Кнопка "Далее »" -->
@@ -718,6 +831,26 @@ const interactiveConfig = {
   }
 };
 
+// Конфигурация для множественного выбора
+const multipleChoiceConfig = {
+  'accompanier-text-thirteen': {
+    choices: [
+      {
+        buttonId: 'choice-a-button',
+        responseTextId: 'accompanier-text-fourteen-a'
+      },
+      {
+        buttonId: 'choice-b-button',
+        responseTextId: 'accompanier-text-fourteen-b'
+      },
+      {
+        buttonId: 'choice-c-button',
+        responseTextId: 'accompanier-text-fourteen-c'
+      }
+    ]
+  }
+};
+
 // Универсальная функция для обработки интерактивных кнопок
 function handleInteractiveButton(buttonId, currentTextId, nextTextId) {
   const button = document.querySelector(`#${buttonId}`);
@@ -743,12 +876,52 @@ function handleInteractiveButton(buttonId, currentTextId, nextTextId) {
   });
 }
 
+// Функция обработки множественного выбора
+function handleMultipleChoice(textId) {
+  const config = multipleChoiceConfig[textId];
+  if (!config) return;
+
+  const nextButton = document.querySelector('#next-text-button');
+  const nextPlane = nextButton.querySelector('a-plane');
+  const currentText = document.querySelector(`#${textId}`);
+  const choiceButtons = config.choices.map(choice => document.querySelector(`#${choice.buttonId}`));
+
+  // Показываем кнопки выбора
+  choiceButtons.forEach(button => {
+    button.setAttribute('visible', 'true');
+    button.querySelector('a-plane').classList.add('clickable');
+  });
+
+  // Обработчик для каждой кнопки выбора
+  config.choices.forEach(choice => {
+    const button = document.querySelector(`#${choice.buttonId}`);
+    button.addEventListener('click', async () => {
+      // Скрываем все кнопки выбора
+      choiceButtons.forEach(btn => {
+        btn.setAttribute('visible', 'false');
+        btn.querySelector('a-plane').classList.remove('clickable');
+        btn.parentNode.removeChild(btn); // Удаляем кнопки
+      });
+
+      // Скрываем текущий текст и показываем ответ
+      currentText.setAttribute('visible', 'false');
+      const responseText = document.querySelector(`#${choice.responseTextId}`);
+      responseText.setAttribute('visible', 'true');
+      await typeText(responseText, responseText.getAttribute('value'));
+
+      // Показываем кнопку Next
+      nextButton.setAttribute('visible', 'true');
+      nextPlane.classList.add('clickable');
+    });
+  });
+}
+
 // Инициализация всех интерактивных кнопок
 Object.entries(interactiveConfig).forEach(([textId, { buttonId, nextTextId }]) => {
   handleInteractiveButton(buttonId, textId, nextTextId);
 });
 
-// Упрощённый обработчик next-text-button
+// Обновленный обработчик next-text-button
 document.querySelector('#next-text-button').addEventListener('click', async function() {
   const texts = [
     '#accompanier-text-one',
@@ -763,7 +936,10 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     '#accompanier-text-ten',
     '#accompanier-text-eleven-interactive',
     '#accompanier-text-twelve',
-    '#accompanier-text-thirteen'
+    '#accompanier-text-thirteen',
+    '#accompanier-text-fourteen-a', // Добавляем возможные ответы
+    '#accompanier-text-fourteen-b',
+    '#accompanier-text-fourteen-c'
   ].map(id => document.querySelector(id));
 
   const nextButton = document.querySelector('#next-text-button');
@@ -779,14 +955,19 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     nextText.setAttribute('visible', 'true');
     await typeText(nextText, nextText.getAttribute('value'));
 
-    // Если следующий текст интерактивный
+    // Проверяем интерактивные элементы
     if (interactiveConfig[nextText.id]) {
       const button = document.querySelector(`#${interactiveConfig[nextText.id].buttonId}`);
       if (button) {
         button.setAttribute('visible', 'true');
         button.querySelector('a-plane').classList.add('clickable');
       }
-    } else {
+    } 
+    // Проверяем множественный выбор
+    else if (multipleChoiceConfig[nextText.id]) {
+      handleMultipleChoice(nextText.id);
+    } 
+    else {
       nextButton.setAttribute('visible', 'true');
       nextPlane.classList.add('clickable');
     }
