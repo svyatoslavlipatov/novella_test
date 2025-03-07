@@ -282,10 +282,9 @@
 
       </a-entity>
 
-      <!-- Кнопка "Далее »" -->
-      <a-entity id="next-text-button" position="1.5 -0.3 0.01">
+     <!-- Кнопка "Далее »" -->
+      <a-entity id="next-text-button" position="1.5 -0.3 0.01" visible="false">
         <a-plane 
-          class="clickable" 
           width="0.6" 
           height="0.3" 
           color="#008CBA"
@@ -504,16 +503,20 @@
           const targetScene = document.querySelector(`#${targetSceneId}`);
           const portals = document.querySelector('#portals').querySelectorAll('a-circle');
           const background = document.querySelector('#background');
-    
+          const nextButton = document.querySelector('#next-text-button');
+
           portals.forEach(portal => portal.classList.remove('clickable'));
           transitionScene.setAttribute('visible', 'false');
           targetScene.setAttribute('visible', 'true');
           background.setAttribute('environment', `preset: ${environmentPreset}`);
-    
+
           // Запускаем печать первого текста при входе в rpo-scene
           if (targetSceneId === 'rpo-scene') {
             const firstText = document.querySelector('#accompanier-text-one');
             await typeText(firstText, firstText.getAttribute('value'));
+            // Показываем кнопку после завершения анимации
+            nextButton.setAttribute('visible', 'true');
+            nextButton.querySelector('a-plane').classList.add('clickable');
           }
         });
       }
@@ -526,23 +529,32 @@
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
     
       // Логика переключения текста в rpo-scene с эффектом печати
-document.querySelector('#next-text-button').addEventListener('click', async function() {
-  const texts = [
-    document.querySelector('#accompanier-text-one'),
-    document.querySelector('#accompanier-text-two'),
-    document.querySelector('#accompanier-text-three'),
-    document.querySelector('#accompanier-text-four')
-  ];
+      document.querySelector('#next-text-button').addEventListener('click', async function() {
+        const texts = [
+          document.querySelector('#accompanier-text-one'),
+          document.querySelector('#accompanier-text-two'),
+          document.querySelector('#accompanier-text-three'),
+          document.querySelector('#accompanier-text-four')
+        ];
+        const nextButton = document.querySelector('#next-text-button');
+        const plane = nextButton.querySelector('a-plane');
 
-  const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
-  if (currentIndex < texts.length - 1) {
-    texts[currentIndex].setAttribute('visible', 'false');
-    const nextText = texts[currentIndex + 1];
-    nextText.setAttribute('visible', 'true');
-    await typeText(nextText, nextText.getAttribute('value'));
-  }
-});
+        const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
+        if (currentIndex < texts.length - 1) {
+          // Скрываем кнопку перед началом анимации
+          nextButton.setAttribute('visible', 'false');
+          plane.classList.remove('clickable');
 
+          texts[currentIndex].setAttribute('visible', 'false');
+          const nextText = texts[currentIndex + 1];
+          nextText.setAttribute('visible', 'true');
+          await typeText(nextText, nextText.getAttribute('value'));
+
+          // Показываем кнопку после завершения анимации
+          nextButton.setAttribute('visible', 'true');
+          plane.classList.add('clickable');
+        }
+      });
 
 
 
