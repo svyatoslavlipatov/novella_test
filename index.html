@@ -495,38 +495,52 @@
         background.setAttribute('environment', 'preset: starry');
       });
     
-      // Функция для обработки перехода по клику на портал
-      function handlePortalClick(portalId, targetSceneId, environmentPreset) {
-        document.querySelector(`#${portalId} a-circle`).addEventListener('click', async function () {
-          console.log(`${portalId} clicked`);
-          const transitionScene = document.querySelector('#transition-scene');
-          const targetScene = document.querySelector(`#${targetSceneId}`);
-          const portals = document.querySelector('#portals').querySelectorAll('a-circle');
-          const background = document.querySelector('#background');
-          const nextButton = document.querySelector('#next-text-button');
 
-          portals.forEach(portal => portal.classList.remove('clickable'));
-          transitionScene.setAttribute('visible', 'false');
-          targetScene.setAttribute('visible', 'true');
-          background.setAttribute('environment', `preset: ${environmentPreset}`);
 
-          // Запускаем печать первого текста при входе в rpo-scene
-          if (targetSceneId === 'rpo-scene') {
-            const firstText = document.querySelector('#accompanier-text-one');
-            await typeText(firstText, firstText.getAttribute('value'));
-            // Показываем кнопку после завершения анимации
-            nextButton.setAttribute('visible', 'true');
-            nextButton.querySelector('a-plane').classList.add('clickable');
-          }
+      // Объект с конфигурацией порталов
+      const portalConfig = {
+        'portal1': { scene: 'rpo-scene', preset: 'default' },
+        'portal2': { scene: 'dizayn-scene', preset: 'goldmine' },
+        'portal3': { scene: 'turizm-scene', preset: 'egypt' },
+        'portal4': { scene: 'service-scene', preset: 'japan' },
+        'portal5': { scene: 'reklama-scene', preset: 'volcano' }
+      };
+
+      // Единая функция инициализации порталов
+      function initializePortals() {
+        const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+        const transitionScene = document.querySelector('#transition-scene');
+        const background = document.querySelector('#background');
+        const nextButton = document.querySelector('#next-text-button');
+
+        Object.entries(portalConfig).forEach(([portalId, { scene, preset }]) => {
+          document.querySelector(`#${portalId} a-circle`).addEventListener('click', async () => {
+            console.log(`${portalId} clicked`);
+            
+            // Отключаем кликабельность всех порталов
+            portals.forEach(portal => portal.classList.remove('clickable'));
+            
+            // Переключаем сцены
+            transitionScene.setAttribute('visible', 'false');
+            document.querySelector(`#${scene}`).setAttribute('visible', 'true');
+            background.setAttribute('environment', `preset: ${preset}`);
+
+            // Обработка специальной логики для rpo-scene
+            if (scene === 'rpo-scene') {
+              const firstText = document.querySelector('#accompanier-text-one');
+              await typeText(firstText, firstText.getAttribute('value'));
+              nextButton.setAttribute('visible', 'true');
+              nextButton.querySelector('a-plane').classList.add('clickable');
+            }
+          });
         });
       }
-    
-      // Применяем функцию для каждого портала
-      handlePortalClick('portal1', 'rpo-scene', 'default');
-      handlePortalClick('portal2', 'dizayn-scene', 'goldmine');
-      handlePortalClick('portal3', 'turizm-scene', 'egypt');
-      handlePortalClick('portal4', 'service-scene', 'japan');
-      handlePortalClick('portal5', 'reklama-scene', 'volcano');
+
+      // Инициализация
+      initializePortals();
+
+
+
     
       // Логика переключения текста в rpo-scene с эффектом печати
       document.querySelector('#next-text-button').addEventListener('click', async function() {
@@ -588,6 +602,7 @@ document.addEventListener('keydown', function(event) {
     console.log('Переключение на rpo-scene выполнено');
   }
 });
+
     </script>
   </body>
 </html>
