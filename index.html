@@ -508,16 +508,21 @@
           const targetScene = document.querySelector(`#${targetSceneId}`);
           const portals = document.querySelector('#portals').querySelectorAll('a-circle');
           const background = document.querySelector('#background');
-    
+          const nextTextButtonEntity = document.querySelector('#next-text-button-entity');
+          const nextButton = document.querySelector('#next-text-button');
+
           portals.forEach(portal => portal.classList.remove('clickable'));
           transitionScene.setAttribute('visible', 'false');
           targetScene.setAttribute('visible', 'true');
           background.setAttribute('environment', `preset: ${environmentPreset}`);
-    
-          // Запускаем печать первого текста при входе в rpo-scene
+
           if (targetSceneId === 'rpo-scene') {
             const firstText = document.querySelector('#accompanier-text-one');
+            nextTextButtonEntity.setAttribute('visible', 'false');
+            nextButton.classList.remove('clickable');
             await typeText(firstText, firstText.getAttribute('value'));
+            nextTextButtonEntity.setAttribute('visible', 'true');
+            nextButton.classList.add('clickable');
           }
         });
       }
