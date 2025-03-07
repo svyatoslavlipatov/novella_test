@@ -560,84 +560,6 @@ visible="false">
 </a-text>
 </a-entity>
 
-<!-- Варианты ответов для accompanier-text-seventeen -->
-<a-text id="accompanier-text-eighteen-a" 
-  value="Круто!" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
-  color="#FFFFFF" 
-  align="left" 
-  anchor="left" 
-  baseline="top" 
-  width="3.5" 
-  scale="1 1 1" 
-  position="-1.8 0.2 0.01" 
-  wrapcount="50"
-  visible="false">
-</a-text>
-
-<a-text id="accompanier-text-eighteen-b" 
-  value="Эх, возвращаю тебя обратно к порталам" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
-  color="#FFFFFF" 
-  align="left" 
-  anchor="left" 
-  baseline="top" 
-  width="3.5" 
-  scale="1 1 1" 
-  position="-1.8 0.2 0.01" 
-  wrapcount="50"
-  visible="false">
-</a-text>
-
-<!-- Кнопки выбора для accompanier-text-seventeen -->
-<a-entity id="choice-a-button-seventeen" position="-1 0.8 0" visible="false">
-  <a-plane 
-    width="2" 
-    height="0.3" 
-    color="#00CC00"
-    class="clickable"
-    hoverable>
-  </a-plane>
-  <a-text 
-    value="Да!" 
-    font="msdf/pixel/pix-msdf.json" 
-    font-image="msdf/pixel/pix.png"
-    negate="false"
-    align="center" 
-    color="white" 
-    position="0 0 0.01"
-    width="2"
-    scale="0.8 0.8 0.8">
-  </a-text>
-</a-entity>
-
-<a-entity id="choice-b-button-seventeen" position="1 0.8 0" visible="false">
-  <a-plane 
-    width="2" 
-    height="0.3" 
-    color="#00CC00"
-    class="clickable"
-    hoverable>
-  </a-plane>
-  <a-text 
-    value="Нет" 
-    font="msdf/pixel/pix-msdf.json" 
-    font-image="msdf/pixel/pix.png"
-    negate="false"
-    align="center" 
-    color="white" 
-    position="0 0 0.01"
-    width="2"
-    scale="0.8 0.8 0.8">
-  </a-text>
-</a-entity>
-
-</a-entity>
-
       </a-entity>
 
      <!-- Кнопка "Далее »" -->
@@ -974,18 +896,6 @@ const multipleChoiceConfig = {
         responseTextId: 'accompanier-text-fourteen-c'
       }
     ]
-  },
-  'accompanier-text-seventeen': {
-    choices: [
-      {
-        buttonId: 'choice-a-button-seventeen',
-        responseTextId: 'accompanier-text-eighteen-a'
-      },
-      {
-        buttonId: 'choice-b-button-seventeen',
-        responseTextId: 'accompanier-text-eighteen-b'
-      }
-    ]
   }
 };
 
@@ -1024,45 +934,36 @@ function handleMultipleChoice(textId) {
   const currentText = document.querySelector(`#${textId}`);
   const choiceButtons = config.choices.map(choice => document.querySelector(`#${choice.buttonId}`));
 
-  // Показываем кнопки выбора, только если они существуют
+  // Показываем кнопки выбора
   choiceButtons.forEach(button => {
-    if (button) { // Проверка на null
-      button.setAttribute('visible', 'true');
-      button.querySelector('a-plane').classList.add('clickable');
-    } else {
-      console.warn(`Button with ID ${choice.buttonId} not found in DOM`);
-    }
+    button.setAttribute('visible', 'true');
+    button.querySelector('a-plane').classList.add('clickable');
   });
 
   // Обработчик для каждой кнопки выбора
   config.choices.forEach(choice => {
     const button = document.querySelector(`#${choice.buttonId}`);
-    if (button) { // Проверка на null
-      button.addEventListener('click', async () => {
-        // Скрываем все кнопки выбора
-        choiceButtons.forEach(btn => {
-          if (btn) { // Проверка на null
-            btn.setAttribute('visible', 'false');
-            btn.querySelector('a-plane').classList.remove('clickable');
-            btn.parentNode.removeChild(btn); // Удаляем кнопки
-          }
-        });
-
-        // Скрываем текущий текст и показываем ответ
-        currentText.setAttribute('visible', 'false');
-        const responseText = document.querySelector(`#${choice.responseTextId}`);
-        responseText.setAttribute('visible', 'true');
-        await typeText(responseText, responseText.getAttribute('value'));
-
-        // Показываем кнопку Next
-        nextButton.setAttribute('visible', 'true');
-        nextPlane.classList.add('clickable');
+    button.addEventListener('click', async () => {
+      // Скрываем все кнопки выбора
+      choiceButtons.forEach(btn => {
+        btn.setAttribute('visible', 'false');
+        btn.querySelector('a-plane').classList.remove('clickable');
+        btn.parentNode.removeChild(btn); // Удаляем кнопки
       });
-    } else {
-      console.warn(`Button with ID ${choice.buttonId} not found for event listener`);
-    }
+
+      // Скрываем текущий текст и показываем ответ
+      currentText.setAttribute('visible', 'false');
+      const responseText = document.querySelector(`#${choice.responseTextId}`);
+      responseText.setAttribute('visible', 'true');
+      await typeText(responseText, responseText.getAttribute('value'));
+
+      // Показываем кнопку Next
+      nextButton.setAttribute('visible', 'true');
+      nextPlane.classList.add('clickable');
+    });
   });
 }
+
 // Инициализация всех интерактивных кнопок
 Object.entries(interactiveConfig).forEach(([textId, { buttonId, nextTextId }]) => {
   handleInteractiveButton(buttonId, textId, nextTextId);
@@ -1089,9 +990,6 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     '#accompanier-text-fourteen-c',
     '#accompanier-text-fiveteen',
     '#accompanier-text-sixteen',
-    '#accompanier-text-seventeen',
-    '#accompanier-text-eighteen-a',
-    '#accompanier-text-eighteen-b'
   ].map(id => document.querySelector(id));
 
   const nextButton = document.querySelector('#next-text-button');
@@ -1110,38 +1008,23 @@ document.querySelector('#next-text-button').addEventListener('click', async func
         .includes(texts[currentIndex].id)) {
       nextIndex = texts.findIndex(text => text.id === 'accompanier-text-fiveteen');
     }
-    // Проверяем, если текущий текст — один из ответов eighteen, завершаем или возвращаем к порталам
-    else if (['accompanier-text-eighteen-a'].includes(texts[currentIndex].id)) {
-      // Можно добавить дополнительную логику завершения, если нужно
-      nextIndex = texts.length; // Завершаем последовательность
-    } else if (['accompanier-text-eighteen-b'].includes(texts[currentIndex].id)) {
-      // Возвращаем к порталам
-      document.querySelector('#rpo-scene').setAttribute('visible', 'false');
-      document.querySelector('#transition-scene').setAttribute('visible', 'true');
-      document.querySelector('#background').setAttribute('environment', 'preset: forest');
-      const portals = document.querySelector('#portals').querySelectorAll('a-circle');
-      portals.forEach(portal => portal.classList.add('clickable'));
-      return; // Прерываем выполнение
-    }
 
     const nextText = texts[nextIndex];
-    if (nextText) {
-      nextText.setAttribute('visible', 'true');
-      await typeText(nextText, nextText.getAttribute('value'));
+    nextText.setAttribute('visible', 'true');
+    await typeText(nextText, nextText.getAttribute('value'));
 
-      // Проверяем интерактивные элементы
-      if (interactiveConfig[nextText.id]) {
-        const button = document.querySelector(`#${interactiveConfig[nextText.id].buttonId}`);
-        if (button) {
-          button.setAttribute('visible', 'true');
-          button.querySelector('a-plane').classList.add('clickable');
-        }
-      } else if (multipleChoiceConfig[nextText.id]) {
-        handleMultipleChoice(nextText.id);
-      } else {
-        nextButton.setAttribute('visible', 'true');
-        nextPlane.classList.add('clickable');
+    // Проверяем интерактивные элементы
+    if (interactiveConfig[nextText.id]) {
+      const button = document.querySelector(`#${interactiveConfig[nextText.id].buttonId}`);
+      if (button) {
+        button.setAttribute('visible', 'true');
+        button.querySelector('a-plane').classList.add('clickable');
       }
+    } else if (multipleChoiceConfig[nextText.id]) {
+      handleMultipleChoice(nextText.id);
+    } else {
+      nextButton.setAttribute('visible', 'true');
+      nextPlane.classList.add('clickable');
     }
   }
 });
