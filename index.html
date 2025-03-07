@@ -992,11 +992,9 @@ const multipleChoiceConfig = {
 // Универсальная функция для обработки интерактивных кнопок
 function handleInteractiveButton(buttonId, currentTextId, nextTextId) {
   const button = document.querySelector(`#${buttonId}`);
-  if (!button) return;
-
+  if (!button) return; // Если кнопка уже удалена, ничего не делаем
+  
   button.addEventListener('click', async () => {
-    if (!button.querySelector('a-plane').classList.contains('clickable')) return;
-
     const nextButton = document.querySelector('#next-text-button');
     const nextPlane = nextButton.querySelector('a-plane');
     const currentText = document.querySelector(`#${currentTextId}`);
@@ -1014,12 +1012,6 @@ function handleInteractiveButton(buttonId, currentTextId, nextTextId) {
 
     button.parentNode.removeChild(button);
   });
-
-  // Показ кнопки с анимацией
-  button.setAttribute('visible', 'true');
-  animateOpacity(button, 0, 1, 500).then(() => {
-    button.querySelector('a-plane').classList.add('clickable');
-  });
 }
 
 // Функция обработки множественного выбора
@@ -1032,16 +1024,9 @@ function handleMultipleChoice(textId) {
   const currentText = document.querySelector(`#${textId}`);
   const choiceButtons = config.choices.map(choice => document.querySelector(`#${choice.buttonId}`));
 
-  // Показываем кнопки выбора с анимацией появления
-  choiceButtons.forEach(async button => {
+  // Показываем кнопки выбора
+  choiceButtons.forEach(button => {
     button.setAttribute('visible', 'true');
-    // Сначала кнопка не кликабельна
-    button.querySelector('a-plane').classList.remove('clickable');
-
-    // Анимация появления (например, opacity от 0 до 1)
-    await animateOpacity(button, 0, 1, 500); // 500мс анимация
-
-    // После завершения анимации делаем кнопку кликабельной
     button.querySelector('a-plane').classList.add('clickable');
   });
 
@@ -1049,9 +1034,6 @@ function handleMultipleChoice(textId) {
   config.choices.forEach(choice => {
     const button = document.querySelector(`#${choice.buttonId}`);
     button.addEventListener('click', async () => {
-      // Проверяем, что кнопка кликабельна (на случай, если клик произошел до завершения анимации)
-      if (!button.querySelector('a-plane').classList.contains('clickable')) return;
-
       // Скрываем все кнопки выбора
       choiceButtons.forEach(btn => {
         btn.setAttribute('visible', 'false');
@@ -1071,23 +1053,6 @@ function handleMultipleChoice(textId) {
     });
   });
 }
-
-// // Функция анимации opacity (если еще не определена)
-// function animateOpacity(element, from, to, duration) {
-//   return new Promise(resolve => {
-//     element.setAttribute('animation', {
-//       property: 'opacity',
-//       from: from,
-//       to: to,
-//       dur: duration,
-//       easing: 'easeInOutQuad'
-//     });
-//     element.addEventListener('animationcomplete', function handler() {
-//       element.removeEventListener('animationcomplete', handler);
-//       resolve();
-//     }, { once: true });
-//   });
-// }
 
 // Инициализация всех интерактивных кнопок
 Object.entries(interactiveConfig).forEach(([textId, { buttonId, nextTextId }]) => {
