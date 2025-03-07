@@ -283,9 +283,8 @@
       </a-entity>
 
       <!-- Кнопка "Далее »" -->
-      <a-entity position="1.5 -0.3 0.01">
+      <a-entity id="next-text-button" position="1.5 -0.3 0.01">
         <a-plane 
-          id="next-text-button" 
           class="clickable" 
           width="0.6" 
           height="0.3" 
@@ -541,8 +540,6 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     const nextText = texts[currentIndex + 1];
     nextText.setAttribute('visible', 'true');
     await typeText(nextText, nextText.getAttribute('value'));
-
-    // Показываем кнопку Yes после accompanier-text-four
   }
 });
 
