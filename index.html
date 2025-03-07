@@ -508,21 +508,16 @@
           const targetScene = document.querySelector(`#${targetSceneId}`);
           const portals = document.querySelector('#portals').querySelectorAll('a-circle');
           const background = document.querySelector('#background');
-          const nextTextButtonEntity = document.querySelector('#next-text-button-entity');
-          const nextButton = document.querySelector('#next-text-button');
-
+    
           portals.forEach(portal => portal.classList.remove('clickable'));
           transitionScene.setAttribute('visible', 'false');
           targetScene.setAttribute('visible', 'true');
           background.setAttribute('environment', `preset: ${environmentPreset}`);
-
+    
+          // Запускаем печать первого текста при входе в rpo-scene
           if (targetSceneId === 'rpo-scene') {
             const firstText = document.querySelector('#accompanier-text-one');
-            nextTextButtonEntity.setAttribute('visible', 'false');
-            nextButton.classList.remove('clickable');
             await typeText(firstText, firstText.getAttribute('value'));
-            nextTextButtonEntity.setAttribute('visible', 'true');
-            nextButton.classList.add('clickable');
           }
         });
       }
@@ -535,65 +530,33 @@
       handlePortalClick('portal5', 'reklama-scene', 'volcano');
     
       // Логика переключения текста в rpo-scene с эффектом печати
-      document.querySelector('#next-text-button').addEventListener('click', async function() {
-        const texts = [
-          document.querySelector('#accompanier-text-one'),
-          document.querySelector('#accompanier-text-two'),
-          document.querySelector('#accompanier-text-three'),
-          document.querySelector('#accompanier-text-four'),
-          document.querySelector('#accompanier-text-six') // Только основные тексты
-        ];
-        const textFiveInteractive = document.querySelector('#accompanier-text-five-interactive');
-        const rpoOneButtonEntity = document.querySelector('#rpo-one-button-entity');
-        const nextTextButtonEntity = document.querySelector('#next-text-button-entity');
-        const nextButton = document.querySelector('#next-text-button');
+document.querySelector('#next-text-button').addEventListener('click', async function() {
+  const texts = [
+    document.querySelector('#accompanier-text-one'),
+    document.querySelector('#accompanier-text-two'),
+    document.querySelector('#accompanier-text-three'),
+    document.querySelector('#accompanier-text-four'),
+    document.querySelector('#accompanier-text-six')
+  ];
+  const rpoOneButtonEntity = document.querySelector('#rpo-one-button-entity');
 
-        const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
+  const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
+  if (currentIndex < texts.length - 1) {
+    texts[currentIndex].setAttribute('visible', 'false');
+    const nextText = texts[currentIndex + 1];
+    nextText.setAttribute('visible', 'true');
+    await typeText(nextText, nextText.getAttribute('value'));
 
-        // Если виден #accompanier-text-five-interactive
-        if (textFiveInteractive.getAttribute('visible') === 'true') {
-          textFiveInteractive.setAttribute('visible', 'false');
-          const nextText = document.querySelector('#accompanier-text-six'); // Явно указываем следующий текст
-          nextText.setAttribute('visible', 'true');
-
-          // Скрываем кнопку Next перед анимацией
-          nextTextButtonEntity.setAttribute('visible', 'false');
-          nextButton.classList.remove('clickable');
-
-          // Запускаем анимацию печати
-          await typeText(nextText, nextText.getAttribute('value'));
-
-          // Показываем кнопку Next после анимации
-          nextTextButtonEntity.setAttribute('visible', 'true');
-          nextButton.classList.add('clickable');
-        } 
-        // Обычная логика для остальных текстов
-        else if (currentIndex >= 0 && currentIndex < texts.length - 1) {
-          texts[currentIndex].setAttribute('visible', 'false');
-          const nextText = texts[currentIndex + 1];
-          nextText.setAttribute('visible', 'true');
-
-          // Скрываем кнопку Next перед анимацией
-          nextTextButtonEntity.setAttribute('visible', 'false');
-          nextButton.classList.remove('clickable');
-
-          // Ждём завершения анимации печати
-          await typeText(nextText, nextText.getAttribute('value'));
-
-          // Показываем кнопку Yes после accompanier-text-four
-          if (nextText.id === 'accompanier-text-four') {
-            rpoOneButtonEntity.setAttribute('visible', 'true');
-            const yesButton = rpoOneButtonEntity.querySelector('#rpo-one-button');
-            if (yesButton) {
-              yesButton.classList.add('clickable');
-            }
-          } else {
-            // Показываем кнопку Next после завершения анимации
-            nextTextButtonEntity.setAttribute('visible', 'true');
-            nextButton.classList.add('clickable');
-          }
-        }
-      });
+    // Показываем кнопку Yes после accompanier-text-four
+    if (nextText.id === 'accompanier-text-four') {
+      rpoOneButtonEntity.setAttribute('visible', 'true');
+      const yesButton = rpoOneButtonEntity.querySelector('#rpo-one-button');
+      if (yesButton) {
+        yesButton.classList.add('clickable');
+      }
+    }
+  }
+});
 
 // Обработчик для кнопки Yes
 document.querySelector('#rpo-one-button').addEventListener('click', async function() {
@@ -601,25 +564,16 @@ document.querySelector('#rpo-one-button').addEventListener('click', async functi
   const yesButton = document.querySelector('#rpo-one-button');
   const currentText = document.querySelector('#accompanier-text-four');
   const textInteractiveOne = document.querySelector('#accompanier-text-five-interactive');
-  const nextTextButtonEntity = document.querySelector('#next-text-button-entity');
-  const nextButton = document.querySelector('#next-text-button');
 
-  // Скрываем текущий текст и кнопку Yes
+
+  // Скрываем текущий текст и кнопку
   currentText.setAttribute('visible', 'false');
   rpoOneButtonEntity.setAttribute('visible', 'false');
   yesButton.classList.remove('clickable');
 
-  // Скрываем кнопку Next перед началом анимации
-  nextTextButtonEntity.setAttribute('visible', 'false');
-  nextButton.classList.remove('clickable');
-
   // Показываем новый текст с эффектом печати
   textInteractiveOne.setAttribute('visible', 'true');
   await typeText(textInteractiveOne, textInteractiveOne.getAttribute('value'));
-
-  // Показываем кнопку Next после завершения анимации
-  nextTextButtonEntity.setAttribute('visible', 'true');
-  nextButton.classList.add('clickable');
 });
 
 
