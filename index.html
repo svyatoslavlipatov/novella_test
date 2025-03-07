@@ -541,7 +541,7 @@
           document.querySelector('#accompanier-text-two'),
           document.querySelector('#accompanier-text-three'),
           document.querySelector('#accompanier-text-four'),
-          document.querySelector('#accompanier-text-six') // Оставляем только основные тексты
+          document.querySelector('#accompanier-text-six') // Только основные тексты
         ];
         const textFiveInteractive = document.querySelector('#accompanier-text-five-interactive');
         const rpoOneButtonEntity = document.querySelector('#rpo-one-button-entity');
@@ -549,31 +549,38 @@
         const nextButton = document.querySelector('#next-text-button');
 
         const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
-        
-        // Если виден accompanier-text-five-interactive
+
+        // Если виден #accompanier-text-five-interactive
         if (textFiveInteractive.getAttribute('visible') === 'true') {
           textFiveInteractive.setAttribute('visible', 'false');
-          const nextText = texts[texts.length - 1]; // Переходим к accompanier-text-six
+          const nextText = document.querySelector('#accompanier-text-six'); // Явно указываем следующий текст
           nextText.setAttribute('visible', 'true');
-          
+
+          // Скрываем кнопку Next перед анимацией
           nextTextButtonEntity.setAttribute('visible', 'false');
           nextButton.classList.remove('clickable');
-          
+
+          // Запускаем анимацию печати
           await typeText(nextText, nextText.getAttribute('value'));
+
+          // Показываем кнопку Next после анимации
           nextTextButtonEntity.setAttribute('visible', 'true');
           nextButton.classList.add('clickable');
         } 
-        // Обычная логика для основного потока текстов
-        else if (currentIndex < texts.length - 1) {
+        // Обычная логика для остальных текстов
+        else if (currentIndex >= 0 && currentIndex < texts.length - 1) {
           texts[currentIndex].setAttribute('visible', 'false');
           const nextText = texts[currentIndex + 1];
           nextText.setAttribute('visible', 'true');
-          
+
+          // Скрываем кнопку Next перед анимацией
           nextTextButtonEntity.setAttribute('visible', 'false');
           nextButton.classList.remove('clickable');
 
+          // Ждём завершения анимации печати
           await typeText(nextText, nextText.getAttribute('value'));
 
+          // Показываем кнопку Yes после accompanier-text-four
           if (nextText.id === 'accompanier-text-four') {
             rpoOneButtonEntity.setAttribute('visible', 'true');
             const yesButton = rpoOneButtonEntity.querySelector('#rpo-one-button');
@@ -581,6 +588,7 @@
               yesButton.classList.add('clickable');
             }
           } else {
+            // Показываем кнопку Next после завершения анимации
             nextTextButtonEntity.setAttribute('visible', 'true');
             nextButton.classList.add('clickable');
           }
