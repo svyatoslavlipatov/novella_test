@@ -383,7 +383,7 @@
       </a-text>
 
       
-      <a-text id="accompanier-text-thirteen" 
+      <a-text id="accompanier-text-twelve" 
         value="У меня есть для тебя задача: представь, что ты должен настроить сервер, чтобы он ответил на запрос пользователя. Выбери, что нужно сделать" 
         font="msdf/pixel/pix-msdf.json" 
         font-image="msdf/pixel/pix.png"
@@ -459,7 +459,8 @@
           width="3"
           scale="0.8 0.8 0.8">
         </a-text>
-      </a-entity>
+
+    </a-entity>
 
      <!-- Кнопка интерактив 3-->
      <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
@@ -480,6 +481,7 @@
         width="3"
         scale="0.8 0.8 0.8">
       </a-text>
+
     </a-entity>
 
     </a-box>
@@ -760,8 +762,7 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     '#accompanier-text-nine',
     '#accompanier-text-ten',
     '#accompanier-text-eleven-interactive',
-    '#accompanier-text-twelve',
-    'accompanier-text-thirteen'
+    '#accompanier-text-twelve'
   ].map(id => document.querySelector(id));
 
   const nextButton = document.querySelector('#next-text-button');
