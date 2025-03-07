@@ -536,11 +536,9 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     document.querySelector('#accompanier-text-two'),
     document.querySelector('#accompanier-text-three'),
     document.querySelector('#accompanier-text-four'),
-    document.querySelector('#accompanier-text-five-interactive'),
     document.querySelector('#accompanier-text-six')
   ];
   const rpoOneButtonEntity = document.querySelector('#rpo-one-button-entity');
-  const textInteractiveOne = document.querySelector('#accompanier-text-five-interactive');
 
   const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
   if (currentIndex < texts.length - 1) {
