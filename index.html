@@ -367,7 +367,24 @@
       </a-text>
 
       <a-text id="accompanier-text-twelve" 
-        value="Видишь? Ты нажал кнопку, а я за секунду обработал твой запрос. Это и есть наша работа — сделать так, чтобы всё было быстро, надёжно и незаметно для тебя. Хочешь попробовать сам?" 
+        value="Видишь? Ты нажал кнопку, а я за секунду обработал твой запрос. Это и есть наша работа — сделать так, чтобы всё было быстро, надёжно и незаметно для тебя." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      
+      <a-text id="accompanier-text-thirteen" 
+        value="У меня есть для тебя задача: представь, что ты должен настроить сервер, чтобы он ответил на запрос пользователя. Выбери, что нужно сделать" 
         font="msdf/pixel/pix-msdf.json" 
         font-image="msdf/pixel/pix.png"
         negate="false"
@@ -442,8 +459,7 @@
           width="3"
           scale="0.8 0.8 0.8">
         </a-text>
-
-    </a-entity>
+      </a-entity>
 
      <!-- Кнопка интерактив 3-->
      <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
@@ -464,7 +480,6 @@
         width="3"
         scale="0.8 0.8 0.8">
       </a-text>
-
     </a-entity>
 
     </a-box>
@@ -745,7 +760,8 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     '#accompanier-text-nine',
     '#accompanier-text-ten',
     '#accompanier-text-eleven-interactive',
-    '#accompanier-text-twelve'
+    '#accompanier-text-twelve',
+    'accompanier-text-thirteen'
   ].map(id => document.querySelector(id));
 
   const nextButton = document.querySelector('#next-text-button');
