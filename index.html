@@ -54,19 +54,22 @@
             color="#008CBA"
             hoverable>
           </a-plane>
-          <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+          <a-text value="Вперед!" align="center" color="white" position="0 0 0.01"
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" >
+          </a-text>
         </a-entity>
       </a-entity>
 
       <!-- Транзитная сцена -->
       <a-entity id="transition-scene" visible="false">
         <a-entity position="0 1 -4">
-          <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
-          <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-three" value="Three msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-five" value="Five msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-six" value="Six msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-one" value="Привет!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+          <a-text id="msg-two" value="Ты стоишь на перепутье, кем же тебе стать.." font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-three" value="Выбрать направление очень важно, и мы тебе поможем в этом" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-four" value="Мы покажем тебе 5 направлений нашего факультета" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-five" value="И покажем суть каждого!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-six" value="Выбирай!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
         </a-entity>
 
         <a-entity id="portals">
@@ -150,7 +153,7 @@
             color="#008CBA"
             hoverable>
           </a-plane>
-          <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
+          <a-text value="Назад" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
@@ -158,7 +161,7 @@
 <a-entity id="rpo-scene" visible="false">
   <a-sky color="#ECECEC"></a-sky>
   <a-entity position="0 1 -4">
-    <a-text id="rpo-msg-one" value="RPO" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+    <a-text id="rpo-msg-one" value="РПО" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
   </a-entity>
   
   <!-- Сопроводитель -->
@@ -173,7 +176,9 @@
       
       <a-text 
         id="speaker-name" 
-        value="ACCOMPANIER" 
+        value="СОПРОВОДИТЕЛЬ" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
         color="#FFD700" 
         align="left" 
         width="2.5" 
@@ -185,7 +190,9 @@
       <a-entity id="accompanier-dialog">
         
         <a-text id="accompanier-text-one" 
-          value="Privet! Ti popal d yadro lubogo prilozheniya - backend. Ya soprovoditel i pokazhu tebe, kak zdes vse rabotaet" 
+          value="Привет! Ты попал в ядро любого приложения — его back-end." 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png"
           color="#FFFFFF" 
           align="left" 
           anchor="left" 
@@ -198,7 +205,9 @@
         </a-text>
 
         <a-text id="accompanier-text-two" 
-          value="You've entered RPO" 
+          value="Я Сопроводитель РПО, и я отвечаю за то, чтобы всё работало как часы: серверы, базы данных, API. Здесь мы создаём невидимую, но самую важную часть программ — их мозги. " 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png"
           color="#FFFFFF" 
           align="left" 
           anchor="left" 
@@ -211,7 +220,9 @@
         </a-text>
 
         <a-text id="accompanier-text-three" 
-          value="This is scene RPO" 
+          value="Хочешь узнать, что это за работа?" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png"
           color="#FFFFFF" 
           align="left" 
           anchor="left" 
@@ -274,7 +285,7 @@
       <!-- Кнопка "Yes" 1 вариант -->
       <a-entity id="rpo-one-button-entity" position="0 1 -3" visible="false">
           <a-plane 
-            id="yes-button" 
+            id="rpo-one-button" 
             class="clickable" 
             width="0.6" 
             height="0.3" 
@@ -282,7 +293,9 @@
             hoverable>
           </a-plane>
           <a-text 
-            value="Yes" 
+            value="Да, расскажи подробнее!" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png"
             align="center" 
             color="white" 
             position="0 0 0.01"
@@ -294,7 +307,7 @@
       <!-- Кнопка "А чем вообще занимаются в back-end?" -->
       <a-entity id="rpo-two-button-entity" position="0 1 -3" visible="false">
         <a-plane 
-          id="yes-button" 
+          id="rpo-two-button" 
           class="clickable" 
           width="0.6" 
           height="0.3" 
@@ -531,7 +544,7 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     // Показываем кнопку Yes после accompanier-text-four
     if (nextText.id === 'accompanier-text-four') {
       rpoOneButtonEntity.setAttribute('visible', 'true');
-      const yesButton = rpoOneButtonEntity.querySelector('#yes-button');
+      const yesButton = rpoOneButtonEntity.querySelector('#rpo-one-button');
       if (yesButton) {
         yesButton.classList.add('clickable');
       }
@@ -540,9 +553,9 @@ document.querySelector('#next-text-button').addEventListener('click', async func
 });
 
 // Обработчик для кнопки Yes
-document.querySelector('#yes-button').addEventListener('click', async function() {
+document.querySelector('#rpo-one-button').addEventListener('click', async function() {
   const rpoOneButtonEntity = document.querySelector('#rpo-one-button-entity');
-  const yesButton = document.querySelector('#yes-button');
+  const yesButton = document.querySelector('#rpo-one-button');
   const currentText = document.querySelector('#accompanier-text-four');
   const yesText = document.querySelector('#accompanier-text-five-yes');
 
