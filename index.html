@@ -548,12 +548,12 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     document.querySelector('#accompanier-text-two'),
     document.querySelector('#accompanier-text-three'),
     document.querySelector('#accompanier-text-four'),
-    document.querySelector('#accompanier-text-five-interactive')
+    document.querySelector('#accompanier-text-five-interactive'),
+    document.querySelector('#accompanier-text-six')
   ];
   const nextButton = document.querySelector('#next-text-button');
   const nextPlane = nextButton.querySelector('a-plane');
   const rpoButton = document.querySelector('#rpo-one-button-interactive');
-  const rpoPlane = rpoButton.querySelector('a-plane');
 
   const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
   if (currentIndex < texts.length - 1) {
@@ -566,15 +566,15 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     nextText.setAttribute('visible', 'true');
     await typeText(nextText, nextText.getAttribute('value'));
 
-    // Если это последний текст (accompanier-text-five-interactive)
+    // Если это текст перед интерактивной кнопкой
     if (nextText.id === 'accompanier-text-five-interactive') {
-      // Скрываем и отключаем кнопку "Next"
       nextButton.setAttribute('visible', 'false');
       nextPlane.classList.remove('clickable');
-
-      // Показываем и активируем кнопку "rpo-one-button-interactive"
-      rpoButton.setAttribute('visible', 'true');
-      rpoPlane.classList.add('clickable');
+      
+      if (rpoButton) { // Проверяем, существует ли кнопка
+        rpoButton.setAttribute('visible', 'true');
+        rpoButton.querySelector('a-plane').classList.add('clickable');
+      }
     } else {
       // Показываем кнопку "Next" для всех остальных текстов
       nextButton.setAttribute('visible', 'true');
@@ -584,7 +584,30 @@ document.querySelector('#next-text-button').addEventListener('click', async func
 });
 
 
+// Логика для кнопки rpo-one-button-interactive
+document.querySelector('#rpo-one-button-interactive').addEventListener('click', async function() {
+  const rpoButton = document.querySelector('#rpo-one-button-interactive');
+  const nextButton = document.querySelector('#next-text-button');
+  const nextPlane = nextButton.querySelector('a-plane');
+  const textSix = document.querySelector('#accompanier-text-six');
+  const textFive = document.querySelector('#accompanier-text-five-interactive');
 
+  // Скрываем текущий текст и кнопку
+  textFive.setAttribute('visible', 'false');
+  rpoButton.setAttribute('visible', 'false');
+  rpoButton.querySelector('a-plane').classList.remove('clickable');
+
+  // Показываем новый текст с эффектом печати
+  textSix.setAttribute('visible', 'true');
+  await typeText(textSix, textSix.getAttribute('value'));
+
+  // Показываем и активируем кнопку Next
+  nextButton.setAttribute('visible', 'true');
+  nextPlane.classList.add('clickable');
+
+  // Удаляем кнопку rpo-one-button-interactive
+  rpoButton.parentNode.removeChild(rpoButton);
+});
 
 
 
