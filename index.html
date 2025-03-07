@@ -301,7 +301,7 @@
       </a-entity>
 
       <!-- Кнопка интерактив 1-->
-      <a-entity id="rpo-one-button-entity" position="0 1 -3" visible="false">
+      <a-entity id="rpo-one-button-interactive" position="0 1 -3" visible="false">
           <a-plane 
             width="0.6" 
             height="0.3" 
@@ -541,34 +541,47 @@
 
 
     
-      // Логика переключения текста в rpo-scene с эффектом печати
-      document.querySelector('#next-text-button').addEventListener('click', async function() {
-        const texts = [
-          document.querySelector('#accompanier-text-one'),
-          document.querySelector('#accompanier-text-two'),
-          document.querySelector('#accompanier-text-three'),
-          document.querySelector('#accompanier-text-four'),
-          document.querySelector('#accompanier-text-five-interactive')
-        ];
-        const nextButton = document.querySelector('#next-text-button');
-        const plane = nextButton.querySelector('a-plane');
+// Логика переключения текста в rpo-scene с эффектом печати
+document.querySelector('#next-text-button').addEventListener('click', async function() {
+  const texts = [
+    document.querySelector('#accompanier-text-one'),
+    document.querySelector('#accompanier-text-two'),
+    document.querySelector('#accompanier-text-three'),
+    document.querySelector('#accompanier-text-four'),
+    document.querySelector('#accompanier-text-five-interactive')
+  ];
+  const nextButton = document.querySelector('#next-text-button');
+  const nextPlane = nextButton.querySelector('a-plane');
+  const rpoButton = document.querySelector('#rpo-one-button-interactive');
+  const rpoPlane = rpoButton.querySelector('a-plane');
 
-        const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
-        if (currentIndex < texts.length - 1) {
-          // Скрываем кнопку перед началом анимации
-          nextButton.setAttribute('visible', 'false');
-          plane.classList.remove('clickable');
+  const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
+  if (currentIndex < texts.length - 1) {
+    // Скрываем кнопку "Next" перед началом анимации
+    nextButton.setAttribute('visible', 'false');
+    nextPlane.classList.remove('clickable');
 
-          texts[currentIndex].setAttribute('visible', 'false');
-          const nextText = texts[currentIndex + 1];
-          nextText.setAttribute('visible', 'true');
-          await typeText(nextText, nextText.getAttribute('value'));
+    texts[currentIndex].setAttribute('visible', 'false');
+    const nextText = texts[currentIndex + 1];
+    nextText.setAttribute('visible', 'true');
+    await typeText(nextText, nextText.getAttribute('value'));
 
-          // Показываем кнопку после завершения анимации
-          nextButton.setAttribute('visible', 'true');
-          plane.classList.add('clickable');
-        }
-      });
+    // Если это последний текст (accompanier-text-five-interactive)
+    if (nextText.id === 'accompanier-text-five-interactive') {
+      // Скрываем и отключаем кнопку "Next"
+      nextButton.setAttribute('visible', 'false');
+      nextPlane.classList.remove('clickable');
+
+      // Показываем и активируем кнопку "rpo-one-button-interactive"
+      rpoButton.setAttribute('visible', 'true');
+      rpoPlane.classList.add('clickable');
+    } else {
+      // Показываем кнопку "Next" для всех остальных текстов
+      nextButton.setAttribute('visible', 'true');
+      nextPlane.classList.add('clickable');
+    }
+  }
+});
 
 
 
