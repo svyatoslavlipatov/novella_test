@@ -1179,6 +1179,9 @@ document.querySelector('#rpo-back-to-portals').addEventListener('click', functio
   const transitionScene = document.querySelector('#transition-scene');
   const background = document.querySelector('#background');
   const backButton = document.querySelector('#rpo-back-to-portals');
+  const portal1 = document.querySelector('#portal1 a-circle'); // Портал RPO
+  const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+  const portalLight = document.querySelector('#portal-light');
 
   // Скрываем текущую сцену и показываем сцену с порталами
   rpoScene.setAttribute('visible', 'false');
@@ -1190,11 +1193,17 @@ document.querySelector('#rpo-back-to-portals').addEventListener('click', functio
   backButton.querySelector('a-plane').classList.remove('clickable');
 
   // Восстанавливаем видимость порталов и их подсветку
-  const portals = document.querySelector('#portals').querySelectorAll('a-circle');
-  const portalLight = document.querySelector('#portal-light');
   portals.forEach(portal => {
-    portal.setAttribute('opacity', '0.8');
-    portal.classList.add('clickable');
+    if (portal === portal1) {
+      // Делаем portal1 серым и некликабельным
+      portal.setAttribute('color', '#808080'); // Серый цвет
+      portal.setAttribute('opacity', '0.8');
+      portal.classList.remove('clickable');
+    } else {
+      // Остальные порталы остаются кликабельными и с исходным цветом
+      portal.setAttribute('opacity', '0.8');
+      portal.classList.add('clickable');
+    }
   });
   portalLight.setAttribute('intensity', '1');
 
