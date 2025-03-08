@@ -2,7 +2,16 @@
   <head>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
-
+    <script>
+      AFRAME.registerComponent('custom-font', {
+        init: function () {
+          this.el.setAttribute('font', 'msdf/pixel/pix-msdf.json');
+          this.el.setAttribute('font-image', 'msdf/pixel/pix.png');
+          this.el.setAttribute('negate', 'false');
+        }
+      });
+            
+    </script>
   </head>
   <body>
     <a-scene>      
@@ -54,11 +63,7 @@
             color="#008CBA"
             hoverable>
           </a-plane>
-          <a-text value="Вперед!" align="center" color="white" position="0 0 0.01"
-            font="msdf/pixel/pix-msdf.json" 
-            font-image="msdf/pixel/pix.png" 
-            negate="false">
-          </a-text>
+          <a-text custom-font value="Вперед!" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
