@@ -979,198 +979,153 @@
 
 // -----------------------МЕХАНИКИ ДЛЯ РПО-----------------------
     
-// Конфигурация интерактивных элементов
-const sceneConfig = {
-  'rpo-scene': {
-    texts: [
-      { id: 'accompanier-text-one', next: 'accompanier-text-two' },
-      { id: 'accompanier-text-two', next: 'accompanier-text-three' },
-      { id: 'accompanier-text-three', next: 'accompanier-text-four' },
-      { id: 'accompanier-text-four', next: 'accompanier-text-five-interactive' },
-      { 
-        id: 'accompanier-text-five-interactive', 
-        interactive: { 
-          buttonId: 'rpo-one-button-interactive', 
-          nextTextId: 'accompanier-text-six' 
-        }
-      },
-      { id: 'accompanier-text-six', next: 'accompanier-text-seven' },
-      { id: 'accompanier-text-seven', next: 'accompanier-text-eight-interactive' },
-      { 
-        id: 'accompanier-text-eight-interactive', 
-        interactive: { 
-          buttonId: 'rpo-two-button-interactive', 
-          nextTextId: 'accompanier-text-nine' 
-        }
-      },
-      { id: 'accompanier-text-nine', next: 'accompanier-text-ten' },
-      { id: 'accompanier-text-ten', next: 'accompanier-text-eleven-interactive' },
-      { 
-        id: 'accompanier-text-eleven-interactive', 
-        interactive: { 
-          buttonId: 'rpo-three-button-interactive', 
-          nextTextId: 'accompanier-text-twelve' 
-        }
-      },
-      { id: 'accompanier-text-twelve', next: 'accompanier-text-thirteen' },
-      { 
-        id: 'accompanier-text-thirteen', 
-        multipleChoice: [
-          { buttonId: 'choice-a-button-fourteen', responseTextId: 'accompanier-text-fourteen-a', next: 'accompanier-text-fiveteen' },
-          { buttonId: 'choice-b-button-fourteen', responseTextId: 'accompanier-text-fourteen-b', next: 'accompanier-text-fiveteen' },
-          { buttonId: 'choice-c-button-fourteen', responseTextId: 'accompanier-text-fourteen-c', next: 'accompanier-text-fiveteen' }
-        ]
-      },
-      { id: 'accompanier-text-fourteen-a', next: 'accompanier-text-fiveteen' },
-      { id: 'accompanier-text-fourteen-b', next: 'accompanier-text-fiveteen' },
-      { id: 'accompanier-text-fourteen-c', next: 'accompanier-text-fiveteen' },
-      { id: 'accompanier-text-fiveteen', next: 'accompanier-text-sixteen' },
-      { id: 'accompanier-text-sixteen', next: 'accompanier-text-seventeen' },
-      { 
-        id: 'accompanier-text-seventeen', 
-        multipleChoice: [
-          { buttonId: 'yes-button-seventeen', responseTextId: 'accompanier-text-eighteen-yes', next: 'accompanier-text-nineteen' },
-          { buttonId: 'no-button-seventeen', responseTextId: 'accompanier-text-eighteen-no', next: 'accompanier-text-nineteen' }
-        ]
-      },
-      { id: 'accompanier-text-eighteen-yes', next: 'accompanier-text-nineteen' },
-      { id: 'accompanier-text-eighteen-no', next: 'accompanier-text-nineteen' },
-      { id: 'accompanier-text-nineteen', end: true } // Конец сцены
+// Конфигурация
+const config = {
+  interactive: {
+    'accompanier-text-five-interactive': { button: 'rpo-one-button-interactive', next: 'accompanier-text-six' },
+    'accompanier-text-eight-interactive': { button: 'rpo-two-button-interactive', next: 'accompanier-text-nine' },
+    'accompanier-text-eleven-interactive': { button: 'rpo-three-button-interactive', next: 'accompanier-text-twelve' }
+  },
+  multipleChoice: {
+    'accompanier-text-seventeen': [
+      { button: 'yes-button-seventeen', response: 'accompanier-text-eighteen-yes' },
+      { button: 'no-button-seventeen', response: 'accompanier-text-eighteen-no' }
     ],
-    backButtonId: 'rpo-back-to-portals'
-  }
-  // Можно добавить другие сцены, например:
-  // 'dizayn-scene': { texts: [...] },
-  // 'turizm-scene': { texts: [...] }
+    'accompanier-text-thirteen': [
+      { button: 'choice-a-button-fourteen', response: 'accompanier-text-fourteen-a' },
+      { button: 'choice-b-button-fourteen', response: 'accompanier-text-fourteen-b' },
+      { button: 'choice-c-button-fourteen', response: 'accompanier-text-fourteen-c' }
+    ]
+  },
+  textsOrder: [
+    'one', 'two', 'three', 'four', 'five-interactive', 'six', 'seven', 'eight-interactive', 
+    'nine', 'ten', 'eleven-interactive', 'twelve', 'thirteen', 'fourteen-a', 'fourteen-b', 
+    'fourteen-c', 'fiveteen', 'sixteen', 'seventeen', 'eighteen-yes', 'eighteen-no', 'nineteen'
+  ].map(id => `accompanier-text-${id}`)
 };
 
-// Универсальная функция обработки интерактивных кнопок
-function handleInteractiveButton(buttonId, currentTextId, nextTextId, nextButton) {
+// Универсальный обработчик кнопок
+const handleButton = (buttonId, onClick) => {
   const button = document.querySelector(`#${buttonId}`);
   if (!button) return;
+  
+  button.addEventListener('click', onClick);
+  button.setAttribute('visible', 'true');
+  button.querySelector('a-plane').classList.add('clickable');
+};
 
-  button.addEventListener('click', async () => {
-    const currentText = document.querySelector(`#${currentTextId}`);
-    const nextText = document.querySelector(`#${nextTextId}`);
-    const nextPlane = nextButton.querySelector('a-plane');
+// Обработка интерактивных элементов
+const handleInteractive = (currentId, { button, next }) => {
+  handleButton(button, async () => {
+    await toggleText(currentId, next);
+    cleanButton(button);
+  });
+};
 
-    currentText.setAttribute('visible', 'false');
+// Обработка множественного выбора
+const handleChoices = (textId, choices) => {
+  choices.forEach(({ button, response }) => {
+    handleButton(button, async () => {
+      await toggleText(textId, response);
+      choices.forEach(ch => cleanButton(ch.button));
+    });
+  });
+};
+
+// Переключение текста
+const toggleText = async (currentId, nextId) => {
+  const [current, next, nextBtn] = [currentId, nextId, 'next-text-button']
+    .map(id => document.querySelector(`#${id}`));
+  const nextPlane = nextBtn.querySelector('a-plane');
+
+  current.setAttribute('visible', 'false');
+  next.setAttribute('visible', 'true');
+  await typeText(next, next.getAttribute('value'));
+  nextBtn.setAttribute('visible', 'true');
+  nextPlane.classList.add('clickable');
+};
+
+// Очистка кнопки
+const cleanButton = (buttonId) => {
+  const button = document.querySelector(`#${buttonId}`);
+  if (button) {
     button.setAttribute('visible', 'false');
     button.querySelector('a-plane').classList.remove('clickable');
-
-    nextText.setAttribute('visible', 'true');
-    await typeText(nextText, nextText.getAttribute('value'));
-
-    nextButton.setAttribute('visible', 'true');
-    nextPlane.classList.add('clickable');
-
-    button.parentNode.removeChild(button);
-  });
-}
-
-// Универсальная функция обработки множественного выбора
-function handleMultipleChoice(textId, choices, nextButton) {
-  const currentText = document.querySelector(`#${textId}`);
-  const choiceButtons = choices.map(choice => document.querySelector(`#${choice.buttonId}`));
-  const nextPlane = nextButton.querySelector('a-plane');
-
-  choiceButtons.forEach(button => {
-    button.setAttribute('visible', 'true');
-    button.querySelector('a-plane').classList.add('clickable');
-  });
-
-  choices.forEach(choice => {
-    const button = document.querySelector(`#${choice.buttonId}`);
-    button.addEventListener('click', async () => {
-      choiceButtons.forEach(btn => {
-        btn.setAttribute('visible', 'false');
-        btn.querySelector('a-plane').classList.remove('clickable');
-        btn.parentNode.removeChild(btn);
-      });
-
-      currentText.setAttribute('visible', 'false');
-      const responseText = document.querySelector(`#${choice.responseTextId}`);
-      responseText.setAttribute('visible', 'true');
-      await typeText(responseText, responseText.getAttribute('value'));
-
-      nextButton.setAttribute('visible', 'true');
-      nextPlane.classList.add('clickable');
-    });
-  });
-}
-
-// Универсальный обработчик сцены
-function initializeScene(sceneId) {
-  const config = sceneConfig[sceneId];
-  if (!config) return;
-
-  const texts = config.texts.map(t => ({ ...t, element: document.querySelector(`#${t.id}`) }));
-  const nextButton = document.querySelector('#next-text-button');
-  const backButton = document.querySelector(`#${config.backButtonId}`);
-
-  nextButton.addEventListener('click', async () => {
-    const currentIndex = texts.findIndex(t => t.element.getAttribute('visible'));
-    if (currentIndex === -1 || currentIndex >= texts.length - 1) return;
-
-    const currentText = texts[currentIndex];
-    nextButton.setAttribute('visible', 'false');
-    nextButton.querySelector('a-plane').classList.remove('clickable');
-    currentText.element.setAttribute('visible', 'false');
-
-    let nextText = texts[currentIndex + 1];
-    if (currentText.multipleChoice) {
-      handleMultipleChoice(currentText.id, currentText.multipleChoice, nextButton);
-      return;
-    } else if (currentText.interactive) {
-      handleInteractiveButton(currentText.interactive.buttonId, currentText.id, currentText.interactive.nextTextId, nextButton);
-      return;
-    }
-
-    nextText.element.setAttribute('visible', 'true');
-    await typeText(nextText.element, nextText.element.getAttribute('value'));
-
-    if (nextText.end) {
-      backButton.setAttribute('visible', 'true');
-      backButton.querySelector('a-plane').classList.add('clickable');
-    } else if (nextText.interactive) {
-      const button = document.querySelector(`#${nextText.interactive.buttonId}`);
-      button.setAttribute('visible', 'true');
-      button.querySelector('a-plane').classList.add('clickable');
-    } else if (nextText.multipleChoice) {
-      handleMultipleChoice(nextText.id, nextText.multipleChoice, nextButton);
-    } else {
-      nextButton.setAttribute('visible', 'true');
-      nextButton.querySelector('a-plane').classList.add('clickable');
-    }
-  });
-}
-
-// Инициализация сцены при входе через портал
-function initializePortals() {
-  const portals = document.querySelector('#portals').querySelectorAll('a-circle');
-  const transitionScene = document.querySelector('#transition-scene');
-  const background = document.querySelector('#background');
-  const nextButton = document.querySelector('#next-text-button');
-
-  Object.entries(portalConfig).forEach(([portalId, { scene, preset }]) => {
-    document.querySelector(`#${portalId} a-circle`).addEventListener('click', async () => {
-      portals.forEach(portal => portal.classList.remove('clickable'));
-      transitionScene.setAttribute('visible', 'false');
-      document.querySelector(`#${scene}`).setAttribute('visible', 'true');
-      background.setAttribute('environment', `preset: ${preset}`);
-
-      const firstText = document.querySelector(`#${sceneConfig[scene].texts[0].id}`);
-      await typeText(firstText, firstText.getAttribute('value'));
-      nextButton.setAttribute('visible', 'true');
-      nextButton.querySelector('a-plane').classList.add('clickable');
-
-      initializeScene(scene); // Инициализируем сцену
-    });
-  });
-}
+    button.remove();
+  }
+};
 
 // Инициализация
-initializePortals();
+Object.entries(config.interactive).forEach(([id, data]) => handleInteractive(id, data));
+
+// Обработчик кнопки Next
+document.querySelector('#next-text-button').addEventListener('click', async function() {
+  const texts = config.textsOrder.map(id => document.querySelector(`#${id}`));
+  const [nextBtn, backBtn] = ['next-text-button', 'rpo-back-to-portals']
+    .map(id => document.querySelector(`#${id}`));
+  const nextPlane = nextBtn.querySelector('a-plane');
+  
+  const currentIdx = texts.findIndex(t => t.getAttribute('visible'));
+  if (currentIdx >= texts.length - 1) return;
+
+  nextBtn.setAttribute('visible', 'false');
+  nextPlane.classList.remove('clickable');
+  texts[currentIdx].setAttribute('visible', 'false');
+
+  let nextIdx = currentIdx + 1;
+  if (texts[currentIdx].id.includes('fourteen-')) nextIdx = texts.findIndex(t => t.id === 'accompanier-text-fiveteen');
+  else if (texts[currentIdx].id.includes('eighteen-')) nextIdx = texts.findIndex(t => t.id === 'accompanier-text-nineteen');
+
+  const nextText = texts[nextIdx];
+  nextText.setAttribute('visible', 'true');
+  await typeText(nextText, nextText.getAttribute('value'));
+
+  if (nextText.id === 'accompanier-text-nineteen') {
+    nextBtn.setAttribute('visible', 'false');
+    backBtn.setAttribute('visible', 'true');
+    backBtn.querySelector('a-plane').classList.add('clickable');
+  } else if (config.interactive[nextText.id]) {
+    handleInteractive(nextText.id, config.interactive[nextText.id]);
+  } else if (config.multipleChoice[nextText.id]) {
+    handleChoices(nextText.id, config.multipleChoice[nextText.id]);
+  } else {
+    nextBtn.setAttribute('visible', 'true');
+    nextPlane.classList.add('clickable');
+  }
+});
+
+// Обработчик возврата
+document.querySelector('#rpo-back-to-portals').addEventListener('click', () => {
+  const elements = {
+    rpoScene: '#rpo-scene',
+    transition: '#transition-scene',
+    bg: '#background',
+    backBtn: '#rpo-back-to-portals',
+    portal1: '#portal1 a-circle',
+    portals: '#portals',
+    light: '#portal-light',
+    msg: '#msg-six'
+  };
+  
+  const dom = Object.fromEntries(Object.entries(elements).map(([k, v]) => [k, document.querySelector(v)]));
+  
+  dom.rpoScene.setAttribute('visible', 'false');
+  dom.transition.setAttribute('visible', 'true');
+  dom.bg.setAttribute('environment', 'preset: forest');
+  dom.backBtn.setAttribute('visible', 'false');
+  dom.backBtn.querySelector('a-plane').classList.remove('clickable');
+
+  dom.portals.querySelectorAll('a-circle').forEach(portal => {
+    portal.setAttribute('opacity', '0.8');
+    portal === dom.portal1 
+      ? portal.setAttribute('color', '#808080') 
+      : portal.classList.add('clickable');
+  });
+  
+  dom.light.setAttribute('intensity', '1');
+  dom.msg?.setAttribute('visible', 'true');
+  dom.msg?.setAttribute('opacity', '1');
+});
 
 
 // -----------------------КОНЕЦ МЕХАНИКИ ДЛЯ РПО-----------------------
