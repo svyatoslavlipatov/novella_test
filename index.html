@@ -591,6 +591,27 @@
   visible="false">
 </a-text>
 
+<!-- Кнопка "Назад" в rpo-scene -->
+<a-entity id="rpo-back-to-portals" position="0 0.5 0" visible="false">
+  <a-plane 
+    width="1" 
+    height="0.4" 
+    color="#008CBA" 
+    class="clickable" 
+    hoverable>
+  </a-plane>
+  <a-text 
+    value="Назад к порталам" 
+    font="msdf/pixel/pix-msdf.json" 
+    font-image="msdf/pixel/pix.png" 
+    negate="false" 
+    align="center" 
+    color="white" 
+    position="0 0 0.01" 
+    scale="0.8 0.8 0.8">
+  </a-text>
+</a-entity>
+
 <!-- Кнопки выбора для accompanier-text-thirteen -->
 <a-entity id="choice-a-button-fourteen" position="0 1.6 0" visible="false">
 <a-plane 
@@ -1100,11 +1121,12 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     '#accompanier-text-seventeen',
     '#accompanier-text-eighteen-yes',
     '#accompanier-text-eighteen-no',
-    '#accompanier-text-nineteen' // Добавляем этот элемент в массив
+    '#accompanier-text-nineteen'
   ].map(id => document.querySelector(id));
 
   const nextButton = document.querySelector('#next-text-button');
   const nextPlane = nextButton.querySelector('a-plane');
+  const backButton = document.querySelector('#rpo-back-to-portals'); // Добавляем кнопку "Назад"
 
   const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
   if (currentIndex < texts.length - 1) {
@@ -1130,8 +1152,13 @@ document.querySelector('#next-text-button').addEventListener('click', async func
     nextText.setAttribute('visible', 'true');
     await typeText(nextText, nextText.getAttribute('value'));
 
-    // Проверяем интерактивные элементы
-    if (interactiveConfig[nextText.id]) {
+    // Проверяем, если достигнут accompanier-text-nineteen
+    if (nextText.id === 'accompanier-text-nineteen') {
+      nextButton.setAttribute('visible', 'false'); // Скрываем кнопку "Next"
+      nextPlane.classList.remove('clickable');
+      backButton.setAttribute('visible', 'true'); // Показываем кнопку "Назад"
+      backButton.querySelector('a-plane').classList.add('clickable');
+    } else if (interactiveConfig[nextText.id]) {
       const button = document.querySelector(`#${interactiveConfig[nextText.id].buttonId}`);
       if (button) {
         button.setAttribute('visible', 'true');
@@ -1146,6 +1173,38 @@ document.querySelector('#next-text-button').addEventListener('click', async func
   }
 });
 
+
+document.querySelector('#rpo-back-to-portals').addEventListener('click', function() {
+  const rpoScene = document.querySelector('#rpo-scene');
+  const transitionScene = document.querySelector('#transition-scene');
+  const background = document.querySelector('#background');
+  const backButton = document.querySelector('#rpo-back-to-portals');
+
+  // Скрываем текущую сцену и показываем сцену с порталами
+  rpoScene.setAttribute('visible', 'false');
+  transitionScene.setAttribute('visible', 'true');
+  background.setAttribute('environment', 'preset: forest'); // Возвращаем фон с порталами
+
+  // Скрываем кнопку "Назад"
+  backButton.setAttribute('visible', 'false');
+  backButton.querySelector('a-plane').classList.remove('clickable');
+
+  // Восстанавливаем видимость порталов и их подсветку
+  const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+  const portalLight = document.querySelector('#portal-light');
+  portals.forEach(portal => {
+    portal.setAttribute('opacity', '0.8');
+    portal.classList.add('clickable');
+  });
+  portalLight.setAttribute('intensity', '1');
+
+  // Показываем последний текст сцены перехода
+  const msgSix = document.querySelector('#msg-six');
+  if (msgSix) {
+    msgSix.setAttribute('visible', 'true');
+    msgSix.setAttribute('opacity', '1');
+  }
+});
 
     </script>
   </body>
