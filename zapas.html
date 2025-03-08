@@ -2,6 +2,61 @@
   <head>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+    <script>
+      // Шрифт для текста
+      AFRAME.registerComponent('custom-font', {
+        init: function () {
+          this.el.setAttribute('font', 'msdf/pixel/pix-msdf.json');
+          this.el.setAttribute('font-image', 'msdf/pixel/pix.png');
+          this.el.setAttribute('negate', 'false');
+        }
+      });
+
+      // Компонент кнопки
+      AFRAME.registerComponent('button', {
+        schema: {
+          value: { type: 'string', default: '' },
+          position: { type: 'vec3', default: { x: 0, y: 1, z: 0 } }
+        },
+        init: function () {
+          const el = this.el;
+          const data = this.data;
+
+          // Создаём плоскость
+          const plane = document.createElement('a-plane');
+          plane.setAttribute('width', '2');
+          plane.setAttribute('height', '0.3');
+          plane.setAttribute('color', '#00CC00');
+          plane.setAttribute('hoverable', '');
+
+          // Создаём текст
+          const text = document.createElement('a-text');
+          text.setAttribute('value', data.value);
+          text.setAttribute('font', 'msdf/pixel/pix-msdf.json');
+          text.setAttribute('font-image', 'msdf/pixel/pix.png');
+          text.setAttribute('negate', 'false');
+          text.setAttribute('align', 'center');
+          text.setAttribute('color', 'white');
+          text.setAttribute('position', '0 0 0.01');
+          text.setAttribute('width', '2');
+          text.setAttribute('scale', '0.8 0.8 0.8');
+
+          // Добавляем элементы в сущность
+          el.appendChild(plane);
+          el.appendChild(text);
+          el.setAttribute('position', data.position);
+        }
+      });
+
+      // Если hoverable уже есть, убедитесь, что он работает
+      AFRAME.registerComponent('hoverable', {
+        init: function () {
+          const el = this.el;
+          el.addEventListener('mouseenter', () => el.setAttribute('color', '#005F7F'));
+          el.addEventListener('mouseleave', () => el.setAttribute('color', '#00CC00'));
+        }
+      });
+    </script>
 
   </head>
   <body>
@@ -54,23 +109,19 @@
             color="#008CBA"
             hoverable>
           </a-plane>
-          <a-text value="Вперед!" align="center" color="white" position="0 0 0.01"
-            font="msdf/pixel/pix-msdf.json" 
-            font-image="msdf/pixel/pix.png" 
-            negate="false">
-          </a-text>
+          <a-text custom-font value="Вперед!" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
       <!-- Транзитная сцена -->
       <a-entity id="transition-scene" visible="false">
         <a-entity position="0 1 -4">
-          <a-text id="msg-one" value="Привет!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
-          <a-text id="msg-two" value="Ты стоишь на перепутье, кем же тебе стать.." font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-three" value="Выбрать направление очень важно, и мы тебе поможем в этом" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-four" value="Мы покажем тебе 5 направлений нашего факультета" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-five" value="И покажем суть каждого!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-six" value="Выбирай!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-one" value="Привет!" custom-font  align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+          <a-text id="msg-two" value="Ты стоишь на перепутье, кем же тебе стать.." custom-font align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-three" value="Выбрать направление очень важно, и мы тебе поможем в этом" custom-font align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-four" value="Мы покажем тебе 5 направлений нашего факультета" custom-font align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-five" value="И покажем суть каждого!" custom-font align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-six" value="Выбирай!" custom-font align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
         </a-entity>
 
         <a-entity id="portals">
@@ -154,7 +205,7 @@
             color="#008CBA"
             hoverable>
           </a-plane>
-          <a-text value="Назад" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" position="0 0 0.01"></a-text>
+          <a-text value="Назад" custom-font align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
@@ -162,7 +213,7 @@
 <a-entity id="rpo-scene" visible="false">
   <a-sky color="#ECECEC"></a-sky>
   <a-entity position="0 1 -4">
-    <a-text id="rpo-msg-one" value="РПО" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+    <a-text id="rpo-msg-one" value="РПО" custom-font align="center" color="white" scale="2 2 2" opacity="1"></a-text>
   </a-entity>
   
   <!-- Сопроводитель -->
@@ -178,9 +229,7 @@
       <a-text 
         id="speaker-name" 
         value="СОПРОВОДИТЕЛЬ" 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFD700" 
         align="left" 
         width="2.5" 
@@ -193,9 +242,7 @@
         
         <a-text id="accompanier-text-one" 
           value="Привет! Ты попал в ядро любого приложения — его back-end." 
-          font="msdf/pixel/pix-msdf.json" 
-          font-image="msdf/pixel/pix.png"
-          negate="false"
+          custom-font
           color="#FFFFFF" 
           align="left" 
           anchor="left" 
@@ -209,9 +256,7 @@
 
         <a-text id="accompanier-text-two" 
           value="Я Сопроводитель РПО, и я отвечаю за то, чтобы всё работало как часы: серверы, базы данных, API. Здесь мы создаём невидимую, но самую важную часть программ — их мозги. " 
-          font="msdf/pixel/pix-msdf.json" 
-          font-image="msdf/pixel/pix.png"
-          negate="false"
+          custom-font
           color="#FFFFFF" 
           align="left" 
           anchor="left" 
@@ -225,9 +270,7 @@
 
         <a-text id="accompanier-text-three" 
           value="Хочешь узнать, что это за работа?" 
-          font="msdf/pixel/pix-msdf.json" 
-          font-image="msdf/pixel/pix.png"
-          negate="false"
+          custom-font
           color="#FFFFFF" 
           align="left" 
           anchor="left" 
@@ -240,7 +283,8 @@
         </a-text>
 
       <a-text id="accompanier-text-four" 
-        value="WOWOWOWOWOWWOWO" 
+        custom-font
+        value="йоу пасандре" 
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -255,9 +299,7 @@
       <!-- Текст интерактив 1 -->
       <a-text id="accompanier-text-five-interactive" 
         value="Да, расскажи подробнее!" 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -269,12 +311,29 @@
         visible="false">
       </a-text>
 
+           <!-- Кнопка интерактив 1-->
+      <a-entity id="rpo-one-button-interactive" position="0 1 0" visible="false">
+        <a-plane 
+          width="3" 
+          height="0.3" 
+          color="#00CC00"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Да, расскажи подробнее!" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="3"
+          scale="0.8 0.8 0.8">
+        </a-text>
+      </a-entity>
+
 
       <a-text id="accompanier-text-six" 
         value="Отлично! Представь себе: ты открываешь любимое приложение — например, соцсеть или игру. Ты видишь кнопки, картинки, сообщения." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -288,9 +347,7 @@
 
       <a-text id="accompanier-text-seven" 
         value="Но за всем этим стоит back-end. Это как кухня в ресторане: ты не видишь, как готовят еду, но без неё ничего бы не получилось." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -304,9 +361,7 @@
 
       <a-text id="accompanier-text-eight-interactive" 
         value="Мы пишем код, который обрабатывает твои действия: сохраняет посты, отправляет сообщения, считает очки в игре. Без нас всё просто остановится. Круто, правда?" 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -318,11 +373,28 @@
         visible="false">
       </a-text>
 
+      <!-- Кнопка интерактив 2-->
+      <a-entity id="rpo-two-button-interactive" position="0 1 0" visible="false">
+        <a-plane 
+          width="3" 
+          height="0.3" 
+          color="#00CC00"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="А Что вообще делают в back-end?" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="3"
+          scale="0.8 0.8 0.8">
+        </a-text>
+      </a-entity>
+
       <a-text id="accompanier-text-nine" 
         value="Back-end — это всё, что скрыто от глаз. Мы проектируем серверы, чтобы они могли выдерживать миллионы запросов. Настраиваем базы данных, чтобы твои данные — например, фотки или пароли — хранились надёжно." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -336,9 +408,7 @@
 
       <a-text id="accompanier-text-ten" 
         value="Мы пишем API — это как мостик между приложением и сервером. Короче, мы строим фундамент, на котором держится весь цифровой мир! Хочешь покажу, как это работает? " 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -352,9 +422,7 @@
 
       <a-text id="accompanier-text-eleven-interactive" 
         value="Я покажу тебе на примере. Слева от тебя кнопка Отправить сообщение, нажми на неё." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -366,11 +434,28 @@
         visible="false">
       </a-text>
 
+      <!-- Кнопка интерактив 3-->
+     <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
+      <a-plane 
+        width="3" 
+        height="0.3" 
+        color="#00CC00"
+        hoverable>
+      </a-plane>
+      <a-text 
+        value="Отправить сообщение" 
+       custom-font
+        align="center" 
+        color="white" 
+        position="0 0 0.01"
+        width="3"
+        scale="0.8 0.8 0.8">
+      </a-text>
+    </a-entity>
+
       <a-text id="accompanier-text-twelve" 
         value="Видишь? Ты нажал кнопку, а я за секунду обработал твой запрос. Это и есть наша работа — сделать так, чтобы всё было быстро, надёжно и незаметно для тебя." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -385,9 +470,7 @@
       
       <a-text id="accompanier-text-thirteen" 
         value="У меня есть для тебя задача: представь, что ты должен настроить сервер, чтобы он ответил на запрос пользователя. Выбери, что нужно сделать" 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -399,12 +482,73 @@
         visible="false">
       </a-text>
 
+      <!-- Кнопки выбора для accompanier-text-thirteen -->
+
+      <a-entity id="choice-a-button-fourteen" button="value: Обработать запрос; position: 0 1.6 0" visible="false"></a-entity>
+      <a-entity id="choice-b-button-fourteen" button="value: Перезагрузить страницу; position: 0 1.3 0" visible="false"></a-entity>
+      <a-entity id="choice-c-button-fourteen" button="value: Нарисовать кнопку; position: 0 0.8 0" visible="false"></a-entity>
+
+      <!-- <a-entity id="choice-a-button-fourteen" position="0 1.6 0" visible="false">
+        <a-plane 
+          width="2" 
+          height="0.3" 
+          color="#00CC00"
+        
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Обработать запрос" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="2"
+          scale="0.8 0.8 0.8">
+        </a-text>
+        </a-entity>
+        
+        <a-entity id="choice-b-button-fourteen" position="0 1.3 0" visible="false">
+        <a-plane 
+          width="2" 
+          height="0.3" 
+          color="#00CC00"
+        
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Перезагрузить страницу" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="2"
+          scale="0.8 0.8 0.8">
+        </a-text>
+        </a-entity>
+        
+        <a-entity id="choice-c-button-fourteen" position="0 0.8 0" visible="false">
+        <a-plane 
+          width="2" 
+          height="0.3" 
+          color="#00CC00"
+        
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Нарисовать кнопку" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="2"
+          scale="0.8 0.8 0.8">
+        </a-text>
+        </a-entity> -->
+
       <!-- Варианты ответов для accompanier-text-thirteen -->
       <a-text id="accompanier-text-fourteen-a" 
         value="Верно! Нужно написать код для обработки запроса на сервере и отправки ответа клиенту." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -418,9 +562,7 @@
 
       <a-text id="accompanier-text-fourteen-b" 
         value="Не совсем. Перезагрузка страницы — это не задача сервера, а клиентская механика." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -434,9 +576,7 @@
 
       <a-text id="accompanier-text-fourteen-c" 
         value="Нет, рисовать кнопки — это задача фронтенд-разработчиков, а не бэкенд." 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
+       custom-font
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -450,9 +590,7 @@
 
     <a-text id="accompanier-text-fiveteen" 
       value="Вот и все! В этом все направление!" 
-      font="msdf/pixel/pix-msdf.json" 
-      font-image="msdf/pixel/pix.png"
-      negate="false"
+      custom-font
       color="#FFFFFF" 
       align="left" 
       anchor="left" 
@@ -466,9 +604,7 @@
 
     <a-text id="accompanier-text-sixteen" 
       value="Пока!" 
-      font="msdf/pixel/pix-msdf.json" 
-      font-image="msdf/pixel/pix.png"
-      negate="false"
+      custom-font
       color="#FFFFFF" 
       align="left" 
       anchor="left" 
@@ -482,9 +618,7 @@
 
     <a-text id="accompanier-text-seventeen" 
       value="Тебе понравилось?" 
-      font="msdf/pixel/pix-msdf.json" 
-      font-image="msdf/pixel/pix.png"
-      negate="false"
+      custom-font
       color="#FFFFFF" 
       align="left" 
       anchor="left" 
@@ -507,9 +641,7 @@
   </a-plane>
   <a-text 
     value="Да" 
-    font="msdf/pixel/pix-msdf.json" 
-    font-image="msdf/pixel/pix.png"
-    negate="false"
+    custom-font
     align="center" 
     color="white" 
     position="0 0 0.01"
@@ -529,9 +661,7 @@
   </a-plane>
   <a-text 
     value="Нет" 
-    font="msdf/pixel/pix-msdf.json" 
-    font-image="msdf/pixel/pix.png"
-    negate="false"
+    custom-font
     align="center" 
     color="white" 
     position="0 0 0.01"
@@ -543,9 +673,7 @@
 <!-- Текст ответа "Ура" -->
 <a-text id="accompanier-text-eighteen-yes" 
   value="Ура" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
+  custom-font
   color="#FFFFFF" 
   align="left" 
   anchor="left" 
@@ -560,9 +688,7 @@
 <!-- Текст ответа "Жаль" -->
 <a-text id="accompanier-text-eighteen-no" 
   value="Жаль" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
+  custom-font
   color="#FFFFFF" 
   align="left" 
   anchor="left" 
@@ -577,9 +703,7 @@
 <!-- Текст ответа "Жаль" -->
 <a-text id="accompanier-text-nineteen" 
   value="Пока!" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
+  custom-font
   color="#FFFFFF" 
   align="left" 
   anchor="left" 
@@ -602,9 +726,7 @@
   </a-plane>
   <a-text 
     value="Назад к порталам" 
-    font="msdf/pixel/pix-msdf.json" 
-    font-image="msdf/pixel/pix.png" 
-    negate="false" 
+    custom-font
     align="center" 
     color="white" 
     position="0 0 0.01" 
@@ -612,69 +734,7 @@
   </a-text>
 </a-entity>
 
-<!-- Кнопки выбора для accompanier-text-thirteen -->
-<a-entity id="choice-a-button-fourteen" position="0 1.6 0" visible="false">
-<a-plane 
-  width="2" 
-  height="0.3" 
-  color="#00CC00"
 
-  hoverable>
-</a-plane>
-<a-text 
-  value="Обработать запрос" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
-  align="center" 
-  color="white" 
-  position="0 0 0.01"
-  width="2"
-  scale="0.8 0.8 0.8">
-</a-text>
-</a-entity>
-
-<a-entity id="choice-b-button-fourteen" position="0 1.3 0" visible="false">
-<a-plane 
-  width="2" 
-  height="0.3" 
-  color="#00CC00"
- 
-  hoverable>
-</a-plane>
-<a-text 
-  value="Перезагрузить страницу" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
-  align="center" 
-  color="white" 
-  position="0 0 0.01"
-  width="2"
-  scale="0.8 0.8 0.8">
-</a-text>
-</a-entity>
-
-<a-entity id="choice-c-button-fourteen" position="0 0.8 0" visible="false">
-<a-plane 
-  width="2" 
-  height="0.3" 
-  color="#00CC00"
-
-  hoverable>
-</a-plane>
-<a-text 
-  value="Нарисовать кнопку" 
-  font="msdf/pixel/pix-msdf.json" 
-  font-image="msdf/pixel/pix.png"
-  negate="false"
-  align="center" 
-  color="white" 
-  position="0 0 0.01"
-  width="2"
-  scale="0.8 0.8 0.8">
-</a-text>
-</a-entity>
 
       </a-entity>
 
@@ -695,72 +755,6 @@
           scale="0.8 0.8 0.8">
         </a-text>
       </a-entity>
-
-      <!-- Кнопка интерактив 1-->
-      <a-entity id="rpo-one-button-interactive" position="0 1 0" visible="false">
-          <a-plane 
-            width="3" 
-            height="0.3" 
-            color="#00CC00"
-            hoverable>
-          </a-plane>
-          <a-text 
-            value="Да, расскажи подробнее!" 
-            font="msdf/pixel/pix-msdf.json" 
-            font-image="msdf/pixel/pix.png"
-            negate="false"
-            align="center" 
-            color="white" 
-            position="0 0 0.01"
-            width="3"
-            scale="0.8 0.8 0.8">
-          </a-text>
-      </a-entity>
-
-      <!-- Кнопка интерактив 2-->
-      <a-entity id="rpo-two-button-interactive" position="0 1 0" visible="false">
-        <a-plane 
-          width="3" 
-          height="0.3" 
-          color="#00CC00"
-          hoverable>
-        </a-plane>
-        <a-text 
-          value="А Что вообще делают в back-end?" 
-          font="msdf/pixel/pix-msdf.json" 
-          font-image="msdf/pixel/pix.png"
-          negate="false"
-          align="center" 
-          color="white" 
-          position="0 0 0.01"
-          width="3"
-          scale="0.8 0.8 0.8">
-        </a-text>
-
-    </a-entity>
-
-     <!-- Кнопка интерактив 3-->
-     <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
-      <a-plane 
-        width="3" 
-        height="0.3" 
-        color="#00CC00"
-        hoverable>
-      </a-plane>
-      <a-text 
-        value="Отправить сообщение" 
-        font="msdf/pixel/pix-msdf.json" 
-        font-image="msdf/pixel/pix.png"
-        negate="false"
-        align="center" 
-        color="white" 
-        position="0 0 0.01"
-        width="3"
-        scale="0.8 0.8 0.8">
-      </a-text>
-
-    </a-entity>
-
     </a-box>
 
     <a-image 

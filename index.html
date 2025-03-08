@@ -10,8 +10,8 @@
           this.el.setAttribute('negate', 'false');
         }
       });
-            
     </script>
+
   </head>
   <body>
     <a-scene>      
@@ -237,7 +237,8 @@
         </a-text>
 
       <a-text id="accompanier-text-four" 
-        value="WOWOWOWOWOWWOWO" 
+        custom-font
+        value="йоу пасандре" 
         color="#FFFFFF" 
         align="left" 
         anchor="left" 
@@ -263,6 +264,25 @@
         wrapcount="50"
         visible="false">
       </a-text>
+
+           <!-- Кнопка интерактив 1-->
+      <a-entity id="rpo-one-button-interactive" position="0 1 0" visible="false">
+        <a-plane 
+          width="3" 
+          height="0.3" 
+          color="#00CC00"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Да, расскажи подробнее!" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="3"
+          scale="0.8 0.8 0.8">
+        </a-text>
+      </a-entity>
 
 
       <a-text id="accompanier-text-six" 
@@ -307,6 +327,25 @@
         visible="false">
       </a-text>
 
+      <!-- Кнопка интерактив 2-->
+      <a-entity id="rpo-two-button-interactive" position="0 1 0" visible="false">
+        <a-plane 
+          width="3" 
+          height="0.3" 
+          color="#00CC00"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="А Что вообще делают в back-end?" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="3"
+          scale="0.8 0.8 0.8">
+        </a-text>
+      </a-entity>
+
       <a-text id="accompanier-text-nine" 
         value="Back-end — это всё, что скрыто от глаз. Мы проектируем серверы, чтобы они могли выдерживать миллионы запросов. Настраиваем базы данных, чтобы твои данные — например, фотки или пароли — хранились надёжно." 
        custom-font
@@ -349,6 +388,25 @@
         visible="false">
       </a-text>
 
+      <!-- Кнопка интерактив 3-->
+     <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
+      <a-plane 
+        width="3" 
+        height="0.3" 
+        color="#00CC00"
+        hoverable>
+      </a-plane>
+      <a-text 
+        value="Отправить сообщение" 
+       custom-font
+        align="center" 
+        color="white" 
+        position="0 0 0.01"
+        width="3"
+        scale="0.8 0.8 0.8">
+      </a-text>
+    </a-entity>
+
       <a-text id="accompanier-text-twelve" 
         value="Видишь? Ты нажал кнопку, а я за секунду обработал твой запрос. Это и есть наша работа — сделать так, чтобы всё было быстро, надёжно и незаметно для тебя." 
        custom-font
@@ -377,6 +435,64 @@
         wrapcount="50"
         visible="false">
       </a-text>
+
+      <!-- Кнопки выбора для accompanier-text-thirteen -->
+      <a-entity id="choice-a-button-fourteen" position="0 1.6 0" visible="false">
+        <a-plane 
+          width="2" 
+          height="0.3" 
+          color="#00CC00"
+        
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Обработать запрос" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="2"
+          scale="0.8 0.8 0.8">
+        </a-text>
+        </a-entity>
+        
+        <a-entity id="choice-b-button-fourteen" position="0 1.3 0" visible="false">
+        <a-plane 
+          width="2" 
+          height="0.3" 
+          color="#00CC00"
+        
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Перезагрузить страницу" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="2"
+          scale="0.8 0.8 0.8">
+        </a-text>
+        </a-entity>
+        
+        <a-entity id="choice-c-button-fourteen" position="0 0.8 0" visible="false">
+        <a-plane 
+          width="2" 
+          height="0.3" 
+          color="#00CC00"
+        
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Нарисовать кнопку" 
+          custom-font
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="2"
+          scale="0.8 0.8 0.8">
+        </a-text>
+        </a-entity>
 
       <!-- Варианты ответов для accompanier-text-thirteen -->
       <a-text id="accompanier-text-fourteen-a" 
@@ -567,63 +683,7 @@
   </a-text>
 </a-entity>
 
-<!-- Кнопки выбора для accompanier-text-thirteen -->
-<a-entity id="choice-a-button-fourteen" position="0 1.6 0" visible="false">
-<a-plane 
-  width="2" 
-  height="0.3" 
-  color="#00CC00"
 
-  hoverable>
-</a-plane>
-<a-text 
-  value="Обработать запрос" 
-  custom-font
-  align="center" 
-  color="white" 
-  position="0 0 0.01"
-  width="2"
-  scale="0.8 0.8 0.8">
-</a-text>
-</a-entity>
-
-<a-entity id="choice-b-button-fourteen" position="0 1.3 0" visible="false">
-<a-plane 
-  width="2" 
-  height="0.3" 
-  color="#00CC00"
- 
-  hoverable>
-</a-plane>
-<a-text 
-  value="Перезагрузить страницу" 
-  custom-font
-  align="center" 
-  color="white" 
-  position="0 0 0.01"
-  width="2"
-  scale="0.8 0.8 0.8">
-</a-text>
-</a-entity>
-
-<a-entity id="choice-c-button-fourteen" position="0 0.8 0" visible="false">
-<a-plane 
-  width="2" 
-  height="0.3" 
-  color="#00CC00"
-
-  hoverable>
-</a-plane>
-<a-text 
-  value="Нарисовать кнопку" 
-  custom-font
-  align="center" 
-  color="white" 
-  position="0 0 0.01"
-  width="2"
-  scale="0.8 0.8 0.8">
-</a-text>
-</a-entity>
 
       </a-entity>
 
@@ -644,66 +704,6 @@
           scale="0.8 0.8 0.8">
         </a-text>
       </a-entity>
-
-      <!-- Кнопка интерактив 1-->
-      <a-entity id="rpo-one-button-interactive" position="0 1 0" visible="false">
-          <a-plane 
-            width="3" 
-            height="0.3" 
-            color="#00CC00"
-            hoverable>
-          </a-plane>
-          <a-text 
-            value="Да, расскажи подробнее!" 
-            custom-font
-            align="center" 
-            color="white" 
-            position="0 0 0.01"
-            width="3"
-            scale="0.8 0.8 0.8">
-          </a-text>
-      </a-entity>
-
-      <!-- Кнопка интерактив 2-->
-      <a-entity id="rpo-two-button-interactive" position="0 1 0" visible="false">
-        <a-plane 
-          width="3" 
-          height="0.3" 
-          color="#00CC00"
-          hoverable>
-        </a-plane>
-        <a-text 
-          value="А Что вообще делают в back-end?" 
-          custom-font
-          align="center" 
-          color="white" 
-          position="0 0 0.01"
-          width="3"
-          scale="0.8 0.8 0.8">
-        </a-text>
-
-    </a-entity>
-
-     <!-- Кнопка интерактив 3-->
-     <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
-      <a-plane 
-        width="3" 
-        height="0.3" 
-        color="#00CC00"
-        hoverable>
-      </a-plane>
-      <a-text 
-        value="Отправить сообщение" 
-       custom-font
-        align="center" 
-        color="white" 
-        position="0 0 0.01"
-        width="3"
-        scale="0.8 0.8 0.8">
-      </a-text>
-
-    </a-entity>
-
     </a-box>
 
     <a-image 
