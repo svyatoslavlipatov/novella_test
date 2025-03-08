@@ -2,6 +2,7 @@
   <head>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+
   </head>
   <body>
     <a-scene>      
@@ -53,19 +54,23 @@
             color="#008CBA"
             hoverable>
           </a-plane>
-          <a-text value="Next" align="center" color="white" position="0 0 0.01"></a-text>
+          <a-text value="Вперед!" align="center" color="white" position="0 0 0.01"
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png" 
+            negate="false">
+          </a-text>
         </a-entity>
       </a-entity>
 
       <!-- Транзитная сцена -->
       <a-entity id="transition-scene" visible="false">
         <a-entity position="0 1 -4">
-          <a-text id="msg-one" value="HI" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
-          <a-text id="msg-two" value="Second msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-three" value="Three msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-four" value="Four msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-five" value="Five msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
-          <a-text id="msg-six" value="Six msg" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-one" value="Привет!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+          <a-text id="msg-two" value="Ты стоишь на перепутье, кем же тебе стать.." font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-three" value="Выбрать направление очень важно, и мы тебе поможем в этом" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-four" value="Мы покажем тебе 5 направлений нашего факультета" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-five" value="И покажем суть каждого!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
+          <a-text id="msg-six" value="Выбирай!" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="0" visible="true"></a-text>
         </a-entity>
 
         <a-entity id="portals">
@@ -149,44 +154,625 @@
             color="#008CBA"
             hoverable>
           </a-plane>
-          <a-text value="Back" align="center" color="white" position="0 0 0.01"></a-text>
+          <a-text value="Назад" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" position="0 0 0.01"></a-text>
         </a-entity>
       </a-entity>
 
       <!-- РПО сцена -->
-      <<a-entity id="rpo-scene" visible="false">
-        <!-- Темное окружение -->
-        <a-sky color="#1A1A2E"></a-sky>
+<a-entity id="rpo-scene" visible="false">
+  <a-sky color="#ECECEC"></a-sky>
+  <a-entity position="0 1 -4">
+    <a-text id="rpo-msg-one" value="РПО" font="msdf/pixel/pix-msdf.json" font-image="msdf/pixel/pix.png" negate="false" align="center" color="white" scale="2 2 2" opacity="1"></a-text>
+  </a-entity>
+  
+  <!-- Сопроводитель -->
+  <a-entity id="accompanier" position="0 0.5 -3">
+    <a-box 
+      id="accompanier-box"
+      width="4" 
+      height="1" 
+      depth="0.01" 
+      color="#000000" 
+      opacity="0.7">
       
-        <!-- Шестеренки -->
-        <a-entity position="-2 1 -3" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
-          <a-torus radius="0.5" radius-tubular="0.05" arc="360" color="#FFD700"></a-torus>
-        </a-entity>
-        <a-entity position="2 2 -4" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 7000">
-          <a-torus radius="0.7" radius-tubular="0.05" arc="360" color="#FFD700"></a-torus>
-        </a-entity>
-        <a-entity position="0 3 -2" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 6000">
-          <a-torus radius="0.3" radius-tubular="0.05" arc="360" color="#FFD700"></a-torus>
-        </a-entity>
+      <a-text 
+        id="speaker-name" 
+        value="СОПРОВОДИТЕЛЬ" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFD700" 
+        align="left" 
+        width="2.5" 
+        position="-1.8 0.34 0.01" 
+        scale="1 1 1"
+        opacity="1">
+      </a-text>
+
+      <a-entity id="accompanier-dialog">
+        
+        <a-text id="accompanier-text-one" 
+          value="Привет! Ты попал в ядро любого приложения — его back-end." 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png"
+          negate="false"
+          color="#FFFFFF" 
+          align="left" 
+          anchor="left" 
+          baseline="top" 
+          width="3.5" 
+          scale="1 1 1" 
+          position="-1.8 0.2 0.01" 
+          wrapcount="50"
+          visible="true">
+        </a-text>
+
+        <a-text id="accompanier-text-two" 
+          value="Я Сопроводитель РПО, и я отвечаю за то, чтобы всё работало как часы: серверы, базы данных, API. Здесь мы создаём невидимую, но самую важную часть программ — их мозги. " 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png"
+          negate="false"
+          color="#FFFFFF" 
+          align="left" 
+          anchor="left" 
+          baseline="top" 
+          width="3.5" 
+          scale="1 1 1" 
+          position="-1.8 0.2 0.01" 
+          wrapcount="50"
+          visible="false">
+        </a-text>
+
+        <a-text id="accompanier-text-three" 
+          value="Хочешь узнать, что это за работа?" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png"
+          negate="false"
+          color="#FFFFFF" 
+          align="left" 
+          anchor="left" 
+          baseline="top" 
+          width="3.5" 
+          scale="1 1 1" 
+          position="-1.8 0.2 0.01" 
+          wrapcount="50"
+          visible="false">
+        </a-text>
+
+      <a-text id="accompanier-text-four" 
+        value="WOWOWOWOWOWWOWO" 
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <!-- Текст интерактив 1 -->
+      <a-text id="accompanier-text-five-interactive" 
+        value="Да, расскажи подробнее!" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+
+      <a-text id="accompanier-text-six" 
+        value="Отлично! Представь себе: ты открываешь любимое приложение — например, соцсеть или игру. Ты видишь кнопки, картинки, сообщения." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-seven" 
+        value="Но за всем этим стоит back-end. Это как кухня в ресторане: ты не видишь, как готовят еду, но без неё ничего бы не получилось." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-eight-interactive" 
+        value="Мы пишем код, который обрабатывает твои действия: сохраняет посты, отправляет сообщения, считает очки в игре. Без нас всё просто остановится. Круто, правда?" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-nine" 
+        value="Back-end — это всё, что скрыто от глаз. Мы проектируем серверы, чтобы они могли выдерживать миллионы запросов. Настраиваем базы данных, чтобы твои данные — например, фотки или пароли — хранились надёжно." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-ten" 
+        value="Мы пишем API — это как мостик между приложением и сервером. Короче, мы строим фундамент, на котором держится весь цифровой мир! Хочешь покажу, как это работает? " 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-eleven-interactive" 
+        value="Я покажу тебе на примере. Слева от тебя кнопка Отправить сообщение, нажми на неё." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-twelve" 
+        value="Видишь? Ты нажал кнопку, а я за секунду обработал твой запрос. Это и есть наша работа — сделать так, чтобы всё было быстро, надёжно и незаметно для тебя." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
       
-        <!-- Падающий цифровой код -->
-        <a-entity position="0 5 -3" animation="property: position; to: 0 -5 -3; loop: true; dur: 4000">
-          <a-text value="101010 001 111 0101" color="#00FF00" align="center" scale="1 1 1"></a-text>
-        </a-entity>
-        <a-entity position="2 5 -4" animation="property: position; to: 2 -5 -4; loop: true; dur: 4500">
-          <a-text value="110011 010 101 1100" color="#00FF00" align="center" scale="1 1 1"></a-text>
-        </a-entity>
-        <a-entity position="-2 5 -2" animation="property: position; to: -2 -5 -2; loop: true; dur: 3800">
-          <a-text value="010101 111 000 1010" color="#00FF00" align="center" scale="1 1 1"></a-text>
-        </a-entity>
-      
-        <!-- Сопроводитель (текст для начала) -->
-        <a-entity id="guide" position="0 1.5 -3">
-          <a-text id="guide-text" value="Hi!\nYa soprovoditel\nTi popapl v RPO,\ngde cod ozhivaet i vezde garmoniya"
-                  color="#FFFFFF" align="center" width="4" scale="1 1 1" opacity="0"
-                  animation="property: opacity; from: 0; to: 1; dur: 2000; delay: 1000"></a-text>
-        </a-entity>
+      <a-text id="accompanier-text-thirteen" 
+        value="У меня есть для тебя задача: представь, что ты должен настроить сервер, чтобы он ответил на запрос пользователя. Выбери, что нужно сделать" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <!-- Варианты ответов для accompanier-text-thirteen -->
+      <a-text id="accompanier-text-fourteen-a" 
+        value="Верно! Нужно написать код для обработки запроса на сервере и отправки ответа клиенту." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-fourteen-b" 
+        value="Не совсем. Перезагрузка страницы — это не задача сервера, а клиентская механика." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+      <a-text id="accompanier-text-fourteen-c" 
+        value="Нет, рисовать кнопки — это задача фронтенд-разработчиков, а не бэкенд." 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        color="#FFFFFF" 
+        align="left" 
+        anchor="left" 
+        baseline="top" 
+        width="3.5" 
+        scale="1 1 1" 
+        position="-1.8 0.2 0.01" 
+        wrapcount="50"
+        visible="false">
+      </a-text>
+
+    <a-text id="accompanier-text-fiveteen" 
+      value="Вот и все! В этом все направление!" 
+      font="msdf/pixel/pix-msdf.json" 
+      font-image="msdf/pixel/pix.png"
+      negate="false"
+      color="#FFFFFF" 
+      align="left" 
+      anchor="left" 
+      baseline="top" 
+      width="3.5" 
+      scale="1 1 1" 
+      position="-1.8 0.2 0.01" 
+      wrapcount="50"
+      visible="false">
+    </a-text>
+
+    <a-text id="accompanier-text-sixteen" 
+      value="Пока!" 
+      font="msdf/pixel/pix-msdf.json" 
+      font-image="msdf/pixel/pix.png"
+      negate="false"
+      color="#FFFFFF" 
+      align="left" 
+      anchor="left" 
+      baseline="top" 
+      width="3.5" 
+      scale="1 1 1" 
+      position="-1.8 0.2 0.01" 
+      wrapcount="50"
+      visible="false">
+    </a-text>
+
+    <a-text id="accompanier-text-seventeen" 
+      value="Тебе понравилось?" 
+      font="msdf/pixel/pix-msdf.json" 
+      font-image="msdf/pixel/pix.png"
+      negate="false"
+      color="#FFFFFF" 
+      align="left" 
+      anchor="left" 
+      baseline="top" 
+      width="3.5" 
+      scale="1 1 1" 
+      position="-1.8 0.2 0.01" 
+      wrapcount="50"
+      visible="false">
+    </a-text>
+
+    <!-- Кнопка "Да" -->
+<a-entity id="yes-button-seventeen" position="-1 0.8 0" visible="false">
+  <a-plane 
+    width="1" 
+    height="0.3" 
+    color="#00CC00"
+
+    hoverable>
+  </a-plane>
+  <a-text 
+    value="Да" 
+    font="msdf/pixel/pix-msdf.json" 
+    font-image="msdf/pixel/pix.png"
+    negate="false"
+    align="center" 
+    color="white" 
+    position="0 0 0.01"
+    width="1"
+    scale="0.8 0.8 0.8">
+  </a-text>
+</a-entity>
+
+<!-- Кнопка "Нет" -->
+<a-entity id="no-button-seventeen" position="0 0.8 0" visible="false">
+  <a-plane 
+    width="1" 
+    height="0.3" 
+    color="#CC0000"
+  
+    hoverable>
+  </a-plane>
+  <a-text 
+    value="Нет" 
+    font="msdf/pixel/pix-msdf.json" 
+    font-image="msdf/pixel/pix.png"
+    negate="false"
+    align="center" 
+    color="white" 
+    position="0 0 0.01"
+    width="1"
+    scale="0.8 0.8 0.8">
+  </a-text>
+</a-entity>
+
+<!-- Текст ответа "Ура" -->
+<a-text id="accompanier-text-eighteen-yes" 
+  value="Ура" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  color="#FFFFFF" 
+  align="left" 
+  anchor="left" 
+  baseline="top" 
+  width="3.5" 
+  scale="1 1 1" 
+  position="-1.8 0.2 0.01" 
+  wrapcount="50"
+  visible="false">
+</a-text>
+
+<!-- Текст ответа "Жаль" -->
+<a-text id="accompanier-text-eighteen-no" 
+  value="Жаль" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  color="#FFFFFF" 
+  align="left" 
+  anchor="left" 
+  baseline="top" 
+  width="3.5" 
+  scale="1 1 1" 
+  position="-1.8 0.2 0.01" 
+  wrapcount="50"
+  visible="false">
+</a-text>
+
+<!-- Текст ответа "Жаль" -->
+<a-text id="accompanier-text-nineteen" 
+  value="Пока!" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  color="#FFFFFF" 
+  align="left" 
+  anchor="left" 
+  baseline="top" 
+  width="3.5" 
+  scale="1 1 1" 
+  position="-1.8 0.2 0.01" 
+  wrapcount="50"
+  visible="false">
+</a-text>
+
+<!-- Кнопка "Назад" в rpo-scene -->
+<a-entity id="rpo-back-to-portals" position="0 0.5 0" visible="false">
+  <a-plane 
+    width="1" 
+    height="0.4" 
+    color="#008CBA" 
+    class="clickable" 
+    hoverable>
+  </a-plane>
+  <a-text 
+    value="Назад к порталам" 
+    font="msdf/pixel/pix-msdf.json" 
+    font-image="msdf/pixel/pix.png" 
+    negate="false" 
+    align="center" 
+    color="white" 
+    position="0 0 0.01" 
+    scale="0.8 0.8 0.8">
+  </a-text>
+</a-entity>
+
+<!-- Кнопки выбора для accompanier-text-thirteen -->
+<a-entity id="choice-a-button-fourteen" position="0 1.6 0" visible="false">
+<a-plane 
+  width="2" 
+  height="0.3" 
+  color="#00CC00"
+
+  hoverable>
+</a-plane>
+<a-text 
+  value="Обработать запрос" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  align="center" 
+  color="white" 
+  position="0 0 0.01"
+  width="2"
+  scale="0.8 0.8 0.8">
+</a-text>
+</a-entity>
+
+<a-entity id="choice-b-button-fourteen" position="0 1.3 0" visible="false">
+<a-plane 
+  width="2" 
+  height="0.3" 
+  color="#00CC00"
+ 
+  hoverable>
+</a-plane>
+<a-text 
+  value="Перезагрузить страницу" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  align="center" 
+  color="white" 
+  position="0 0 0.01"
+  width="2"
+  scale="0.8 0.8 0.8">
+</a-text>
+</a-entity>
+
+<a-entity id="choice-c-button-fourteen" position="0 0.8 0" visible="false">
+<a-plane 
+  width="2" 
+  height="0.3" 
+  color="#00CC00"
+
+  hoverable>
+</a-plane>
+<a-text 
+  value="Нарисовать кнопку" 
+  font="msdf/pixel/pix-msdf.json" 
+  font-image="msdf/pixel/pix.png"
+  negate="false"
+  align="center" 
+  color="white" 
+  position="0 0 0.01"
+  width="2"
+  scale="0.8 0.8 0.8">
+</a-text>
+</a-entity>
+
       </a-entity>
+
+     <!-- Кнопка "Далее »" -->
+      <a-entity id="next-text-button" position="1.5 -0.3 0.01" visible="false">
+        <a-plane 
+          width="0.6" 
+          height="0.3" 
+          color="#008CBA"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="Next >>" 
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="1.25"
+          scale="0.8 0.8 0.8">
+        </a-text>
+      </a-entity>
+
+      <!-- Кнопка интерактив 1-->
+      <a-entity id="rpo-one-button-interactive" position="0 1 0" visible="false">
+          <a-plane 
+            width="3" 
+            height="0.3" 
+            color="#00CC00"
+            hoverable>
+          </a-plane>
+          <a-text 
+            value="Да, расскажи подробнее!" 
+            font="msdf/pixel/pix-msdf.json" 
+            font-image="msdf/pixel/pix.png"
+            negate="false"
+            align="center" 
+            color="white" 
+            position="0 0 0.01"
+            width="3"
+            scale="0.8 0.8 0.8">
+          </a-text>
+      </a-entity>
+
+      <!-- Кнопка интерактив 2-->
+      <a-entity id="rpo-two-button-interactive" position="0 1 0" visible="false">
+        <a-plane 
+          width="3" 
+          height="0.3" 
+          color="#00CC00"
+          hoverable>
+        </a-plane>
+        <a-text 
+          value="А Что вообще делают в back-end?" 
+          font="msdf/pixel/pix-msdf.json" 
+          font-image="msdf/pixel/pix.png"
+          negate="false"
+          align="center" 
+          color="white" 
+          position="0 0 0.01"
+          width="3"
+          scale="0.8 0.8 0.8">
+        </a-text>
+
+    </a-entity>
+
+     <!-- Кнопка интерактив 3-->
+     <a-entity id="rpo-three-button-interactive" position="0 1 0" visible="false">
+      <a-plane 
+        width="3" 
+        height="0.3" 
+        color="#00CC00"
+        hoverable>
+      </a-plane>
+      <a-text 
+        value="Отправить сообщение" 
+        font="msdf/pixel/pix-msdf.json" 
+        font-image="msdf/pixel/pix.png"
+        negate="false"
+        align="center" 
+        color="white" 
+        position="0 0 0.01"
+        width="3"
+        scale="0.8 0.8 0.8">
+      </a-text>
+
+    </a-entity>
+
+    </a-box>
+
+    <a-image 
+      id="character-portrait"
+      src="#character-image" 
+      position="-1.5 0.5 0" 
+      width="1" 
+      height="1.5" 
+      opacity="0">
+    </a-image>
+  </a-entity>
+</a-entity>
 
       <!-- Дизайн сцена -->
       <a-entity id="dizayn-scene" visible="false">
@@ -235,8 +821,25 @@
           });
         }
       });
-
-      // Логика переключения на вторую сцену
+    
+      // Функция для эффекта печати текста
+      function typeText(element, text, speed = 5) {
+        return new Promise(resolve => {
+          let index = 0;
+          element.setAttribute('value', ''); // Очищаем текст перед началом
+          const interval = setInterval(() => {
+            if (index < text.length) {
+              element.setAttribute('value', text.substring(0, index + 1));
+              index++;
+            } else {
+              clearInterval(interval);
+              resolve();
+            }
+          }, speed);
+        });
+      }
+    
+      // Логика переключения на транзитную сцену
       document.querySelector('#button-next').addEventListener('click', async function () {
         console.log('click');
         const mainScene = document.querySelector('#main-scene');
@@ -244,26 +847,26 @@
         const buttonNext = document.querySelector('#button-next');
         const buttonBack = document.querySelector('#button-back');
         const background = document.querySelector('#background');
-
+    
         mainScene.setAttribute('visible', 'false');
         transitionScene.setAttribute('visible', 'true');
         buttonNext.classList.remove('clickable');
         buttonBack.classList.add('clickable');
-        background.setAttribute('environment', 'preset: forest'); // Меняем фон на forest
-
+        background.setAttribute('environment', 'preset: forest');
+    
         const messages = [
-          { id: '#msg-one', delay: 1000 },
-          { id: '#msg-two', delay: 1000 },
-          { id: '#msg-three', delay: 1000 },
-          { id: '#msg-four', delay: 1000 },
-          { id: '#msg-five', delay: 1000 },
+          { id: '#msg-one', delay: 10 },
+          { id: '#msg-two', delay: 10 },
+          { id: '#msg-three', delay: 10 },
+          { id: '#msg-four', delay: 10 },
+          { id: '#msg-five', delay: 10 },
           { id: '#msg-six', delay: 0 }
         ];
-
+    
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-        const animationDuration = 1000;
-        const pauseBeforeFadeIn = 1000;
-
+        const animationDuration = 10;
+        const pauseBeforeFadeIn = 10;
+    
         const animateOpacity = (element, from, to, duration) => {
           return new Promise(resolve => {
             element.setAttribute('animation', {
@@ -284,17 +887,17 @@
             }, { once: true });
           });
         };
-
+    
         for (let i = 0; i < messages.length - 1; i++) {
           const current = document.querySelector(messages[i].id);
           const next = document.querySelector(messages[i + 1].id);
-
+    
           await sleep(messages[i].delay - animationDuration);
           await animateOpacity(current, 1, 0, animationDuration);
           current.parentNode.removeChild(current);
           await sleep(pauseBeforeFadeIn);
           await animateOpacity(next, 0, 1, animationDuration);
-
+    
           if (next.id === 'msg-six') {
             const portalsContainer = document.querySelector('#portals');
             const portals = portalsContainer.querySelectorAll('a-circle');
@@ -312,6 +915,7 @@
         }
       });
 
+    
       // Логика переключения обратно на основную сцену
       document.querySelector('#button-back').addEventListener('click', function () {
         console.log('click');
@@ -325,31 +929,295 @@
         mainScene.setAttribute('visible', 'true');
         buttonBack.classList.remove('clickable');
         buttonNext.classList.add('clickable');
-        background.setAttribute('environment', 'preset: starry'); // Возвращаем фон starry
+        background.setAttribute('environment', 'preset: starry');
       });
+    
 
-      // Функция для обработки перехода по клику на портал
-      function handlePortalClick(portalId, targetSceneId, environmentPreset) {
-        document.querySelector(`#${portalId} a-circle`).addEventListener('click', function () {
-          console.log(`${portalId} clicked`);
-          const transitionScene = document.querySelector('#transition-scene');
-          const targetScene = document.querySelector(`#${targetSceneId}`);
-          const portals = document.querySelector('#portals').querySelectorAll('a-circle');
-          const background = document.querySelector('#background');
 
-          portals.forEach(portal => portal.classList.remove('clickable'));
-          transitionScene.setAttribute('visible', 'false');
-          targetScene.setAttribute('visible', 'true');
-          background.setAttribute('environment', `preset: ${environmentPreset}`);
+      // Объект с конфигурацией порталов
+      const portalConfig = {
+        'portal1': { scene: 'rpo-scene', preset: 'default' },
+        'portal2': { scene: 'dizayn-scene', preset: 'goldmine' },
+        'portal3': { scene: 'turizm-scene', preset: 'egypt' },
+        'portal4': { scene: 'service-scene', preset: 'japan' },
+        'portal5': { scene: 'reklama-scene', preset: 'volcano' }
+      };
+
+      // Единая функция инициализации порталов
+      function initializePortals() {
+        const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+        const transitionScene = document.querySelector('#transition-scene');
+        const background = document.querySelector('#background');
+        const nextButton = document.querySelector('#next-text-button');
+
+        Object.entries(portalConfig).forEach(([portalId, { scene, preset }]) => {
+          document.querySelector(`#${portalId} a-circle`).addEventListener('click', async () => {
+            console.log(`${portalId} clicked`);
+            
+            // Отключаем кликабельность всех порталов
+            portals.forEach(portal => portal.classList.remove('clickable'));
+            
+            // Переключаем сцены
+            transitionScene.setAttribute('visible', 'false');
+            document.querySelector(`#${scene}`).setAttribute('visible', 'true');
+            background.setAttribute('environment', `preset: ${preset}`);
+
+            // Обработка специальной логики для rpo-scene
+            if (scene === 'rpo-scene') {
+              const firstText = document.querySelector('#accompanier-text-one');
+              await typeText(firstText, firstText.getAttribute('value'));
+              nextButton.setAttribute('visible', 'true');
+              nextButton.querySelector('a-plane').classList.add('clickable');
+            }
+          });
         });
       }
 
-      // Применяем функцию для каждого портала
-      handlePortalClick('portal1', 'rpo-scene', 'none');
-      handlePortalClick('portal2', 'dizayn-scene', 'goldmine');
-      handlePortalClick('portal3', 'turizm-scene', 'egypt');
-      handlePortalClick('portal4', 'service-scene', 'japan');
-      handlePortalClick('portal5', 'reklama-scene', 'volcano');
+      // Инициализация
+      initializePortals();
+
+
+// -----------------------МЕХАНИКИ ДЛЯ РПО-----------------------
+    
+// Конфигурация интерактивных элементов
+const interactiveConfig = {
+  'accompanier-text-five-interactive': {
+    buttonId: 'rpo-one-button-interactive',
+    nextTextId: 'accompanier-text-six'
+  },
+  'accompanier-text-eight-interactive': {
+    buttonId: 'rpo-two-button-interactive',
+    nextTextId: 'accompanier-text-nine'
+  },
+  'accompanier-text-eleven-interactive': {
+    buttonId: 'rpo-three-button-interactive',
+    nextTextId: 'accompanier-text-twelve'
+  }
+};
+
+// Конфигурация для множественного выбора
+const multipleChoiceConfig = {
+  'accompanier-text-seventeen': {
+    choices: [
+      {
+        buttonId: 'yes-button-seventeen',
+        responseTextId: 'accompanier-text-eighteen-yes'
+      },
+      {
+        buttonId: 'no-button-seventeen',
+        responseTextId: 'accompanier-text-eighteen-no'
+      }
+    ]
+  },
+  'accompanier-text-thirteen': {
+    choices: [
+      {
+        buttonId: 'choice-a-button-fourteen',
+        responseTextId: 'accompanier-text-fourteen-a'
+      },
+      {
+        buttonId: 'choice-b-button-fourteen',
+        responseTextId: 'accompanier-text-fourteen-b'
+      },
+      {
+        buttonId: 'choice-c-button-fourteen',
+        responseTextId: 'accompanier-text-fourteen-c'
+      }
+    ]
+  }
+};
+
+// Универсальная функция для обработки интерактивных кнопок
+function handleInteractiveButton(buttonId, currentTextId, nextTextId) {
+  const button = document.querySelector(`#${buttonId}`);
+  if (!button) return; // Если кнопка уже удалена, ничего не делаем
+  
+  button.addEventListener('click', async () => {
+    const nextButton = document.querySelector('#next-text-button');
+    const nextPlane = nextButton.querySelector('a-plane');
+    const currentText = document.querySelector(`#${currentTextId}`);
+    const nextText = document.querySelector(`#${nextTextId}`);
+
+    currentText.setAttribute('visible', 'false');
+    button.setAttribute('visible', 'false');
+    button.querySelector('a-plane').classList.remove('clickable');
+
+    nextText.setAttribute('visible', 'true');
+    await typeText(nextText, nextText.getAttribute('value'));
+
+    nextButton.setAttribute('visible', 'true');
+    nextPlane.classList.add('clickable');
+
+    button.parentNode.removeChild(button);
+  });
+}
+
+// Функция обработки множественного выбора
+function handleMultipleChoice(textId) {
+  const config = multipleChoiceConfig[textId];
+  if (!config) return;
+
+  const nextButton = document.querySelector('#next-text-button');
+  const nextPlane = nextButton.querySelector('a-plane');
+  const currentText = document.querySelector(`#${textId}`);
+  const choiceButtons = config.choices.map(choice => document.querySelector(`#${choice.buttonId}`));
+
+  // Показываем кнопки выбора
+  choiceButtons.forEach(button => {
+    button.setAttribute('visible', 'true');
+    button.querySelector('a-plane').classList.add('clickable');
+  });
+
+  // Обработчик для каждой кнопки выбора
+  config.choices.forEach(choice => {
+    const button = document.querySelector(`#${choice.buttonId}`);
+    button.addEventListener('click', async () => {
+      // Скрываем все кнопки выбора
+      choiceButtons.forEach(btn => {
+        btn.setAttribute('visible', 'false');
+        btn.querySelector('a-plane').classList.remove('clickable');
+        btn.parentNode.removeChild(btn); // Удаляем кнопки
+      });
+
+      // Скрываем текущий текст и показываем ответ
+      currentText.setAttribute('visible', 'false');
+      const responseText = document.querySelector(`#${choice.responseTextId}`);
+      responseText.setAttribute('visible', 'true');
+      await typeText(responseText, responseText.getAttribute('value'));
+
+      // Показываем кнопку Next
+      nextButton.setAttribute('visible', 'true');
+      nextPlane.classList.add('clickable');
+    });
+  });
+}
+
+// Инициализация всех интерактивных кнопок
+Object.entries(interactiveConfig).forEach(([textId, { buttonId, nextTextId }]) => {
+  handleInteractiveButton(buttonId, textId, nextTextId);
+});
+
+// Обновленный обработчик next-text-button
+document.querySelector('#next-text-button').addEventListener('click', async function() {
+  const texts = [
+    '#accompanier-text-one',
+    '#accompanier-text-two',
+    '#accompanier-text-three',
+    '#accompanier-text-four',
+    '#accompanier-text-five-interactive',
+    '#accompanier-text-six',
+    '#accompanier-text-seven',
+    '#accompanier-text-eight-interactive',
+    '#accompanier-text-nine',
+    '#accompanier-text-ten',
+    '#accompanier-text-eleven-interactive',
+    '#accompanier-text-twelve',
+    '#accompanier-text-thirteen',
+    '#accompanier-text-fourteen-a',
+    '#accompanier-text-fourteen-b',
+    '#accompanier-text-fourteen-c',
+    '#accompanier-text-fiveteen',
+    '#accompanier-text-sixteen',
+    '#accompanier-text-seventeen',
+    '#accompanier-text-eighteen-yes',
+    '#accompanier-text-eighteen-no',
+    '#accompanier-text-nineteen'
+  ].map(id => document.querySelector(id));
+
+  const nextButton = document.querySelector('#next-text-button');
+  const nextPlane = nextButton.querySelector('a-plane');
+  const backButton = document.querySelector('#rpo-back-to-portals'); // Добавляем кнопку "Назад"
+
+  const currentIndex = texts.findIndex(text => text.getAttribute('visible'));
+  if (currentIndex < texts.length - 1) {
+    nextButton.setAttribute('visible', 'false');
+    nextPlane.classList.remove('clickable');
+
+    texts[currentIndex].setAttribute('visible', 'false');
+
+    let nextIndex = currentIndex + 1;
+
+    // Проверяем, если текущий текст — один из ответов fourteen, переходим к fiveteen
+    if (['accompanier-text-fourteen-a', 'accompanier-text-fourteen-b', 'accompanier-text-fourteen-c']
+        .includes(texts[currentIndex].id)) {
+      nextIndex = texts.findIndex(text => text.id === 'accompanier-text-fiveteen');
+    }
+    // Проверяем, если текущий текст — один из ответов eighteen, переходим к nineteen
+    else if (['accompanier-text-eighteen-yes', 'accompanier-text-eighteen-no']
+        .includes(texts[currentIndex].id)) {
+      nextIndex = texts.findIndex(text => text.id === 'accompanier-text-nineteen');
+    }
+
+    const nextText = texts[nextIndex];
+    nextText.setAttribute('visible', 'true');
+    await typeText(nextText, nextText.getAttribute('value'));
+
+    // Проверяем, если достигнут accompanier-text-nineteen
+    if (nextText.id === 'accompanier-text-nineteen') {
+      nextButton.setAttribute('visible', 'false'); // Скрываем кнопку "Next"
+      nextPlane.classList.remove('clickable');
+      backButton.setAttribute('visible', 'true'); // Показываем кнопку "Назад"
+      backButton.querySelector('a-plane').classList.add('clickable');
+    } else if (interactiveConfig[nextText.id]) {
+      const button = document.querySelector(`#${interactiveConfig[nextText.id].buttonId}`);
+      if (button) {
+        button.setAttribute('visible', 'true');
+        button.querySelector('a-plane').classList.add('clickable');
+      }
+    } else if (multipleChoiceConfig[nextText.id]) {
+      handleMultipleChoice(nextText.id);
+    } else {
+      nextButton.setAttribute('visible', 'true');
+      nextPlane.classList.add('clickable');
+    }
+  }
+});
+
+document.querySelector('#rpo-back-to-portals').addEventListener('click', function() {
+  const rpoScene = document.querySelector('#rpo-scene');
+  const transitionScene = document.querySelector('#transition-scene');
+  const background = document.querySelector('#background');
+  const backButton = document.querySelector('#rpo-back-to-portals');
+  const portal1 = document.querySelector('#portal1 a-circle'); // Портал RPO
+  const portals = document.querySelector('#portals').querySelectorAll('a-circle');
+  const portalLight = document.querySelector('#portal-light');
+
+  // Скрываем текущую сцену и показываем сцену с порталами
+  rpoScene.setAttribute('visible', 'false');
+  transitionScene.setAttribute('visible', 'true');
+  background.setAttribute('environment', 'preset: forest'); // Возвращаем фон с порталами
+
+  // Скрываем кнопку "Назад"
+  backButton.setAttribute('visible', 'false');
+  backButton.querySelector('a-plane').classList.remove('clickable');
+
+  // Восстанавливаем видимость порталов и их подсветку
+  portals.forEach(portal => {
+    if (portal === portal1) {
+      // Делаем portal1 серым и некликабельным
+      portal.setAttribute('color', '#808080'); // Серый цвет
+      portal.setAttribute('opacity', '0.8');
+      portal.classList.remove('clickable');
+    } else {
+      // Остальные порталы остаются кликабельными и с исходным цветом
+      portal.setAttribute('opacity', '0.8');
+      portal.classList.add('clickable');
+    }
+  });
+  portalLight.setAttribute('intensity', '1');
+
+  // Показываем последний текст сцены перехода
+  const msgSix = document.querySelector('#msg-six');
+  if (msgSix) {
+    msgSix.setAttribute('visible', 'true');
+    msgSix.setAttribute('opacity', '1');
+  }
+});
+
+
+// -----------------------КОНЕЦ МЕХАНИКИ ДЛЯ РПО-----------------------
+
+
     </script>
   </body>
 </html>
